@@ -5,17 +5,46 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
 </head>
 <body>
 
-<button class="login"> Prijava</button>
+<!-- toolbar -->
+<ul>
+  <li class="left"><a href="#home">Home</a></li>
+  <li class="left"><a href="#friends">Friends</a></li>
 
-<div class="pozoriste">
-	<img class="index_img" src="images/pozoriste.jpg"/>
+  <li class="right"><a href="#log">Login</a></li>
+  <li class="right"><a href="#profile">Profile</a></li>
+</ul>
+
+<!-- deo strane koji sluzi za izbor pozorista ili bioskopa -->
+<div id="home_div">
+	<div class="pozoriste">
+		<img class="index_img" src="images/pozoriste.jpg"/>
+	</div>
+	
+	<div class="bioskop">
+		<img class="index_img" src="images/bioskop.jpg"/>
+	</div>
 </div>
 
-<div class="bioskop">
-	<img class="index_img" src="images/bioskop.jpg"/>
+<!-- deo strane koji sluzi da prikaze profil korisnika -->
+<div id="profile_div">
+profil
+</div>
+
+<!-- deo strane koji sluzi da prikaze prijatelje korisnika -->
+<div id="friends_div">
+prijatelji
+</div>
+
+<!-- login ili logout
+ako korisnik nije logovan prikazace stranu za logovanje
+ako je logovan samo ce ga izlogovati sa sajta
+ -->
+<div id="log_div">
+login logout
 </div>
 
 
