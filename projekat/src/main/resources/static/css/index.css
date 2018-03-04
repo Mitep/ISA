@@ -1,0 +1,30 @@
+button.login {
+	float: right;
+}
+img.index_img {
+	border-style: solid;
+	width: 100%;
+	height: 100%;
+}
+div.pozoriste {
+	position:fixed;
+    top: 40%;
+    left: 30%;
+    width:30%;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15%; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+div.bioskop {
+	position:fixed;
+    top: 40%;
+    right: 20%;
+    width:30%;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15%; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
