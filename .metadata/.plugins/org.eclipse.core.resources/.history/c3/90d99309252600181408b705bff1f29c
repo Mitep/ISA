@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Logovanje</title>
+
+   	<script src="jquery.min.js"></script>
+  </head>
+  <body>
+  
+        
+                    <div>
+                        <div >
+                            <h1 class="panel-title text-center"><b>Logovanje</b></h1>
+                        </div>
+                        <div >
+                            <form accept-charset="UTF-8" role="form" name = "loginForm" id="loginForm"  >
+                                <fieldset>
+                                    <div >
+                                        <input placeholder="Email adresa" type="text" name="email">
+                                    </div>
+                                    <div> 
+                                        <input placeholder="Lozinka" name="lozinka" type="password" >
+                                    </div>
+                                    
+                                    <input type="button" value="Login" onclick="logIn()" >
+                                </fieldset>
+                            </form>
+
+
+                        </div>
+                       
+
+                    </div >
+         
+        
+  </body>
+</html>

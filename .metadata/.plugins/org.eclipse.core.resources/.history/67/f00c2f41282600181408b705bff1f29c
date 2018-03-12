@@ -1,0 +1,12 @@
+function registracija(){
+	
+	$.ajax({
+		
+		
+		top.location.href="sljedecaStranica.html";
+			
+		
+	});
+	
+	
+}

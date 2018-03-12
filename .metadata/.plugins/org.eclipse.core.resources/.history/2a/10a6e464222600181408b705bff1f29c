@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Poseti me</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
+</head>
+<body>
+
+<!-- toolbar -->
+<ul>
+  <li class="left"><a href="#home">Home</a></li>
+  <li class="left"><a href="#friends">Nesto</a></li>
+
+  <li class="right"><a href="login.html">Login</a></li>
+  <li class="right"><a href="#profile">Profile</a></li>
+</ul>
+
+
+</body>
+</html>
