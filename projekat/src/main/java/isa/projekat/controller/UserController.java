@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa.projekat.model.Oglas;
 import isa.projekat.model.User;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.EmailService;

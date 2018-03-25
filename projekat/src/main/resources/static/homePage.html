@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Poseti me</title>
+	
+	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/homePage.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
+</head>
+<body>
+
+<!-- toolbar -->
+<ul>
+  <li class="left"><a href="#home">Home</a></li>
+  <li class="left"><a href="profilKorisnika.html">Korisnik</a></li>
+  <li class="left"><a href="#pozorista">Pozorišta</a></li>
+  <li class="left"><a href="#bioskopi">Bioskopi</a></li>
+  <li class="left"><a href="#prijatelji">Prijatelji</a></li>
+  <li class="left"><a href="#rezervacije">Rezervacije</a></li>
+  <li class="left"><a href="#podesavanja">Podešavanja</a></li>
+  <li class="left"><a href="#fanzona">Fan Zona</a></li>
+  <li class="right"><a href="#logout">Odjava</a></li>
+</ul>
+
+<!-- deo strane koji sluzi da prikaze profil korisnika -->
+<div id="home_div">
+HOME
+</div>
+
+<!-- deo strane koji sluzi da prikaze prijatelje korisnika -->
+<div id="pozorista_div">
+POZORISTA
+</div>
+
+<!-- login ili logout
+ako korisnik nije logovan prikazace stranu za logovanje
+ako je logovan samo ce ga izlogovati sa sajta
+ -->
+<div id="bioskopi_div">
+BIOSKOPI
+</div>
+
+<!-- deo strane koji sluzi da prikaze profil korisnika -->
+<div id="prijatelji_div">
+PRIJATELJI
+</div>
+
+<!-- deo strane koji sluzi da prikaze prijatelje korisnika -->
+<div id="rezervacije_div">
+rezer
+</div>
+
+<!-- login ili logout
+ako korisnik nije logovan prikazace stranu za logovanje
+ako je logovan samo ce ga izlogovati sa sajta
+ -->
+<div id="podesavanja_div">
+podes
+</div>
+
+<!-- login ili logout
+ako korisnik nije logovan prikazace stranu za logovanje
+ako je logovan samo ce ga izlogovati sa sajta
+ -->
+<div id="fanzona_div">
+<ul>
+  <li class="center"><a href="#zvanicnaProdavnica">Zvanična prodavnica</a></li>
+  <li class="center"><a href="#oglasi">Oglasi</a></li>
+</ul>
+<input type="text" placeholder="Search..">
+<button>Pretraži</button>
+<div class="slicicaOglasi">
+		<img class="oglas_img" src="images/fanZona.PNG"/>
+	</div>
+	 <input type="button" value="Novi oglas" onclick="noviOglas()">
+</div>
+</body>
+</html>
