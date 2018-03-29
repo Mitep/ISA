@@ -13,8 +13,8 @@
     </head>
     
     <body>
-     
-        
+ 
+       <form>
         <div id="subForums">
         <div>
           
@@ -36,55 +36,61 @@
              <tr>
                 <td >Email Adresa</td>
                 <td id="email"></td>
-                <td><form><input  onclick="izmijeniEmail()" type="button" value="Izmijeni"></form>
-               
-                </td>
+             
+     
               </tr>
                 
                <tr>
                 <td >Lozinka</td>
                 <td id="userPassword"></td>
-                 <td><form><input  onclick="izmijeniLozinku()" type="button" value="Izmijeni"></form>
+              
               </tr>
 
                
               <tr>
                 <td >Lozinka potvrde</td>
                 <td id="userPasswordConf"></td>
-                 <td><form><input  onclick="izmijeniLozinkuPotvrde()" type="button" value="Izmijeni"></form>
+               
               </tr>
               
 
                <tr>
                 <td >Ime</td>
                 <td id="userIme"></td>
-                 <td><form><input  onclick="izmijeniIme()" type="button" value="Izmijeni"></form>
+              
               </tr>
               
               <tr>
                 <td>Prezime</td>
                 <td  id="userSurname"></td>
-                 <td><form><input  onclick="izmijeniPrezime()" type="button" value="Izmijeni"></form>
+              
               </tr>
                      
                             
             <tr>
                 <td >Grad</td>
                 <td id="city"></td>
-                 <td><form><input  onclick="izmijeniGrad()" type="button" value="Izmijeni"></form>
+                
             </tr>
 
             <tr>
                 <td >Broj telefona</td>
                 <td id="mobileNumber"></td>
-                 <td><form><input  onclick="izmijeniBrojMobilnog()" type="button" value="Izmijeni"></form>
+                
               </tr>                
               
               </tbody>
             </table>
        </div>
+       
+          <input  onclick="formaZaIzmjenu()" type="button" value="Izmijeni">
      </div>
+            </form>
             
+            <form id = "friendsForm">
+            	
+            	 <input  onclick="dodajPrijatelja()" type="button" value="Dodaj Prijatelja">
+            </form>
     </body>
     
 </html>

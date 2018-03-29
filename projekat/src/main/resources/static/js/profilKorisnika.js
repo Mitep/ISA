@@ -1,4 +1,3 @@
-
 window.onload = function(){
 	
 	$.ajax({
@@ -21,6 +20,11 @@ window.onload = function(){
 
 }
 
+
+function formaZaIzmjenu(){
+	
+	window.location.href = "formaZaIzmjenu.html"
+}
 
 	
 
@@ -53,3 +57,10 @@ function renderUser(user){
 	$("#mobileNumber").append(user.mobileNumber);
 		
 }
+
+function dodajPrijatelja(){
+	
+	
+}
+
+

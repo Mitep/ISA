@@ -88,4 +88,33 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping(value="/editUser",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+public boolean editUser(@RequestBody User user,HttpServletRequest request) {
+
+
+		User us = (User)request.getSession().getAttribute("user");
+		us.setEmail(user.getEmail());
+		us.setUserName(user.getUserName());
+		us.setUserSurname(user.getUserSurname());
+		us.setUserPassword(user.getUserPassword());
+		us.setUserPasswordConf(user.getUserPasswordConf());
+		us.setMobileNumber(user.getMobileNumber());
+		us.setCity(user.getCity());
+		us.setUserRole("ObicanKorisnik");
+		if(us.getUserPassword().equals(us.getUserPasswordConf())) {
+	
+			userRep.save(us);
+	
+			return true;
+		}
+
+		return false;
+
+	}
+	
+	
+	
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Izmjena korisnika</title>
+
+ 	<script  type="text/javascript" src="js/registracija.js"></script>
+   	<script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+   	<script  type="text/javascript" src="js/formaZaIzmjenu.js"></script>
+  </head>
+  <body>
+                    <div>
+                        <h1 ><b>Izmjena korisnika</b></h1>
+                    </div>
+                    <div>
+                        <form  id = "editForm" method="post" >
+                            <fieldset>
+                                <div>
+                                    <input required  placeholder="Email Adresa" id="email" type="text" name="email">
+                                </div>
+
+                                <div>
+                                    <input required placeholder="Lozinka" id="userPassword" type="password" name="userPassword">
+                                </div>
+
+                                <div>
+                                    <input required placeholder="Lozinka" id="userPasswordConf" type="password" name="userPasswordConf">
+                                </div>
+                                
+                                <div>
+                                    <input  required  placeholder="Ime" id="userName" type="text" name="userName">
+                                </div>
+
+                                <div >
+                                    <input  placeholder="Prezime" id="userSurname" type="text" name="userSurname">
+                                </div>
+                                
+                                <div >
+                                    <input placeholder="Grad" id="city" type="text" name="city">
+                                </div>
+                                <div >
+                                    <input  placeholder="Broj telefona" id="mobileNumber" type="text" name="mobileNumber">
+                                </div>
+                                
+                              	<input  id="registerButton" onclick="izmjeniKorisnika()" type="button" value="Izmjeni">
+                               
+                                
+                                
+                            </fieldset>
+                        </form>
+                        
+                       
+                    </div>
+        
+  </body>
+</html>
