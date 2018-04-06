@@ -20,13 +20,14 @@ public class Actor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "actor_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
-	@Column(nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	
 	@ManyToMany
