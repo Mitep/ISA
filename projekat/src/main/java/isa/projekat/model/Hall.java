@@ -21,10 +21,11 @@ public class Hall implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "hall_id", nullable = false)
+	private long id;
 
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
 	@ManyToOne(optional = false)
@@ -70,6 +71,18 @@ public class Hall implements Serializable {
 
 	public void setSegments(Set<Segment> segments) {
 		this.segments = segments;
+	}
+
+	public Set<AmbientRating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Set<AmbientRating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

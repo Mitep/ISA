@@ -22,13 +22,14 @@ public class Director implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "director_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
-	@Column(nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "director")
@@ -68,6 +69,10 @@ public class Director implements Serializable {
 
 	public void setMoviePerformance(Set<MoviePerformance> moviePerformance) {
 		this.moviePerformance = moviePerformance;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

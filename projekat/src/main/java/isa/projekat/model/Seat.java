@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "seat")
 public class Seat implements Serializable {
 
 	/**
@@ -20,13 +18,14 @@ public class Seat implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "seat_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "row_num", nullable = false)
 	private int rowNum;
 
-	@Column(nullable = false)
+	@Column(name = "col_num", nullable = false)
 	private int colNum;
 	
 	@ManyToOne(optional = false)
@@ -66,6 +65,10 @@ public class Seat implements Serializable {
 
 	public void setSegment(Segment segment) {
 		this.segment = segment;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

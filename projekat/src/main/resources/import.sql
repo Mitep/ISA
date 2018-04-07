@@ -1,0 +1,12 @@
+insert into genre(genre_name) values ('Horor')
+insert into genre(genre_name) values ('Akcija')
+insert into genre(genre_name) values ('Komedija')
+insert into genre(genre_name) values ('Drama')
+insert into genre(genre_name) values ('Triler')
+insert into genre(genre_name) values ('Dokumentarni')
+insert into genre(genre_name) values ('Misterija')
+
+insert into actor(first_name, last_name) values ('Džim', 'Keri')
+insert into actor(first_name, last_name) values ('Šon', 'Koneri')
+insert into actor(first_name, last_name) values ('Dragan', 'Jovanović')
+insert into actor(first_name, last_name) values ('Pavle', 'Vuisić')

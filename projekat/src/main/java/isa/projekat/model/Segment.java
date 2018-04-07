@@ -11,10 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "segment")
 public class Segment implements Serializable {
 
 	/**
@@ -23,12 +21,12 @@ public class Segment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "segment_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
-	
 	
 	@ManyToOne(optional = false)
 	private Hall hall;
@@ -70,6 +68,10 @@ public class Segment implements Serializable {
 
 	public void setSeat(Set<Seat> seat) {
 		Seat = seat;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

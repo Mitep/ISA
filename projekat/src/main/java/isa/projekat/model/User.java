@@ -2,11 +2,15 @@ package isa.projekat.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -16,8 +20,9 @@ import javax.validation.constraints.NotNull;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id", nullable = false)
+	private long userId;
 	
 	@NotNull
 	private String email;
@@ -45,6 +50,28 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Ticket> tickets;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<AmbientRating> ambientRatings;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<ProjectionRating> projectionRatings;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
+	private Set<FriendRequest> sentRequests;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
+	private Set<FriendRequest> recievedRequests;
+	
+	//ko su moji prijatelji
+	@ManyToMany
+    @JoinTable(name = "friendship",
+    joinColumns = @JoinColumn(name = "user1_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "user2_id", nullable = false))
+	private Set<User> myFriends;
+	//kome sam ja prijatelj
+	@ManyToMany(mappedBy = "myFriends")
+	private Set<User> friendsWith;
 	
 	public User() {
 		super();
@@ -133,6 +160,66 @@ public class User {
 
 	public void setUserPasswordConf(String userPasswordConf) {
 		this.userPasswordConf = userPasswordConf;
+	}
+
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Set<AmbientRating> getAmbientRatings() {
+		return ambientRatings;
+	}
+
+	public void setAmbientRatings(Set<AmbientRating> ambientRatings) {
+		this.ambientRatings = ambientRatings;
+	}
+
+	public Set<ProjectionRating> getProjectionRatings() {
+		return projectionRatings;
+	}
+
+	public void setProjectionRatings(Set<ProjectionRating> projectionRatings) {
+		this.projectionRatings = projectionRatings;
+	}
+
+	public Set<FriendRequest> getSentRequests() {
+		return sentRequests;
+	}
+
+	public void setSentRequests(Set<FriendRequest> sentRequests) {
+		this.sentRequests = sentRequests;
+	}
+
+	public Set<FriendRequest> getRecievedRequests() {
+		return recievedRequests;
+	}
+
+	public void setRecievedRequests(Set<FriendRequest> recievedRequests) {
+		this.recievedRequests = recievedRequests;
+	}
+
+	public Set<User> getMyFriends() {
+		return myFriends;
+	}
+
+	public void setMyFriends(Set<User> myFriends) {
+		this.myFriends = myFriends;
+	}
+
+	public Set<User> getFriendsWith() {
+		return friendsWith;
+	}
+
+	public void setFriendsWith(Set<User> friendsWith) {
+		this.friendsWith = friendsWith;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	
 	

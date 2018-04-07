@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "projectionRating")
 public class ProjectionRating implements Serializable {
 
 	/**
@@ -20,10 +18,11 @@ public class ProjectionRating implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "projection_rating_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "rating", nullable = false)
 	private int rating;
 	
 	@ManyToOne(optional = false)
@@ -66,6 +65,10 @@ public class ProjectionRating implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

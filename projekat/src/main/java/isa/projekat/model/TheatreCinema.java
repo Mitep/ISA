@@ -12,10 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "theatreCinema")
 public class TheatreCinema implements Serializable {
 
 	/**
@@ -24,21 +22,21 @@ public class TheatreCinema implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "theatre_cinema_id", nullable = false)
+	private long id;
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	//u zavisnosti od tipa znamo da li je bioskop ili pozoriste
 	private TheatreCinemaEnum type;
 	
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(name = "adress", nullable = false)
 	private String adress;
 	
-	@Column(nullable = false)
+	@Column(name = "description", nullable = false)
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
@@ -94,6 +92,10 @@ public class TheatreCinema implements Serializable {
 
 	public void setHalls(Set<Hall> halls) {
 		this.halls = halls;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

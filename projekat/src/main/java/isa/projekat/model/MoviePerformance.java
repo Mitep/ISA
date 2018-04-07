@@ -10,13 +10,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "moviePerformance")
 public class MoviePerformance implements Serializable {
 
 	/**
@@ -25,34 +22,32 @@ public class MoviePerformance implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "movie_performance_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "type", nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	//u zavisnosti od tipa znamo da li je film ili predstava
 	private TheatreCinemaEnum type;
 	
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
 	@ManyToOne(optional = false)
 	private Director director;
 	
-	@ManyToMany
-    @JoinTable(name="movieGenre")
+	@ManyToMany(mappedBy = "moviePerformance")
 	private Set<Genre> genre;
 	
-	@ManyToMany
-    @JoinTable(name="actorsInMovies")
+	@ManyToMany(mappedBy = "moviePerformance")
 	private Set<Actor> actors;
 	
 	//broj sekundi trajanja pa to posle pretvorimo u hh:mm:ss
-	@Column(nullable = false)
+	@Column(name = "length", nullable = false)
 	private int length;
 	
 	//nisam siguran da li se cuva kao path do slike ili kao kodiran string
-	@Column(nullable = false)
+	@Column(name = "poster", nullable = false)
 	private String poster;
 	
 	public MoviePerformance() {
@@ -121,6 +116,10 @@ public class MoviePerformance implements Serializable {
 
 	public void setPoster(String poster) {
 		this.poster = poster;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

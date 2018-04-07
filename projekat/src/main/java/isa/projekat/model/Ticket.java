@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "ticket")
 public class Ticket implements Serializable {
 
 	/**
@@ -20,22 +18,23 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ticket_id", nullable = false)
+	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "price", nullable = false)
 	private int price;
 
-	@Column(nullable = false)
+	@Column(name = "discount", nullable = true)
 	private int discount;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private Seat seat;
 	
 	@ManyToOne(optional = false)
 	private Projection projection;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private User user;
 	
 	public Ticket() {
@@ -88,6 +87,10 @@ public class Ticket implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

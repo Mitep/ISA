@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
@@ -31,7 +32,9 @@ public class Actor implements Serializable {
 	private String lastName;
 	
 	@ManyToMany
-    @JoinTable(name="actorsInMovies")
+    @JoinTable(name = "movie_performance_actors",
+    joinColumns = @JoinColumn(name = "actor_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "movie_performance_id", nullable = false))
 	private Set<MoviePerformance> moviePerformance;
 	
 	public Actor() {
@@ -69,5 +72,10 @@ public class Actor implements Serializable {
 	public void setMoviePerformance(Set<MoviePerformance> moviePerformance) {
 		this.moviePerformance = moviePerformance;
 	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	
 }

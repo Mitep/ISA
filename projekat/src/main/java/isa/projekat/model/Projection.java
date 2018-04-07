@@ -12,12 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "projection")
 public class Projection implements Serializable {
 
 	/**
@@ -26,20 +24,21 @@ public class Projection implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "projection_id", nullable = false)
+	private long id;
 
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(name = "description", nullable = false)
 	private String description;
 	
-	@Column(nullable = false)
+	@Column(name = "projection_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date projectionDate;
 	
-	@Column(nullable = false)
+	@Column(name = "projection_time", nullable = false)
 	@Temporal(TemporalType.TIME)
 	private Date projectionTime;
 	
@@ -129,6 +128,10 @@ public class Projection implements Serializable {
 
 	public void setHall(Hall hall) {
 		this.hall = hall;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }
