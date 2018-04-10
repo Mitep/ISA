@@ -13,7 +13,7 @@ public class Oglas {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer oglasId;
+	private Long oglasId;
 	
 	@NotNull
 	private String nazivOglasa;
@@ -71,4 +71,14 @@ public class Oglas {
 	public void setDatumOglasa(String datumOglasa) {
 		this.datumOglasa = datumOglasa;
 	}
+
+	public Long getOglasId() {
+		return oglasId;
+	}
+
+	public void setOglasId(Long oglasId) {
+		this.oglasId = oglasId;
+	}
+	
+	
 }

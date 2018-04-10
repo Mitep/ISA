@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>FanZona korisnika</title>
+
+ 	<script  type="text/javascript" src="js/registracija.js"></script>
+   	<script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+   	<script  type="text/javascript" src="js/homePage.js"></script>
+	<script  type="text/javascript" src="js/stranicaOglas.js"></script>
+   	<link rel="stylesheet" type="text/css" href="css/index.css">
+  </head>
+  <body>
+ <!-- toolbar -->
+<ul>
+  <li class="left"><a href="">Home</a></li>
+  <li class="left"><a href="profilKorisnika.html">Korisnik</a></li>
+  <li class="left"><a href="">Pozorišta</a></li>
+  <li class="left"><a href="">Bioskopi</a></li>
+  <li class="left"><a href="">Prijatelji</a></li>
+  <li class="left"><a href="">Rezervacije</a></li>
+  <li class="left"><a href="">Podešavanja</a></li>
+  <li class="left"><a href="fanZona.html">Fan Zona</a></li>
+  <li class="right"><a href="">Odjava</a></li>
+</ul>
+
+<div>
+
+<input type="text" placeholder="Search..">
+<button>Pretraži</button>
+		<div class="slicicaOglasi">
+			<img class="oglas_img" src="images/fanZona.PNG"/>
+		</div>
+	 		<input type="button" value="Novi oglas" onclick="noviOglas()">
+                       
+</div>
+      
+<table>
+	<h3>Lista aktivnih oglasa</h3>
+    <tbody class="prikaz"></tbody> 
+</table>
+</body>
+</html>
