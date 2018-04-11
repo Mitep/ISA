@@ -1,17 +1,11 @@
 package isa.projekat.model;
 
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -52,6 +46,9 @@ public class User {
 	@NotNull
 	private boolean userStatus;
 	
+	@NotNull
+	private boolean firstLogin;
+	
 	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Ticket> tickets;
 	
@@ -82,7 +79,7 @@ public class User {
 	}
 
 	public User(String email, String userPassword, String userPasswordConf,String userName,
-			String userSurname,String city, String mobileNumber, UserRole userRole, boolean userStatus) {
+			String userSurname,String city, String mobileNumber, UserRole userRole, boolean userStatus, boolean firstLogin) {
 		super();
 		this.email = email;
 		this.userPassword = userPassword;
@@ -93,6 +90,7 @@ public class User {
 		this.mobileNumber = mobileNumber;
 		this.userRole = userRole;
 		this.userStatus = userStatus;
+		this.firstLogin = firstLogin;
 	}
 
 	public Long getUserId() {
@@ -234,6 +232,14 @@ public class User {
 
 	public void setUserStatus(boolean userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 	
 	

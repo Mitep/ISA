@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa.projekat.model.User;
+import isa.projekat.model.UserPassword;
 import isa.projekat.model.UserRole;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.EmailService;
@@ -40,9 +41,10 @@ public class UserController {
 		
 		System.out.println("daj mi korisnika" + user.getUserName());
 		User us = null;
-		us  = new User(user.getEmail(),user.getUserPassword(),user.getUserPasswordConf(),user.getUserName(), user.getUserSurname(),user.getCity(),user.getMobileNumber(),user.getUserRole(),user.isUserStatus());
+		us  = new User(user.getEmail(),user.getUserPassword(),user.getUserPasswordConf(),user.getUserName(), user.getUserSurname(),user.getCity(),user.getMobileNumber(),user.getUserRole(),user.isUserStatus(), user.isFirstLogin());
 		us.setUserRole(UserRole.USER);
 		us.setUserStatus(false);
+		us.setFirstLogin(false);
 		if(us.getUserPassword().equals(us.getUserPasswordConf())) {
 			
 			//slanje emaila
@@ -89,16 +91,24 @@ public class UserController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean loginUser(@RequestBody User user, HttpServletRequest request) {
+	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
+		if(us.getUserRole().equals(UserRole.SYSADMIN) && us.isFirstLogin()==false) {
+			
+			us.setFirstLogin(true);	
+			request.getSession().setAttribute("user", us);
+			
+			return "admin";
+		}
+		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
 				//&& us.isUserStatus() == true) {
 			//TODO : odkomentarisi kad dodje vrijeme za to
 			request.getSession().setAttribute("user", us);
-			return true;
+			return "logovao";
 		}
 		
-			return false;
+			return "nije se logovao";
 	}
 	
 	
@@ -170,5 +180,28 @@ public class UserController {
 					return userRep.findAll();
 				
 			}
+	
+	@RequestMapping(value="/izmijeniPassword",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean izmijeniPassword(@RequestBody UserPassword user,HttpServletRequest request) {
+		System.out.println(user.getOldPassword());
+		System.out.println(user.getNewPassword());
+		System.out.println(user.getRepeatNewPassword());
+		User us = (User)request.getSession().getAttribute("user");
+		System.out.println(us.getUserRole());
+		if(us.getUserRole().equals(UserRole.SYSADMIN) && us.getUserPassword().equals(user.getOldPassword())) {
+			if(user.getNewPassword().equals(user.getRepeatNewPassword())) {
+				us.setUserPassword(user.getNewPassword());
+				us.setUserPasswordConf(user.getNewPassword());
+				userRep.save(us);
+				return true;
+			}
+			return false;
+			
+		}
+		return false;
+	}
 	
 }
