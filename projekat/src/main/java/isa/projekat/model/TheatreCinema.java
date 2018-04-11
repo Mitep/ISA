@@ -46,6 +46,13 @@ public class TheatreCinema implements Serializable {
 		
 	}
 
+	public TheatreCinema(String name, String adress, String description) {
+		super();
+		this.name = name;
+		this.adress = adress;
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}

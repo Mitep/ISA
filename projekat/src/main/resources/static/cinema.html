@@ -2,10 +2,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Novi oglas</title>
-	<script  type="text/javascript" src="js/registracija.js"></script>
-	<script  type="text/javascript" src="js/stranicaOglas.js"></script>
+    <title>Novi bioskop</title>
     <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script  type="text/javascript" src="js/cinema.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css">
     
   </head>
@@ -25,25 +24,21 @@
    
                     <div>
                         <div >
-                            <h1><b>Novi oglas</b></h1>
+                            <h1><b>Novi bioskop</b></h1>
                         </div>
                         <div >
-                            <form accept-charset="UTF-8" role="form" name = "oglasForm" id="oglasForm"  >
+                            <form accept-charset="UTF-8" role="form" name = "bioskopForm" id="bioskopForm"  >
                                 <fieldset>
                                     <div >
-                                        <input placeholder="Naziv oglasa" type="text" name="nazivOglasa">
+                                        <input placeholder="Naziv bioskopa" type="text" name="name">
+                                    </div>
+                                      <div >
+                                        <input placeholder="Adresa bioskopa" type="text" name="adress">
                                     </div>
                                     <div> 
-                                        <input placeholder="Opis oglasa" name="opisOglasa" type="text" >
+                                        <input placeholder="Opis bioskopa" name="description" type="text" >
                                     </div>
-                                    <div> 
-                                        <input placeholder="Datum" name="datumOglasa" type="text" >
-                                    </div>
-                                    <div> 
-                                        <input placeholder="Slika" name="imageOglasa" type="text" >
-                                        <input value="Izaberi" type="button" >
-                                    </div>
-                                    <input type="button" value="Dodaj" onclick="dodajOglas()">
+                                    <input type="button" value="Dodaj" onclick="dodajBioskop()">
                                
                                 </fieldset>
 
@@ -54,6 +49,11 @@
                        
 
                     </div >
+                    
+                    <table>
+	<h3>Lista bioskopa</h3>
+    <tbody class="prikaz"></tbody> 
+</table>
 
   </body>
 </html>
