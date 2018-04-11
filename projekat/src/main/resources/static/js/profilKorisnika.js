@@ -58,9 +58,52 @@ function renderUser(user){
 		
 }
 
-function dodajPrijatelja(){
+function searchUsers(){
 	
+
+	var userName = $("#name").val();
+	var userSurname = $("#surname").val();
+
+	if(userName == ""){
+		userName = "nista";
+	}
+	if(userSurname == ""){
+		userSurname = "nista";
+	}
+	
+	$.ajax({	
+	url: "user/searchUsers/"+userName+"/"+userSurname,
+	type: "GET",
+	success: function(data){
+		 $(".users").empty();
+		 for(i=0;i<data.length;i++){
+				 $(".users").append(
+						 "<tr><td>Ime:</td><td>" + data[i].userName + "</td></tr>"+
+						 "<tr><td>Prezime:</td><td>" + data[i].userSurname + "</td></tr>"+
+						 "<tr><td>Email:</td><td>" + data[i].email + "</td></tr>"+
+						 "<tr><td>Grad:</td><td>" + data[i].city + "</td></tr>"+
+						 "<tr><td>Broj telefona:</td><td>" + data[i].mobileNumber + "</td></tr>+" +
+						 "<tr><td><input type=\"button\" value = \"Dodaj prijatelja\" onclick = \"dodajPrijatelja("+data[i].userId+")\"></td><tr>");
+	
+		 	}
+	 	}
+	});
+}
+
+function dodajPrijatelja(userId){
+	
+	$.ajax({	
+		url: "user/dodajPrijatelja/"+userId,
+		type: "GET",
+		success: function(data){
+			alert("Uspjesno ste poslali zahtjev");
+		}
+	
+		});
 	
 }
+
+
+
 
 

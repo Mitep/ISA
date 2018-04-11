@@ -35,7 +35,7 @@ public class EmailService {
 		mail.setFrom(env.getProperty("spring.mail.username"));
 		mail.setSubject("Verifikacija naloga");
 		System.out.println("DAJ MI MAIL" + mail);
-		mail.setText("Pozdrav " + user.getUserName() + ",\n\nhvala što pratiš ISA.");
+		mail.setText("Pozdrav " + user.getUserName() + ",\n\n http://localhost:8088/user/sendMail/"+user.getEmail()+"");
 		javaMailSender.send(mail);
 		System.out.println(mail);
 		System.out.println("Email poslat!");

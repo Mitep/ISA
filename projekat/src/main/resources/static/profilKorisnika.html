@@ -99,11 +99,28 @@
           <input  onclick="formaZaIzmjenu()" type="button" value="Izmijeni">
      </div>
             </form>
-            
-            <form id = "friendsForm">
+     
+             
+            <form accept-charset="UTF-8" role="form" id ="searchForm">
+            	<div>
+            		<label>Ime:</label>
+            		<input id="name" type="text">
+				</div>	
+				<div>
+            		<label>Prezime:</label>
+            		<input id="surname" type="text">
+				</div>
+				
+				 <input  onclick="searchUsers()" type="button" value="Pretrazi korisnike">
+				
+				<table>
+				
+                        <tbody class="users">                                    
+                            
+                        </tbody> 
+               	</table>
+			 
             	
-            	 <input  onclick="dodajPrijatelja()" type="button" value="Dodaj Prijatelja">
             </form>
-    </body>
     
 </html>

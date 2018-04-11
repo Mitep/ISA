@@ -46,9 +46,13 @@ public class User {
 	private String mobileNumber;
 	
 	@NotNull
-	private String userRole;
+	private UserRole userRole;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+
+	@NotNull
+	private boolean userStatus;
+	
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Ticket> tickets;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -72,13 +76,13 @@ public class User {
 	//kome sam ja prijatelj
 	@ManyToMany(mappedBy = "myFriends")
 	private Set<User> friendsWith;
-	
+	*/
 	public User() {
 		super();
 	}
 
 	public User(String email, String userPassword, String userPasswordConf,String userName,
-			String userSurname,String city, String mobileNumber, String userRole) {
+			String userSurname,String city, String mobileNumber, UserRole userRole, boolean userStatus) {
 		super();
 		this.email = email;
 		this.userPassword = userPassword;
@@ -88,6 +92,7 @@ public class User {
 		this.city = city;
 		this.mobileNumber = mobileNumber;
 		this.userRole = userRole;
+		this.userStatus = userStatus;
 	}
 
 	public Long getUserId() {
@@ -146,11 +151,12 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public String getUserRole() {
+	
+	public UserRole getUserRole() {
 		return userRole;
 	}
 
-	public void setUserRole(String userRole) {
+	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
 
@@ -161,7 +167,7 @@ public class User {
 	public void setUserPasswordConf(String userPasswordConf) {
 		this.userPasswordConf = userPasswordConf;
 	}
-
+/*
 	public Set<Ticket> getTickets() {
 		return tickets;
 	}
@@ -217,9 +223,17 @@ public class User {
 	public void setFriendsWith(Set<User> friendsWith) {
 		this.friendsWith = friendsWith;
 	}
-
+*/
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public boolean isUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(boolean userStatus) {
+		this.userStatus = userStatus;
 	}
 	
 	
