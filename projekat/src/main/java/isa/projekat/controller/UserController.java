@@ -1,5 +1,6 @@
 package isa.projekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,15 +157,20 @@ public class UserController {
 	
 
 	@RequestMapping(value = "/dodajPrijatelja/{userId}",
-	method = RequestMethod.GET,
-	produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean searchUsers(@PathVariable Long userId,HttpServletRequest request){
-		
-	//	User us = (User)request.getSession().getAttribute("user");
-		
-		
-		return true;
-	}
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean dodajPrijatelja(@PathVariable Long userId,HttpServletRequest request){
+				
+				User sender = (User)request.getSession().getAttribute("user");
+				System.out.println("------------------");
+				System.out.println(sender.getEmail());
+				User reciever = (User) userRep.findByUserId(userId);
+				System.out.println(reciever.getEmail());
+				reciever.getFriendsRequest().add(sender);
+				userRep.save(reciever);
+				return true;
+			}
+	
 	
 	@RequestMapping(value = "/searchUsers/{userName}/{userSurname}",
 			method = RequestMethod.GET,
@@ -203,5 +209,88 @@ public class UserController {
 		}
 		return false;
 	}
+	
+	
+	@RequestMapping(value = "/getFriendRequests",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> friendRequests(HttpServletRequest request){
+				
+				User user = (User)request.getSession().getAttribute("user");
+				User us1 = userRep.findByUserId(user.getUserId());
+				return us1.getFriendsRequest();
+			}
+	
+	@RequestMapping(value = "/prihvatiPrijatelja/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User prihvatiZahtjev(@PathVariable Long userId,HttpServletRequest request){
+			
+		User pom = (User) request.getSession().getAttribute("user");
+		User receiver = userRep.findByUserId(pom.getUserId());
+		User sender = userRep.findByUserId(userId);
+		
+		receiver.getFriendsRequest().remove(sender);
+		sender.getFriendsRequest().remove(receiver);
+		receiver.getMyFriends().add(sender);
+		userRep.save(receiver);
+		
+		for(int i = 0 ; i < receiver.getMyFriends().size();i++) {
+			System.out.println("RECEIVER"+receiver.getMyFriends().get(i).getEmail());
+			
+		}
+		
+		for(int i = 0 ; i < sender.getMyFriends().size();i++) {
+			System.out.println("SENDER" + sender.getMyFriends().get(i).getEmail());
+			
+		}
+		
+		
+		for(int i = 0 ; i < receiver.getFriendsWith().size();i++) {
+			System.out.println("RECEIVERFRIEND"+receiver.getFriendsWith().get(i).getEmail());
+			
+		}
+		
+		for(int i = 0 ; i < sender.getFriendsWith().size();i++) {
+			System.out.println("SENDERFRIEND" + sender.getFriendsWith().get(i).getEmail());
+			
+		}
+		
+		
+		return receiver;
+		
+		}
+	
+	@RequestMapping(value = "/getFriends",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> friends(HttpServletRequest request){
+				
+				User user = (User)request.getSession().getAttribute("user");
+				User us1 = userRep.findByUserId(user.getUserId());
+				List<User> temp = new ArrayList<User>();
+				temp.addAll(us1.getMyFriends());
+				temp.addAll(us1.getFriendsWith());
+				return temp;
+			}
+	
+	
+	@RequestMapping(value = "/odbijPrijatelja/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User odbijZahtjev(@PathVariable Long userId,HttpServletRequest request){
+			
+		User pom = (User) request.getSession().getAttribute("user");
+		User receiver = userRep.findByUserId(pom.getUserId());
+		User sender = userRep.findByUserId(userId);
+		
+		receiver.getFriendsRequest().remove(sender);
+		userRep.save(receiver);
+		
+		return sender;
+		
+		}
+	
+	
 	
 }
