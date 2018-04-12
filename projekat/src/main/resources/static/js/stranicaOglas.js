@@ -1,3 +1,4 @@
+var idOglasa
 function dodajOglas(){
 	
 	var $form = $("#oglasForm");
@@ -59,8 +60,44 @@ function ukloniOglas(oglasId){
 			if(data != null){
 				alert("Uspjesno ste izbrisali oglas!");
 				top.location.href="fanZona.html";
+				
 			}else
 				alert("Niste izbrisali oglas!");
+			
+		}
+	
+	});
+	
+}
+
+function izmijeniOglas(oglasId) {
+				
+	sessionStorage.setItem('id',oglasId);
+	top.location.href="formaZaIzmjenuOglasa.html";
+	
+
+}
+
+function izmijeniOglas2() {
+	
+	idOglasa = sessionStorage.getItem('id');
+	console.log(idOglasa);
+	var $form = $("#izmjenaForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	$.ajax({
+		
+		url: "oglas/izmijeniOglas/"+idOglasa,
+		type: "PUT",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste izmijenili oglas!");
+				top.location.href="fanZona.html";
+			}else
+				alert("Niste izmjenili oglas!");
 			
 		}
 	

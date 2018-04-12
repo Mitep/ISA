@@ -50,4 +50,23 @@ public class OglasController {
 			oglasRep.delete(o);
 			return true;
 	}
+	
+	@RequestMapping(value="/izmijeniOglas/{oglasId}",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean izmijeniOglas(@RequestBody Oglas oglas, @PathVariable Long oglasId) {
+		
+		Oglas og = oglasRep.findByOglasId(oglasId);
+		og.setNazivOglasa(oglas.getNazivOglasa());
+		og.setOpisOglasa(oglas.getOpisOglasa());
+		og.setDatumOglasa(oglas.getDatumOglasa());
+		og.setImageOglasa(oglas.getImageOglasa());
+	
+		oglasRep.save(og);
+	
+			return true;
+
+}
+	
 }

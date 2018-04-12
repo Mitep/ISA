@@ -13,9 +13,9 @@ function logIn(){
 		dataType: "text",
 		success: function(data){
 			console.log(data)
-			if(data == "admin"){
+			if(data == "fanAdmin"){
 				
-				alert("Uspjesno ste se ulogovali sistemski admine!");
+				alert("Uspjesno ste se ulogovali admine fan zone!");
 				top.location.href="podesavanja.html";
 				
 			}else if(data =="logovao"){

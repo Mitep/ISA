@@ -95,12 +95,12 @@ public class UserController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
-		if(us.getUserRole().equals(UserRole.SYSADMIN) && us.isFirstLogin()==false) {
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
 			
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
-			return "admin";
+			return "fanAdmin";
 		}
 		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
@@ -198,7 +198,7 @@ public class UserController {
 		System.out.println(user.getRepeatNewPassword());
 		User us = (User)request.getSession().getAttribute("user");
 		System.out.println(us.getUserRole());
-		if(us.getUserRole().equals(UserRole.SYSADMIN) && us.getUserPassword().equals(user.getOldPassword())) {
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.getUserPassword().equals(user.getOldPassword())) {
 			if(user.getNewPassword().equals(user.getRepeatNewPassword())) {
 				us.setUserPassword(user.getNewPassword());
 				us.setUserPasswordConf(user.getNewPassword());

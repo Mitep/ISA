@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Izmjena oglasa</title>
+	<script  type="text/javascript" src="js/stranicaOglas.js"></script>
+    <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script  type="text/javascript" src="js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    
+  </head>
+  <body>
+  
+   <ul>
+  <li class="left"><a href="">Home</a></li>
+  <li class="left"><a href="profilKorisnika.html">Korisnik</a></li>
+  <li class="left"><a href="theatre.html">Pozorišta</a></li>
+  <li class="left"><a href="cinema.html">Bioskopi</a></li>
+  <li class="left"><a href="">Prijatelji</a></li>
+  <li class="left"><a href="">Rezervacije</a></li>
+  <li class="left"><a href="podesavanja.html">Podešavanja</a></li>
+  <li class="left"><a href="fanZona.html">Fan Zona</a></li>
+ <li class="right"><a href="#logout" onclick="logout()">Odjava</a></li>
+</ul>
+   
+                    <div>
+                        <div >
+                            <h1><b>Izmjena oglasa</b></h1>
+                        </div>
+                        <div >
+                            <form accept-charset="UTF-8" role="form" name = "izmjenaForm" id="izmjenaForm"  >
+                                <fieldset>
+                                    <div >
+                                        <input placeholder="Naziv oglasa" type="text" name="nazivOglasa">
+                                    </div>
+                                    <div> 
+                                        <input placeholder="Opis oglasa" name="opisOglasa" type="text" >
+                                    </div>
+                                    <div> 
+                                        <input placeholder="Datum" name="datumOglasa" type="text" >
+                                    </div>
+                                    <div> 
+                                        <input placeholder="Slika" name="imageOglasa" type="text" >
+                                        <input value="Izaberi" type="button" >
+                                    </div>
+                                    <input type="button" value="Izmijeni" onclick="izmijeniOglas2()">
+                               
+                                </fieldset>
+
+                            </form>
+
+
+                        </div>
+                       
+
+                    </div >
+
+  </body>
+</html>
