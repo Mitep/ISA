@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,14 +79,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
-	public String checkRole(HttpServletRequest request) {
+	public boolean checkRole(HttpServletRequest request) {
 		System.out.println("Stigao sam ovdje");
 		try {
 			request.getSession().invalidate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return "logout";
+		return true;
 	}
 	
 	@RequestMapping(value = "/loginUser",
@@ -292,5 +293,36 @@ public class UserController {
 		}
 	
 	
+	@RequestMapping(value = "/obrisiPrijatelja/{userId}",			
+		method = RequestMethod.GET,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean obrisiPrijatelja(@PathVariable Long userId,HttpServletRequest request){
+	
+		
+		User us = (User)request.getSession().getAttribute("user");
+		User pom = userRep.findByUserId(us.getUserId());
+		
+		for(int i = 0; i < pom.getMyFriends().size(); i++) {
+			System.out.println("++++" + pom.getMyFriends().get(i).getUserName());
+			if(pom.getMyFriends().get(i).getUserId().equals(userId)) {
+				System.out.println("aaaa");
+				pom.getMyFriends().remove(i);
+				
+			}
+		}
+		
+		for(int i = 0; i < pom.getFriendsWith().size(); i++) {
+			System.out.println("-__-" + pom.getFriendsWith().get(i).getUserName());
+			if(pom.getFriendsWith().get(i).getUserId().equals(userId)) {
+				System.out.println("bbbbb");
+				pom.getFriendsWith().remove(i);
+				
+			}
+		}
+		userRep.save(pom);
+		
+		
+		return true;
+	}
 	
 }

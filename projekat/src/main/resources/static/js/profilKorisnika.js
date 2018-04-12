@@ -180,3 +180,22 @@ function odbijPrijatelja(userId){
 	});
 }
 
+function obrisiPrijatelja(userId){
+	
+	$.ajax({
+		 url: "user/obrisiPrijatelja/"+userId,
+		 method: "GET",
+		 success: function(data){
+			 if(data){
+			 alert("Obrisali ste prijatelja!");
+			 top.location.href="profilKorisnika.html";
+			 }
+		},
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+	
+}
+
