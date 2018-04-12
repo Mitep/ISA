@@ -157,6 +157,74 @@ public class UserController {
 	}
 	
 
+	@RequestMapping(value = "/getKorisnici",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getKorisnici(HttpServletRequest request){
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			System.out.println(us.getUserRole());
+			return userRep.findAll();
+			
+		}else {
+		return null;
+		}
+		
+	}
+		
+	@RequestMapping(value = "/promoteUser/{userId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> promoteUser(@PathVariable Long userId, HttpServletRequest request) {
+		User user = (User)request.getSession().getAttribute("user");
+		if(!user.getUserRole().equals(UserRole.SYSADMIN)) {
+			return null;
+		}
+		User us = userRep.findByUserId(userId);
+		if(us.getUserRole().equals(UserRole.USER)) {
+			us.setUserRole(UserRole.ADMIN);
+		} else if (us.getUserRole().equals(UserRole.ADMIN))
+		{
+			us.setUserRole(UserRole.FANADMIN);
+		} else if (us.getUserRole().equals(UserRole.FANADMIN))
+		{
+			us.setUserRole(UserRole.SYSADMIN);
+		} else {
+			return null;
+		}
+		
+		userRep.save(us);
+		
+		return userRep.findAll();
+	}
+	
+	
+	@RequestMapping(value = "/demoteUser/{userId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> demoteUser(@PathVariable Long userId, HttpServletRequest request) {
+		User user = (User)request.getSession().getAttribute("user");
+		if(!user.getUserRole().equals(UserRole.SYSADMIN)) {
+			return null;
+		}
+		User us = userRep.findByUserId(userId);
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			us.setUserRole(UserRole.FANADMIN);
+		} else if (us.getUserRole().equals(UserRole.FANADMIN))
+		{
+			us.setUserRole(UserRole.ADMIN);
+		} else if (us.getUserRole().equals(UserRole.ADMIN))
+		{
+			us.setUserRole(UserRole.USER);
+		} else {
+			return null;
+		}
+		
+		userRep.save(us);
+		
+		return userRep.findAll();
+	}
+	
 	@RequestMapping(value = "/dodajPrijatelja/{userId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
