@@ -384,7 +384,7 @@ public class UserController {
 		
 		User us = (User)request.getSession().getAttribute("user");
 		User pom = userRep.findByUserId(us.getUserId());
-		
+		User u2 = userRep.findByUserId(userId);
 		for(int i = 0; i < pom.getMyFriends().size(); i++) {
 			System.out.println("++++" + pom.getMyFriends().get(i).getUserName());
 			if(pom.getMyFriends().get(i).getUserId().equals(userId)) {
@@ -402,9 +402,27 @@ public class UserController {
 				
 			}
 		}
+		
+		for(int i = 0; i < u2.getMyFriends().size(); i++) {
+			System.out.println("---" + u2.getMyFriends().get(i).getUserName());
+			if(u2.getMyFriends().get(i).getUserId().equals(pom.getUserId())) {
+				System.out.println("aaaa---");
+				u2.getMyFriends().remove(i);
+				
+			}
+		}
+		
+		for(int i = 0; i < u2.getFriendsWith().size(); i++) {
+			System.out.println("-__-lala" + u2.getFriendsWith().get(i).getUserName());
+			if(u2.getFriendsWith().get(i).getUserId().equals(pom.getUserId())) {
+				System.out.println("bbbbblala");
+				u2.getFriendsWith().remove(i);
+				
+			}
+		}
+		
 		userRep.save(pom);
-		
-		
+		userRep.save(u2);
 		return true;
 	}
 	
