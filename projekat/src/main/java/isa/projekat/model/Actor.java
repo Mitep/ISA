@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Actor implements Serializable {
 
@@ -35,6 +37,7 @@ public class Actor implements Serializable {
     @JoinTable(name = "movie_performance_actors",
     joinColumns = @JoinColumn(name = "actor_id", nullable = false),
     inverseJoinColumns = @JoinColumn(name = "movie_performance_id", nullable = false))
+	@JsonIgnore
 	private Set<MoviePerformance> moviePerformance;
 	
 	public Actor() {

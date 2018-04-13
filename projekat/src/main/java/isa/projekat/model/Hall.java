@@ -9,8 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Hall implements Serializable {
@@ -29,13 +32,12 @@ public class Hall implements Serializable {
 	private String name;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="theatre_cinema_id")
 	private TheatreCinema theatreCinema;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
+	@JsonIgnore
 	private Set<Segment> segments;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
-	private Set<AmbientRating> ratings;
 	
 	public Hall() {
 		
@@ -71,14 +73,6 @@ public class Hall implements Serializable {
 
 	public void setSegments(Set<Segment> segments) {
 		this.segments = segments;
-	}
-
-	public Set<AmbientRating> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Set<AmbientRating> ratings) {
-		this.ratings = ratings;
 	}
 
 	public void setId(long id) {

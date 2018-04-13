@@ -28,7 +28,7 @@ public class AmbientRating implements Serializable {
 	private int rating;
 	
 	@ManyToOne(optional = false)
-	private Hall hall;
+	private TheatreCinema theatreCinema;
 	
 	@ManyToOne(optional = false)
 	private User user;
@@ -53,14 +53,6 @@ public class AmbientRating implements Serializable {
 		this.rating = rating;
 	}
 
-	public Hall getHall() {
-		return hall;
-	}
-
-	public void setHall(Hall hall) {
-		this.hall = hall;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -71,6 +63,14 @@ public class AmbientRating implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public TheatreCinema getTheatreCinema() {
+		return theatreCinema;
+	}
+
+	public void setTheatreCinema(TheatreCinema theatreCinema) {
+		this.theatreCinema = theatreCinema;
 	}
 	
 }

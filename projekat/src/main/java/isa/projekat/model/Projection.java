@@ -10,10 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Projection implements Serializable {
@@ -34,25 +37,25 @@ public class Projection implements Serializable {
 	@Column(name = "description", nullable = false)
 	private String description;
 	
-	@Column(name = "projection_date", nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Date projectionDate;
-	
-	@Column(name = "projection_time", nullable = false)
-	@Temporal(TemporalType.TIME)
-	private Date projectionTime;
+	@Column(name = "projection_date_time", nullable = false)
+	private long projectionDateTime;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projection")
-	private Set<ProjectionRating> ratings;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projection")
+	@JsonIgnore
 	private Set<Ticket> tickets;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="movie_performance_id")
 	private MoviePerformance moviePerformance;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="hall_id")
 	private Hall hall;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name="theatre_cinema_id")
+	private TheatreCinema theatreCinema;
+	
 	
 	public Projection() {
 		
@@ -82,30 +85,6 @@ public class Projection implements Serializable {
 		this.description = description;
 	}
 
-	public Date getProjectionDate() {
-		return projectionDate;
-	}
-
-	public void setProjectionDate(Date projectionDate) {
-		this.projectionDate = projectionDate;
-	}
-
-	public Date getProjectionTime() {
-		return projectionTime;
-	}
-
-	public void setProjectionTime(Date projectionTime) {
-		this.projectionTime = projectionTime;
-	}
-
-	public Set<ProjectionRating> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Set<ProjectionRating> ratings) {
-		this.ratings = ratings;
-	}
-
 	public Set<Ticket> getTickets() {
 		return tickets;
 	}
@@ -132,6 +111,22 @@ public class Projection implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public TheatreCinema getTheatreCinema() {
+		return theatreCinema;
+	}
+
+	public void setTheatreCinema(TheatreCinema theatreCinema) {
+		this.theatreCinema = theatreCinema;
+	}
+
+	public long getProjectionDateTime() {
+		return projectionDateTime;
+	}
+
+	public void setProjectionDateTime(long projectionDateTime) {
+		this.projectionDateTime = projectionDateTime;
 	}
 	
 }

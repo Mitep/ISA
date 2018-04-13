@@ -10,8 +10,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class MoviePerformance implements Serializable {
@@ -34,12 +37,15 @@ public class MoviePerformance implements Serializable {
 	private String name;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="director_id")
 	private Director director;
 	
 	@ManyToMany(mappedBy = "moviePerformance")
+	@JsonIgnore
 	private Set<Genre> genre;
 	
 	@ManyToMany(mappedBy = "moviePerformance")
+	@JsonIgnore
 	private Set<Actor> actors;
 	
 	//broj sekundi trajanja pa to posle pretvorimo u hh:mm:ss

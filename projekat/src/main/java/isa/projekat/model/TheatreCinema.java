@@ -11,7 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TheatreCinema implements Serializable {
@@ -40,7 +45,15 @@ public class TheatreCinema implements Serializable {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
+	@JsonIgnore
 	private Set<Hall> halls;
+	
+	@ManyToMany
+    @JoinTable(name = "theatre_cinema_admins",
+    joinColumns = @JoinColumn(name = "theatre_cinema", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "admin", nullable = false))
+	@JsonIgnore
+	private Set<User> admins;
 	
 	private TheatreCinema() {
 		

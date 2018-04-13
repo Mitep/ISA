@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,12 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.User;
+import isa.projekat.model.dtos.CinemaDTO;
+import isa.projekat.model.dtos.ProjectionDTO;
+import isa.projekat.model.dtos.TheatreDTO;
 import isa.projekat.repository.TheatreRepository;
+import isa.projekat.service.TheatreService;
 
 @RestController
 @RequestMapping("/pozoriste")
 public class TheatreController {
 
+	@Autowired
+	private TheatreService theatreService;
+	
 	@Autowired
 	private TheatreRepository theatreRep;
 	
@@ -41,6 +49,30 @@ public class TheatreController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<TheatreCinema> prikaziPozoriste() {
 			return theatreRep.findAll();
+	}
+	
+	@RequestMapping(
+			value= {"/svaPozorista"},
+			method = {RequestMethod.GET},
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<TheatreDTO> getAllTheatres(){
+		return theatreService.getAllTheatres();
+	}
+	
+	@RequestMapping(
+			value= {"/{id}/projekcije"},
+			method = {RequestMethod.GET},
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ProjectionDTO> getAllProjections(@PathVariable("id") Long id){
+		return theatreService.getTheatreProjections(id);
+	}
+	
+	@RequestMapping(value = "/izmeniOsnovneInformacije",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public void createProjection(@RequestBody TheatreDTO newTheatre){
+		theatreService.editBasicInfo(newTheatre);
 	}
 }
 

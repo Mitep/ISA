@@ -10,36 +10,34 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ProjectionRating implements Serializable {
+public class MoviePerformanceRating implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "projection_rating_id", nullable = false)
+	@Column(name = "rating_id", nullable = false)
 	private long id;
 	
 	@Column(name = "rating", nullable = false)
 	private int rating;
 	
 	@ManyToOne(optional = false)
-	private Projection projection;
+	private MoviePerformance moviePerformance;
 	
 	@ManyToOne(optional = false)
 	private User user;
 	
-	public ProjectionRating() {
-		
-	}
+	public MoviePerformanceRating() {}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -51,12 +49,12 @@ public class ProjectionRating implements Serializable {
 		this.rating = rating;
 	}
 
-	public Projection getProjection() {
-		return projection;
+	public MoviePerformance getMoviePerformance() {
+		return moviePerformance;
 	}
 
-	public void setProjection(Projection projection) {
-		this.projection = projection;
+	public void setMoviePerformance(MoviePerformance moviePerformance) {
+		this.moviePerformance = moviePerformance;
 	}
 
 	public User getUser() {
@@ -65,10 +63,6 @@ public class ProjectionRating implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 	
 }
