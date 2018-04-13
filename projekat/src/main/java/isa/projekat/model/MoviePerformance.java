@@ -1,6 +1,8 @@
 package isa.projekat.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,7 +29,7 @@ public class MoviePerformance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "movie_performance_id", nullable = false)
-	private long id;
+	private Long movieId;
 	
 	@Column(name = "type", nullable = false)
 	@Enumerated(EnumType.ORDINAL)
@@ -38,6 +40,7 @@ public class MoviePerformance implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="director_id")
+	@JsonIgnore
 	private Director director;
 	
 	@ManyToMany(mappedBy = "moviePerformance")
@@ -56,17 +59,50 @@ public class MoviePerformance implements Serializable {
 	@Column(name = "poster", nullable = false)
 	private String poster;
 	
+	@ManyToMany(mappedBy = "moviePer")
+	@JsonIgnore
+	private List<Oglas> oglas;
+	
 	public MoviePerformance() {
 		
 	}
 
-	public Long getId() {
-		return id;
+	
+	public MoviePerformance(TheatreCinemaEnum type, String name, Director director, Set<Genre> genre, Set<Actor> actors,
+			int length, String poster) {
+		super();
+		this.type = type;
+		this.name = name;
+		this.director = director;
+		this.genre = genre;
+		this.actors = actors;
+		this.length = length;
+		this.poster = poster;
+		this.oglas = new ArrayList<Oglas>();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+
+	public List<Oglas> getOglas() {
+		return oglas;
 	}
+
+
+	public void setOglas(List<Oglas> oglas) {
+		this.oglas = oglas;
+	}
+
+
+	
+
+	public Long getMovieId() {
+		return movieId;
+	}
+
+
+	public void setMovieId(Long movieId) {
+		this.movieId = movieId;
+	}
+
 
 	public TheatreCinemaEnum getType() {
 		return type;
@@ -124,8 +160,6 @@ public class MoviePerformance implements Serializable {
 		this.poster = poster;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	
 }

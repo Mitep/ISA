@@ -79,8 +79,6 @@ $(document).ready(function(){
 		
 });
 
-function noviOglas(){
-	window.location.href="stranicaOglas.html";		
-		}
+
 	
 	

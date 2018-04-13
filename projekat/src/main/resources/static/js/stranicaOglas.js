@@ -1,13 +1,21 @@
 var idOglasa
+
+function noviOglas(){
+	window.location.href="stranicaOglas.html";
+	
+		}
+
 function dodajOglas(){
+
 	
 	var $form = $("#oglasForm");
 	var data = getFormData($form);
 	var s = JSON.stringify(data);
+	var movieId = sessionStorage.getItem('film');
 	console.log(s);
 	$.ajax({
 		
-		url: "oglas/addOglas",
+		url: "oglas/addOglas/" + movieId,
 		type: "POST",
 		data: s,
 		contentType: "application/json",
@@ -22,6 +30,7 @@ function dodajOglas(){
 		}
 	
 	});
+	
 	
 }
 
@@ -47,6 +56,53 @@ $.ajax({
 		}
 	
 	});
+
+
+
+$.ajax({
+	url: "movie/prikaziFilmove",
+	type:"GET",
+	contentType:"application/json",
+	dataType:"json",
+	success : function(data){
+		console.log(data)
+		$("#sviFilmovi").empty();
+		for(i=0;i<data.length;i++) {
+			$("#sviFilmovi").append("<tr>" +
+					"<td>" + data[i].type + "</td>" +
+					"<td>" + data[i].name + "</td>" +
+					"<td>" + data[i].director + "</td>" +
+					"<td>" + data[i].genre + "</td>" +
+					"<td>" + data[i].length + "</td>" +
+					"<td>" + data[i].poster + "</td>" +
+					"<td><a href=\"javascript:;\" onclick=\"dodajFilmuOglas('"+data[i].movieId+"')\">Dodaj	</a>" +
+					"</td></tr>");
+			}
+			
+	},
+	error: function(){
+		alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
+	}
+	});
+
+	
+}
+
+function dodajFilmuOglas(movieId) {
+$.ajax({
+		
+		url: "movie/getFilmOglasa/" + movieId,
+		type: "GET",
+		contentType:"application/json",
+		dataType: "json",
+		success: function(data){
+			sessionStorage.setItem('film',data.movieId);
+		},
+		error: function() {
+			
+		}
+	
+	});
 	
 }
 
@@ -67,8 +123,10 @@ function ukloniOglas(oglasId){
 		}
 	
 	});
-	
+
 }
+	
+
 
 function izmijeniOglas(oglasId) {
 				
@@ -104,3 +162,33 @@ function izmijeniOglas2() {
 	});
 	
 }
+
+function getFilmovi() {
+	$.ajax({
+		url: "movie/prikaziFilmove",
+		type:"GET",
+		contentType:"application/json",
+		dataType:"json",
+		success : function(data){
+			console.log(data)
+			$("#sviFilmovi").empty();
+			for(i=0;i<data.length;i++) {
+				$("#sviFilmovi").append("<tr>" +
+						"<td>" + data[i].type + "</td>" +
+						"<td>" + data[i].name + "</td>" +
+						"<td>" + data[i].director + "</td>" +
+						"<td>" + data[i].genre + "</td>" +
+						"<td>" + data[i].length + "</td>" +
+						"<td>" + data[i].poster + "</td>" +
+						"<td><a href=\"javascript:;\" onclick=\"dodajFilmuOglas('"+data[i].id+"')\">Dodaj	</a>" +
+						"</td></tr>");
+				}
+				
+		},
+		error: function(){
+			alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
+		}
+		});
+}
+	
+	

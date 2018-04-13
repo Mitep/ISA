@@ -53,11 +53,11 @@ public class CinemaServiceImpl implements CinemaService {
 		List<ProjectionDTO> dtos = new ArrayList<ProjectionDTO>();
 		for(Projection p : projections){
 			//iz filma izvaditi prosecnu ocenu 
-			String movieRating = movieRatingRepository.getAvgMovieRating(p.getMoviePerformance().getId());
+			String movieRating = movieRatingRepository.getAvgMovieRating(p.getMoviePerformance().getMovieId());
 			if(movieRating == null)
 				movieRating = "Bez rejtinga";	
 			ProjectionDTO dto = new ProjectionDTO(p.getId(), p.getName(), p.getDescription(), p.getProjectionDateTime(),
-					movieRating, p.getMoviePerformance().getId(), p.getMoviePerformance().getName(), p.getHall().getId(), p.getHall().getName(),
+					movieRating, p.getMoviePerformance().getMovieId(), p.getMoviePerformance().getName(), p.getHall().getId(), p.getHall().getName(),
 					p.getTheatreCinema().getId(), p.getTheatreCinema().getName());
 			dtos.add(dto);
 		}

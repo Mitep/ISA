@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa.projekat.model.MoviePerformance;
 import isa.projekat.model.Oglas;
 import isa.projekat.model.User;
+import isa.projekat.repository.MoviePerformanceRepository;
 import isa.projekat.repository.OglasRepository;
 
 @RestController
@@ -23,15 +25,22 @@ public class OglasController {
 	@Autowired
 	private OglasRepository oglasRep;
 	
-	@RequestMapping(value = "/addOglas",
+	@Autowired
+	private MoviePerformanceRepository movieRep;
+	
+	@RequestMapping(value = "/addOglas/{movieId}",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean addOglas(@RequestBody Oglas oglas, HttpServletRequest request) {
+	public boolean addOglas(@RequestBody Oglas oglas, @PathVariable Long movieId, HttpServletRequest request) {
 			User us = (User) request.getSession().getAttribute("user");
 			Oglas og = null;
 			og = new Oglas(oglas.getNazivOglasa(), oglas.getOpisOglasa(), oglas.getImageOglasa(), oglas.getDatumOglasa());
+			MoviePerformance movie = movieRep.findByMovieId(movieId);
+			movie.getOglas().add(og);
+			og.getMoviePer().add(movie);
 			oglasRep.save(og);
+			movieRep.save(movie);
 			return true;
 	}
 	

@@ -1,14 +1,19 @@
 package isa.projekat.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "oglas")
@@ -29,8 +34,14 @@ public class Oglas {
 	@NotNull
 	private String datumOglasa;
 
-	/*@ManyToOne
-	private User user;*/
+	@ManyToMany
+	@JoinTable(name = "oglasiFilma",
+	joinColumns = @JoinColumn(name = "oglas_id", nullable = false),
+	inverseJoinColumns = @JoinColumn(name = "movie_id", nullable = false))
+	@JsonIgnore
+	private List<MoviePerformance> moviePer;
+	
+
 	
 	public Oglas() {
 		super();
@@ -44,6 +55,16 @@ public class Oglas {
 		this.opisOglasa = opisOglasa;
 		this.imageOglasa = imageOglasa;
 		this.datumOglasa = datumOglasa;
+		this.moviePer = new ArrayList<MoviePerformance>();
+	}
+	
+
+	public List<MoviePerformance> getMoviePer() {
+		return moviePer;
+	}
+
+	public void setMoviePer(List<MoviePerformance> moviePer) {
+		this.moviePer = moviePer;
 	}
 
 	public String getNazivOglasa() {
