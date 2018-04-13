@@ -1,6 +1,8 @@
 package isa.projekat.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,7 +13,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TheatreCinema implements Serializable {
@@ -42,6 +49,13 @@ public class TheatreCinema implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
 	private Set<Hall> halls;
 	
+	@ManyToMany
+    @JoinTable(name = "adminiObjekata",
+    joinColumns = @JoinColumn(name = "user1_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "objekat_id", nullable = false))
+	@JsonIgnore
+	private List<User> adminiBioPoz;
+	
 	private TheatreCinema() {
 		
 	}
@@ -51,6 +65,7 @@ public class TheatreCinema implements Serializable {
 		this.name = name;
 		this.adress = adress;
 		this.description = description;
+		this.adminiBioPoz = new ArrayList<User>();
 	}
 
 	public Long getId() {
@@ -104,5 +119,14 @@ public class TheatreCinema implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public List<User> getAdminiBioPoz() {
+		return adminiBioPoz;
+	}
+
+	public void setAdminiBioPoz(List<User> adminiBioPoz) {
+		this.adminiBioPoz = adminiBioPoz;
+	}
+	
 	
 }

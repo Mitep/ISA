@@ -172,6 +172,21 @@ public class UserController {
 		
 	}
 		
+	@RequestMapping(value = "/getAdmine",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getAdmine(HttpServletRequest request){
+		List<User> listaKorisnika = userRep.findAll();
+		List<User> pomListaKorisnika = new ArrayList<User>();
+		for(int i=0; i <listaKorisnika.size(); i++) {
+			if(listaKorisnika.get(i).getUserRole().equals(UserRole.ADMIN)) {
+				pomListaKorisnika.add(listaKorisnika.get(i));
+				
+			}
+		}
+		return pomListaKorisnika;
+		
+	}
 	@RequestMapping(value = "/promoteUser/{userId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -392,5 +407,16 @@ public class UserController {
 		
 		return true;
 	}
+	
+	
+	@RequestMapping(value = "/getAdminiPozorista/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User adminiPozoristas(@PathVariable Long userId,HttpServletRequest request){
+			
+			return userRep.findByUserId(userId);
+		
+		}
+	
 	
 }

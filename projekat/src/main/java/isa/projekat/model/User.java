@@ -89,8 +89,11 @@ public class User {
 	@JsonIgnore
 	private List<User> friendsRequest;
 		
-	/*@OneToMany(mappedBy = "user")
-	private Set<Oglas> oglasi;*/
+	@ManyToMany(mappedBy = "adminiBioPoz")
+	@JsonIgnore
+	private List<TheatreCinema> bioPozAdmini;
+	
+	
 	public User() {
 		super();
 	}
@@ -111,8 +114,10 @@ public class User {
 		this.myFriends = new ArrayList<User>();
 		this.friendsWith = new ArrayList<User>();
 		this.friendsRequest = new ArrayList<User>();
+		this.bioPozAdmini = new ArrayList<TheatreCinema>();
 	}
 
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -185,7 +190,17 @@ public class User {
 	public void setUserPasswordConf(String userPasswordConf) {
 		this.userPasswordConf = userPasswordConf;
 	}
-/*
+	
+public List<TheatreCinema> getBioPozAdmini() {
+		return bioPozAdmini;
+	}
+
+	public void setBioPozAdmini(List<TheatreCinema> bioPozAdmini) {
+		this.bioPozAdmini = bioPozAdmini;
+	}
+
+	/*
+ *
 	public Set<Ticket> getTickets() {
 		return tickets;
 	}
@@ -253,8 +268,7 @@ public class User {
 	public void setFriendsRequest(List<User> friendsRequest) {
 		this.friendsRequest = friendsRequest;
 	}
-	
-	
+
 	
 	
 	
