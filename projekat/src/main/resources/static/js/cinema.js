@@ -1,28 +1,3 @@
-function dodajBioskop() {
-	var $form = $("#bioskopForm");
-	var data = getFormData($form);
-	var s = JSON.stringify(data);
-	console.log(s);
-	$.ajax({
-		
-		url: "bioskop/addBioskop",
-		type: "POST",
-		data: s,
-		contentType: "application/json",
-		dataType: "json",
-		success: function(data){
-			if(data){
-				alert("Uspjesno ste dodali bioskop!");
-				top.location.href="cinema.html";
-			}else
-				alert("Niste dodali bioskop!");
-			
-		}
-	
-	});
-	
-}
-
 window.onload = function() {
 	$.ajax({
 			
@@ -43,9 +18,37 @@ window.onload = function() {
 					}
 				}
 				
+			},
+			error: function() {
+				alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
 			}
-		
 		});
+	
+	$.ajax({
+		url: "user/getAdmine",
+		type:"GET",
+		contentType:"application/json",
+		dataType:"json",
+		success : function(data){
+			$("#adminiKorisnici").empty();
+			for(i=0;i<data.length;i++) {
+				$("#adminiKorisnici").append("<tr>" +
+						"<td>" + data[i].userName + "</td>" +
+						"<td>" + data[i].userSurname + "</td>" +
+						"<td>" + data[i].city + "</td>" +
+						"<td>" + data[i].mobileNumber + "</td>" +
+						"<td>" + data[i].email + "</td>" +
+						"<td>" + data[i].userRole + "</td>" +
+						"<td><a href=\"javascript:;\" onclick=\"dodajAdmina("+data[i].userId+")\">Dodaj	</a>" +
+						"</td></tr>");
+				}
+				
+		},
+		error: function(){
+			alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
+		}
+		});
+		
 		
 	}
 
@@ -61,3 +64,33 @@ function getFormData($form){
 	    return indexed_array;
 	
 }
+
+function dodajBioskop() {
+	var $form = $("#bioskopForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	var userId = sessionStorage.getItem('admin');
+	console.log(userId);
+	$.ajax({
+		
+		url: "bioskop/addBioskop/"+userId,
+		type: "POST",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste dodali bioskop!");
+				top.location.href="cinema.html";
+			}else
+				alert("Samo administrator sistema moze da dodaje bioskope!");
+			
+		},
+		error: function() {
+			alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
+		}
+	
+	});
+	
+}
+

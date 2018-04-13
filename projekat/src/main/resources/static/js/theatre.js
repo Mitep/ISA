@@ -16,8 +16,7 @@ window.onload = function() {
 					}
 					
 				}
-				
-			}
+	}
 		
 		});
 	
@@ -43,7 +42,7 @@ window.onload = function() {
 				
 		},
 		error: function(){
-			
+			alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
 		}
 		});
 		
@@ -98,9 +97,11 @@ function dodajPozoriste() {
 				alert("Uspjesno ste dodali pozoriste!");
 				top.location.href="theatre.html";
 			}else
-				alert("Niste dodali pozoriste!");
-			
-		}
+				alert("Samo administrator sistema moze da dodaje pozorista!");
+	},
+	error: function() {
+		alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
+	}
 	
 	});
 	

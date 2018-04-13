@@ -51,6 +51,7 @@ public class TheatreController {
 			the.setType(TheatreCinemaEnum.THEATRE);
 			User admin = userRep.findByUserId(userId);
 			admin.getBioPozAdmini().add(the);
+			the.getAdminiBioPoz().add(admin);
 			System.out.println("dodjes li ddosaodsa");
 			for(int i = 0; i < admin.getBioPozAdmini().size();i++) {
 				System.out.println("--------" + admin.getBioPozAdmini().get(i).getName());
@@ -71,10 +72,16 @@ public class TheatreController {
 	@RequestMapping(value = "/prikaziPozoriste",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<TheatreCinema> prikaziPozoriste() {
+	public List<TheatreCinema> prikaziPozoriste(HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
 			return theatreRep.findAll();
-	}
-	
+		}else {
+			return null;
+			}
+			
+		}
+		
 	@RequestMapping(
 			value= {"/svaPozorista"},
 			method = {RequestMethod.GET},

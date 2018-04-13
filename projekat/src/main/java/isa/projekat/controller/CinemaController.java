@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import isa.projekat.model.Oglas;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.User;
-
+import isa.projekat.model.UserRole;
 import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
-import isa.projekat.model.UserRole;
-
 import isa.projekat.repository.CinemaRepository;
+import isa.projekat.repository.UserRepository;
 import isa.projekat.service.CinemaService;
 
 @RestController
@@ -34,16 +32,22 @@ public class CinemaController {
 	@Autowired
 	private CinemaRepository cinemaRep;
 	
-	@RequestMapping(value = "/addBioskop",
+	@Autowired UserRepository userRep;
+	
+	@RequestMapping(value = "/addBioskop/{userId}",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean addBioskop(@RequestBody TheatreCinema cinema, HttpServletRequest request) {
+	public boolean addBioskop(@RequestBody TheatreCinema cinema,@PathVariable Long userId, HttpServletRequest request) {
 			User us = (User) request.getSession().getAttribute("user");
 			if(us.getUserRole().equals(UserRole.SYSADMIN)) {
 			TheatreCinema cin = null;
 			cin = new TheatreCinema(cinema.getName(), cinema.getAdress(), cinema.getDescription());
 			cin.setType(TheatreCinemaEnum.CINEMA);
+			User admin = userRep.findByUserId(userId);
+			admin.getBioPozAdmini().add(cin);
+			cin.getAdminiBioPoz().add(admin);
+			userRep.save(admin);
 			cinemaRep.save(cin);
 			return true;
 			} else {
@@ -54,9 +58,17 @@ public class CinemaController {
 	@RequestMapping(value = "/prikaziBioskop",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<TheatreCinema> prikaziBioskop() {
+	public List<TheatreCinema> prikaziBioskop(HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
 			return cinemaRep.findAll();
-	}
+		}else {
+			return null;
+			}
+			
+		}
+		
+	
 	
 	@RequestMapping(
 			value= {"/sviBioskopi"},
