@@ -37,3 +37,13 @@ insert into movie_performance(type, name, director_id, length, poster) values (1
 
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 1 projekcija 1", "projekcija 1", "1523552094656", 1, 1, 1) 
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 2 projekcija 2", "projekcija 2", "1523552094656", 1, 2, 1)
+
+insert into user(city, email, first_login, mobile_number, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values ('Zvornik','sysAdmin@sysAdmin.com',0,'123','sysAdmin','sysAdmin','sysAdmin', 2,0,'sysAdmin')
+
+insert into user(city, email, first_login, mobile_number, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values ('Zvornik1','sysAdmin1@sysAdmin1.com',0,'1234','sysAdmin1','sysAdmin1','sysAdmin1', 3,0,'sysAdmin1')
+
+insert into user(city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value ('Lopare','s@s.com',0,'123','s','s','s',0,0,'s')
+insert into user(city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value ('Aaaa','a@a.com',0,'1234','a','a','a',0,0,'a')
+insert into user(city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value ('bbbb','b@b.com',0,'12345','b','b','b',0,0,'b')
+insert into user(city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value ('cccc','c@c.com',0,'12341','c','c','c',0,0,'c')
+

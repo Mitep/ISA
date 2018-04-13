@@ -10,15 +10,27 @@ function logIn(){
 		type: "POST",
 		data: s,
 		contentType: "application/json",
-		dataType: "json",
+		dataType: "text",
 		success: function(data){
-			if(data){
+			console.log(data)
+			if(data == "fanAdmin"){
+				
+				alert("Uspjesno ste se ulogovali admine fan zone!");
+				top.location.href="podesavanja.html";
+				
+			}else if(data =="logovao"){
+				
 				alert("Uspjesno ste se ulogovali!");
 				top.location.href="homePage.html";
+				
 			}else
 				alert("Niste se ulogovali!");
 			
+		},
+		error: function(data){
+			alert(data)
 		}
+		
 	
 	});
 }

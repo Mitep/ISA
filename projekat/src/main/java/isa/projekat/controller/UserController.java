@@ -1,9 +1,11 @@
 package isa.projekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa.projekat.model.User;
+import isa.projekat.model.UserPassword;
 import isa.projekat.model.UserRole;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.EmailService;
@@ -40,9 +43,10 @@ public class UserController {
 		
 		System.out.println("daj mi korisnika" + user.getUserName());
 		User us = null;
-		us  = new User(user.getEmail(),user.getUserPassword(),user.getUserPasswordConf(),user.getUserName(), user.getUserSurname(),user.getCity(),user.getMobileNumber(),user.getUserRole(),user.isUserStatus());
+		us  = new User(user.getEmail(),user.getUserPassword(),user.getUserPasswordConf(),user.getUserName(), user.getUserSurname(),user.getCity(),user.getMobileNumber(),user.getUserRole(),user.isUserStatus(), user.isFirstLogin());
 		us.setUserRole(UserRole.USER);
 		us.setUserStatus(false);
+		us.setFirstLogin(false);
 		if(us.getUserPassword().equals(us.getUserPasswordConf())) {
 			
 			//slanje emaila
@@ -75,30 +79,38 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
-	public String checkRole(HttpServletRequest request) {
+	public boolean checkRole(HttpServletRequest request) {
 		System.out.println("Stigao sam ovdje");
 		try {
 			request.getSession().invalidate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return "logout";
+		return true;
 	}
 	
 	@RequestMapping(value = "/loginUser",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean loginUser(@RequestBody User user, HttpServletRequest request) {
+	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
+			
+			us.setFirstLogin(true);	
+			request.getSession().setAttribute("user", us);
+			
+			return "fanAdmin";
+		}
+		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
 				//&& us.isUserStatus() == true) {
 			//TODO : odkomentarisi kad dodje vrijeme za to
 			request.getSession().setAttribute("user", us);
-			return true;
+			return "logovao";
 		}
 		
-			return false;
+			return "nije se logovao";
 	}
 	
 	
@@ -145,16 +157,104 @@ public class UserController {
 	}
 	
 
-	@RequestMapping(value = "/dodajPrijatelja/{userId}",
-	method = RequestMethod.GET,
-	produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean searchUsers(@PathVariable Long userId,HttpServletRequest request){
+	@RequestMapping(value = "/getKorisnici",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getKorisnici(HttpServletRequest request){
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			System.out.println(us.getUserRole());
+			return userRep.findAll();
+			
+		}else {
+		return null;
+		}
 		
-	//	User us = (User)request.getSession().getAttribute("user");
-		
-		
-		return true;
 	}
+		
+	@RequestMapping(value = "/getAdmine",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getAdmine(HttpServletRequest request){
+		List<User> listaKorisnika = userRep.findAll();
+		List<User> pomListaKorisnika = new ArrayList<User>();
+		for(int i=0; i <listaKorisnika.size(); i++) {
+			if(listaKorisnika.get(i).getUserRole().equals(UserRole.ADMIN)) {
+				pomListaKorisnika.add(listaKorisnika.get(i));
+				
+			}
+		}
+		return pomListaKorisnika;
+		
+	}
+	@RequestMapping(value = "/promoteUser/{userId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> promoteUser(@PathVariable Long userId, HttpServletRequest request) {
+		User user = (User)request.getSession().getAttribute("user");
+		if(!user.getUserRole().equals(UserRole.SYSADMIN)) {
+			return null;
+		}
+		User us = userRep.findByUserId(userId);
+		if(us.getUserRole().equals(UserRole.USER)) {
+			us.setUserRole(UserRole.ADMIN);
+		} else if (us.getUserRole().equals(UserRole.ADMIN))
+		{
+			us.setUserRole(UserRole.FANADMIN);
+		} else if (us.getUserRole().equals(UserRole.FANADMIN))
+		{
+			us.setUserRole(UserRole.SYSADMIN);
+		} else {
+			return null;
+		}
+		
+		userRep.save(us);
+		
+		return userRep.findAll();
+	}
+	
+	
+	@RequestMapping(value = "/demoteUser/{userId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> demoteUser(@PathVariable Long userId, HttpServletRequest request) {
+		User user = (User)request.getSession().getAttribute("user");
+		if(!user.getUserRole().equals(UserRole.SYSADMIN)) {
+			return null;
+		}
+		User us = userRep.findByUserId(userId);
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			us.setUserRole(UserRole.FANADMIN);
+		} else if (us.getUserRole().equals(UserRole.FANADMIN))
+		{
+			us.setUserRole(UserRole.ADMIN);
+		} else if (us.getUserRole().equals(UserRole.ADMIN))
+		{
+			us.setUserRole(UserRole.USER);
+		} else {
+			return null;
+		}
+		
+		userRep.save(us);
+		
+		return userRep.findAll();
+	}
+	
+	@RequestMapping(value = "/dodajPrijatelja/{userId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean dodajPrijatelja(@PathVariable Long userId,HttpServletRequest request){
+				
+				User sender = (User)request.getSession().getAttribute("user");
+				System.out.println("------------------");
+				System.out.println(sender.getEmail());
+				User reciever = (User) userRep.findByUserId(userId);
+				System.out.println(reciever.getEmail());
+				reciever.getFriendsRequest().add(sender);
+				userRep.save(reciever);
+				return true;
+			}
+	
 	
 	@RequestMapping(value = "/searchUsers/{userName}/{userSurname}",
 			method = RequestMethod.GET,
@@ -170,5 +270,153 @@ public class UserController {
 					return userRep.findAll();
 				
 			}
+	
+	@RequestMapping(value="/izmijeniPassword",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean izmijeniPassword(@RequestBody UserPassword user,HttpServletRequest request) {
+		System.out.println(user.getOldPassword());
+		System.out.println(user.getNewPassword());
+		System.out.println(user.getRepeatNewPassword());
+		User us = (User)request.getSession().getAttribute("user");
+		System.out.println(us.getUserRole());
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.getUserPassword().equals(user.getOldPassword())) {
+			if(user.getNewPassword().equals(user.getRepeatNewPassword())) {
+				us.setUserPassword(user.getNewPassword());
+				us.setUserPasswordConf(user.getNewPassword());
+				userRep.save(us);
+				return true;
+			}
+			return false;
+			
+		}
+		return false;
+	}
+	
+	
+	@RequestMapping(value = "/getFriendRequests",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> friendRequests(HttpServletRequest request){
+				
+				User user = (User)request.getSession().getAttribute("user");
+				User us1 = userRep.findByUserId(user.getUserId());
+				return us1.getFriendsRequest();
+			}
+	
+	@RequestMapping(value = "/prihvatiPrijatelja/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User prihvatiZahtjev(@PathVariable Long userId,HttpServletRequest request){
+			
+		User pom = (User) request.getSession().getAttribute("user");
+		User receiver = userRep.findByUserId(pom.getUserId());
+		User sender = userRep.findByUserId(userId);
+		
+		receiver.getFriendsRequest().remove(sender);
+		sender.getFriendsRequest().remove(receiver);
+		receiver.getMyFriends().add(sender);
+		userRep.save(receiver);
+		
+		for(int i = 0 ; i < receiver.getMyFriends().size();i++) {
+			System.out.println("RECEIVER"+receiver.getMyFriends().get(i).getEmail());
+			
+		}
+		
+		for(int i = 0 ; i < sender.getMyFriends().size();i++) {
+			System.out.println("SENDER" + sender.getMyFriends().get(i).getEmail());
+			
+		}
+		
+		
+		for(int i = 0 ; i < receiver.getFriendsWith().size();i++) {
+			System.out.println("RECEIVERFRIEND"+receiver.getFriendsWith().get(i).getEmail());
+			
+		}
+		
+		for(int i = 0 ; i < sender.getFriendsWith().size();i++) {
+			System.out.println("SENDERFRIEND" + sender.getFriendsWith().get(i).getEmail());
+			
+		}
+		
+		
+		return receiver;
+		
+		}
+	
+	@RequestMapping(value = "/getFriends",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<User> friends(HttpServletRequest request){
+				
+				User user = (User)request.getSession().getAttribute("user");
+				User us1 = userRep.findByUserId(user.getUserId());
+				List<User> temp = new ArrayList<User>();
+				temp.addAll(us1.getMyFriends());
+				temp.addAll(us1.getFriendsWith());
+				return temp;
+			}
+	
+	
+	@RequestMapping(value = "/odbijPrijatelja/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User odbijZahtjev(@PathVariable Long userId,HttpServletRequest request){
+			
+		User pom = (User) request.getSession().getAttribute("user");
+		User receiver = userRep.findByUserId(pom.getUserId());
+		User sender = userRep.findByUserId(userId);
+		
+		receiver.getFriendsRequest().remove(sender);
+		userRep.save(receiver);
+		
+		return sender;
+		
+		}
+	
+	
+	@RequestMapping(value = "/obrisiPrijatelja/{userId}",			
+		method = RequestMethod.GET,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean obrisiPrijatelja(@PathVariable Long userId,HttpServletRequest request){
+	
+		
+		User us = (User)request.getSession().getAttribute("user");
+		User pom = userRep.findByUserId(us.getUserId());
+		
+		for(int i = 0; i < pom.getMyFriends().size(); i++) {
+			System.out.println("++++" + pom.getMyFriends().get(i).getUserName());
+			if(pom.getMyFriends().get(i).getUserId().equals(userId)) {
+				System.out.println("aaaa");
+				pom.getMyFriends().remove(i);
+				
+			}
+		}
+		
+		for(int i = 0; i < pom.getFriendsWith().size(); i++) {
+			System.out.println("-__-" + pom.getFriendsWith().get(i).getUserName());
+			if(pom.getFriendsWith().get(i).getUserId().equals(userId)) {
+				System.out.println("bbbbb");
+				pom.getFriendsWith().remove(i);
+				
+			}
+		}
+		userRep.save(pom);
+		
+		
+		return true;
+	}
+	
+	
+	@RequestMapping(value = "/getAdminiPozorista/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User adminiPozoristas(@PathVariable Long userId,HttpServletRequest request){
+			
+			return userRep.findByUserId(userId);
+		
+		}
+	
 	
 }

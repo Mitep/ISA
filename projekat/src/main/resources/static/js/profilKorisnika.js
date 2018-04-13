@@ -17,7 +17,48 @@ window.onload = function(){
 		}
 	});
 	
-
+	$.ajax({
+		 url: "user/getFriendRequests",
+		 method: "GET",
+		 success: function(data){
+			 console.log(data);
+			 $(".friendsRequest").empty();
+			 for(i=0;i<data.length;i++){
+				 $(".friendsRequest").append( 
+						 "<tr><td>Ime:</td><td>" + data[i].userName + "</td></tr>"+
+						 "<tr><td>Prezime:</td><td>" + data[i].userSurname + "</td></tr>"+
+						 "<tr><td><input type=\"button\" value = \"Prihvati\" onclick = \"prihvatiPrijatelja("+data[i].userId+")\"></td><tr>"+
+						 "<tr><td><input type=\"button\" value = \"Odbij\" onclick = \"odbijPrijatelja("+data[i].userId+")\"></td><tr>");
+				 
+					
+			 }
+		 },
+		 error: function(){
+			 alert("Doslo je do greske!");
+		 }
+	});
+	
+	
+	$.ajax({
+		 url: "user/getFriends",
+		 method: "GET",
+		 success: function(data){
+			 $(".friends").empty();
+			 for(i=0;i<data.length;i++){
+				 $(".friends").append( "<tr><td>Ime:</td><td>" + data[i].userName + "</td></tr>"+
+						 "<tr><td>Prezime:</td><td>" + data[i].userSurname + "</td></tr>"+
+						 "<tr><td>Email:</td><td>" + data[i].email + "</td></tr>"+
+						 "<tr><td>Grad:</td><td>" + data[i].city + "</td></tr>"+
+						 "<tr><td>Broj telefona:</td><td>" + data[i].mobileNumber + "</td></tr>+" +
+						 "<tr><td><input type=\"button\" value = \"Obrisi prijatelja\" onclick = \"obrisiPrijatelja("+data[i].userId+")\"></td><tr>");
+			 }
+		 },
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+	
 }
 
 
@@ -97,13 +138,64 @@ function dodajPrijatelja(userId){
 		type: "GET",
 		success: function(data){
 			alert("Uspjesno ste poslali zahtjev");
-		}
-	
+		},
+	 	error: function(){
+		 alert("Niste dodali korisnika!");
+	 	}
 		});
 	
 }
 
+function prihvatiPrijatelja(userId){
+	
+	$.ajax({
+		 url: "user/prihvatiPrijatelja/"+userId,
+		 method: "GET",
+		 success: function(){
+			 
+			 alert("Prihvatili ste zahtjev za prijateljstvo!");
+			 top.location.href="profilKorisnika.html";
+			 
+		 },
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+}
 
+function odbijPrijatelja(userId){
+	
+	$.ajax({
+		 url: "user/odbijPrijatelja/"+userId,
+		 method: "GET",
+		 success: function(){
+			 
+			 alert("Odbili ste zahtjev za prijateljstvo!");
+			 top.location.href="profilKorisnika.html";
+		 },
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+}
 
-
+function obrisiPrijatelja(userId){
+	
+	$.ajax({
+		 url: "user/obrisiPrijatelja/"+userId,
+		 method: "GET",
+		 success: function(data){
+			 if(data){
+			 alert("Obrisali ste prijatelja!");
+			 top.location.href="profilKorisnika.html";
+			 }
+		},
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+	
+}
 

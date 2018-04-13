@@ -1,10 +1,12 @@
 package isa.projekat.model;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -52,6 +56,9 @@ public class User {
 	@NotNull
 	private boolean userStatus;
 	
+	@NotNull
+	private boolean firstLogin;
+	
 	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Ticket> tickets;
 	
@@ -60,29 +67,39 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<ProjectionRating> projectionRatings;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
-	private Set<FriendRequest> sentRequests;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
-	private Set<FriendRequest> recievedRequests;
-	
+	*/
 	//ko su moji prijatelji
 	@ManyToMany
     @JoinTable(name = "friendship",
     joinColumns = @JoinColumn(name = "user1_id", nullable = false),
     inverseJoinColumns = @JoinColumn(name = "user2_id", nullable = false))
-	private Set<User> myFriends;
+	@JsonIgnore
+	private List<User> myFriends;
+	
 	//kome sam ja prijatelj
 	@ManyToMany(mappedBy = "myFriends")
-	private Set<User> friendsWith;
-	*/
+	@JsonIgnore
+	private List<User> friendsWith;
+	
+	//zahtjevi
+	@ManyToMany
+    @JoinTable(name = "friendshipRequest",
+    joinColumns = @JoinColumn(name = "sender", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "reciever", nullable = false))
+	@JsonIgnore
+	private List<User> friendsRequest;
+		
+	@ManyToMany(mappedBy = "adminiBioPoz")
+	@JsonIgnore
+	private List<TheatreCinema> bioPozAdmini;
+	
+	
 	public User() {
 		super();
 	}
 
 	public User(String email, String userPassword, String userPasswordConf,String userName,
-			String userSurname,String city, String mobileNumber, UserRole userRole, boolean userStatus) {
+			String userSurname,String city, String mobileNumber, UserRole userRole, boolean userStatus, boolean firstLogin) {
 		super();
 		this.email = email;
 		this.userPassword = userPassword;
@@ -93,8 +110,14 @@ public class User {
 		this.mobileNumber = mobileNumber;
 		this.userRole = userRole;
 		this.userStatus = userStatus;
+		this.firstLogin = firstLogin;
+		this.myFriends = new ArrayList<User>();
+		this.friendsWith = new ArrayList<User>();
+		this.friendsRequest = new ArrayList<User>();
+		this.bioPozAdmini = new ArrayList<TheatreCinema>();
 	}
 
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -167,7 +190,17 @@ public class User {
 	public void setUserPasswordConf(String userPasswordConf) {
 		this.userPasswordConf = userPasswordConf;
 	}
-/*
+	
+public List<TheatreCinema> getBioPozAdmini() {
+		return bioPozAdmini;
+	}
+
+	public void setBioPozAdmini(List<TheatreCinema> bioPozAdmini) {
+		this.bioPozAdmini = bioPozAdmini;
+	}
+
+	/*
+ *
 	public Set<Ticket> getTickets() {
 		return tickets;
 	}
@@ -191,38 +224,6 @@ public class User {
 	public void setProjectionRatings(Set<ProjectionRating> projectionRatings) {
 		this.projectionRatings = projectionRatings;
 	}
-
-	public Set<FriendRequest> getSentRequests() {
-		return sentRequests;
-	}
-
-	public void setSentRequests(Set<FriendRequest> sentRequests) {
-		this.sentRequests = sentRequests;
-	}
-
-	public Set<FriendRequest> getRecievedRequests() {
-		return recievedRequests;
-	}
-
-	public void setRecievedRequests(Set<FriendRequest> recievedRequests) {
-		this.recievedRequests = recievedRequests;
-	}
-
-	public Set<User> getMyFriends() {
-		return myFriends;
-	}
-
-	public void setMyFriends(Set<User> myFriends) {
-		this.myFriends = myFriends;
-	}
-
-	public Set<User> getFriendsWith() {
-		return friendsWith;
-	}
-
-	public void setFriendsWith(Set<User> friendsWith) {
-		this.friendsWith = friendsWith;
-	}
 */
 	public void setUserId(long userId) {
 		this.userId = userId;
@@ -235,8 +236,39 @@ public class User {
 	public void setUserStatus(boolean userStatus) {
 		this.userStatus = userStatus;
 	}
-	
-	
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
+	}
+
+	public List<User> getMyFriends() {
+		return myFriends;
+	}
+
+	public void setMyFriends(List<User> myFriends) {
+		this.myFriends = myFriends;
+	}
+
+	public List<User> getFriendsWith() {
+		return friendsWith;
+	}
+
+	public void setFriendsWith(List<User> friendsWith) {
+		this.friendsWith = friendsWith;
+	}
+
+	public List<User> getFriendsRequest() {
+		return friendsRequest;
+	}
+
+	public void setFriendsRequest(List<User> friendsRequest) {
+		this.friendsRequest = friendsRequest;
+	}
+
 	
 	
 	

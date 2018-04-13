@@ -16,8 +16,11 @@ import isa.projekat.model.Oglas;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.User;
+
 import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
+import isa.projekat.model.UserRole;
+
 import isa.projekat.repository.CinemaRepository;
 import isa.projekat.service.CinemaService;
 
@@ -37,11 +40,15 @@ public class CinemaController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean addBioskop(@RequestBody TheatreCinema cinema, HttpServletRequest request) {
 			User us = (User) request.getSession().getAttribute("user");
+			if(us.getUserRole().equals(UserRole.SYSADMIN)) {
 			TheatreCinema cin = null;
 			cin = new TheatreCinema(cinema.getName(), cinema.getAdress(), cinema.getDescription());
 			cin.setType(TheatreCinemaEnum.CINEMA);
 			cinemaRep.save(cin);
 			return true;
+			} else {
+				return false;
+			}
 	}
 	
 	@RequestMapping(value = "/prikaziBioskop",
