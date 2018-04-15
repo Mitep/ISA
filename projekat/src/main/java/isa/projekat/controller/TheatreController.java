@@ -1,5 +1,6 @@
 package isa.projekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa.projekat.model.Projection;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.User;
-
-import isa.projekat.model.dtos.CinemaDTO;
+import isa.projekat.model.UserRole;
 import isa.projekat.model.dtos.ProjectionDTO;
 import isa.projekat.model.dtos.TheatreDTO;
 import isa.projekat.repository.TheatreRepository;
-import isa.projekat.service.TheatreService;
-
-import isa.projekat.model.UserRole;
 import isa.projekat.repository.UserRepository;
+import isa.projekat.service.TheatreService;
 
 @RestController
 @RequestMapping("/pozoriste")
@@ -81,6 +80,17 @@ public class TheatreController {
 			}
 			
 		}
+	
+	
+	@RequestMapping(value = "/prikaziPozoristeZaHome",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TheatreCinema> prikaziPozoristeZaHome() {
+		
+		return theatreRep.findAll();
+	
+			
+		}
 		
 	@RequestMapping(
 			value= {"/svaPozorista"},
@@ -105,5 +115,21 @@ public class TheatreController {
 	public void createProjection(@RequestBody TheatreDTO newTheatre){
 		theatreService.editBasicInfo(newTheatre);
 	}
+	
+
+	@RequestMapping(value = "/prikaziProjekcijuPozorista/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Projection> prikaziProjekcijuPozorista(@PathVariable Long id) {
+		
+			TheatreCinema tc =  theatreRep.findByTcId(id);
+			if(tc.getType().equals(TheatreCinemaEnum.THEATRE)) {
+				
+				return tc.getProjekcije();
+			}else {
+				return null;
+			}
+		}
+	
 }
 

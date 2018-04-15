@@ -36,7 +36,7 @@ public class TheatreCinema implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "theatre_cinema_id", nullable = false)
-	private long id;
+	private long tcId;
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
@@ -62,6 +62,11 @@ public class TheatreCinema implements Serializable {
 	@JsonIgnore
 	private List<User> adminiBioPoz;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
+	@JsonIgnore
+	private List<Projection> projekcije;
+	
+	
 	private TheatreCinema() {
 		
 	}
@@ -72,14 +77,25 @@ public class TheatreCinema implements Serializable {
 		this.adress = adress;
 		this.description = description;
 		this.adminiBioPoz = new ArrayList<User>();
+		this.projekcije = new ArrayList<Projection>();
+	}
+	
+	
+
+	public List<Projection> getProjekcije() {
+		return projekcije;
+	}
+
+	public void setProjekcije(List<Projection> projekcije) {
+		this.projekcije = projekcije;
 	}
 
 	public Long getId() {
-		return id;
+		return tcId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.tcId = id;
 	}
 
 	public TheatreCinemaEnum getType() {
@@ -122,9 +138,6 @@ public class TheatreCinema implements Serializable {
 		this.halls = halls;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public List<User> getAdminiBioPoz() {
 		return adminiBioPoz;

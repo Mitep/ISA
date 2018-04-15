@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa.projekat.model.Projection;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.User;
@@ -69,6 +70,15 @@ public class CinemaController {
 		}
 		
 	
+	@RequestMapping(value = "/prikaziBioskopZaHome",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TheatreCinema> prikaziBioskopZaHome() {
+		
+		return cinemaRep.findAll();
+			
+		}
+	
 	
 	@RequestMapping(
 			value= {"/sviBioskopi"},
@@ -93,5 +103,21 @@ public class CinemaController {
 	public void createProjection(@RequestBody CinemaDTO newCinema){
 		cinemaService.editBasicInfo(newCinema);
 	}
+	
+
+	@RequestMapping(value = "/prikaziProjekcijuBioskopa/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Projection> prikaziProjekcijuBioskopa(@PathVariable Long id) {
+		
+			TheatreCinema tc =  cinemaRep.findByTcId(id);
+			if(tc.getType().equals(TheatreCinemaEnum.CINEMA)) {
+				
+				return tc.getProjekcije();
+			}else {
+				return null;
+			}
+		}
+	
 	
 }

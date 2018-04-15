@@ -37,6 +37,8 @@ insert into movie_performance(type, name, director_id, length, poster) values (1
 
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 1 projekcija 1", "projekcija 1", "1523552094656", 1, 1, 1) 
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 2 projekcija 2", "projekcija 2", "1523552094656", 1, 2, 1)
+insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("projekcija2", "projekcija2", "1523", 1, 2, 1)
+insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 3 projekcija 3", "projekcija 3", "1523552111", 1, 1, 3) 
 
 insert into user(city, email, first_login, mobile_number, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values ('Zvornik','sysAdmin@sysAdmin.com',0,'123','sysAdmin','sysAdmin','sysAdmin', 2,0,'sysAdmin')
 

@@ -15,6 +15,8 @@ public interface CinemaRepository extends CrudRepository<TheatreCinema, Long> {
 	
 	List<TheatreCinema> findAll();
 	
+	TheatreCinema findByTcId(Long tcId);
+	
 	@Query("select c from TheatreCinema c where c.type = 1")
 	List<TheatreCinema> findAllCinemas();
 	

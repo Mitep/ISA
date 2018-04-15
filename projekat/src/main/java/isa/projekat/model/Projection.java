@@ -46,14 +46,17 @@ public class Projection implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="movie_performance_id")
+	@JsonIgnore
 	private MoviePerformance moviePerformance;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="hall_id")
+	@JsonIgnore
 	private Hall hall;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="theatre_cinema_id")
+	@JsonIgnore
 	private TheatreCinema theatreCinema;
 	
 	

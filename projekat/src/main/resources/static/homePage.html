@@ -26,47 +26,52 @@
   <li class="right"><a href="#logout" onclick="logout()">Odjava</a></li>
 </ul>
 
-<!-- deo strane koji sluzi da prikaze profil korisnika -->
-<div id="home_div">
-HOME
-</div>
+				<div >
+					<label>Naziv bioskopa:</label>
+					<div>
+						<select id="bioskop">
+						</select>
+					</div>
+					<div id = "daljeBioskop">
+						<input type="button" onclick="daljeBioskop()" value="Dalje">
+					</div>
+				</div>
+				
+				
+				<div >
+					<label>Naziv projekcije bioskopa:</label>
+					<div>
+						<select id="bioskopProjekcija">
+						</select>
+					</div>
+					
+				</div>
+				<input type="button" onclick="daljeProjekcijaBioskop()" value="Dalje">
+				
+				
+				
+				<div >
+					<label>Naziv pozorista:</label>
+					<div>
+						<select id="pozorista">
+						</select>
+					</div>
+					<div id = "daljePozoriste">
+						<input type="button" onclick="daljePozoriste()" value="Dalje">
+					</div>
+					
+				</div>
+				
+					
+				<div >
+					<label>Naziv projekcije bioskopa:</label>
+					<div>
+						<select id="pozoristeProjekcija">
+						</select>
+					</div>
+					
+				</div>
+				<input type="button" onclick="daljeProjekcijaPozorista()" value="Dalje">
 
-<!-- deo strane koji sluzi da prikaze prijatelje korisnika -->
-<div id="pozorista_div">
-POZORISTA
-</div>
-
-<!-- login ili logout
-ako korisnik nije logovan prikazace stranu za logovanje
-ako je logovan samo ce ga izlogovati sa sajta
- -->
-<div id="bioskopi_div">
-BIOSKOPI
-</div>
-
-<!-- deo strane koji sluzi da prikaze profil korisnika -->
-<div id="prijatelji_div">
-PRIJATELJI
-</div>
-
-<!-- deo strane koji sluzi da prikaze prijatelje korisnika -->
-<div id="rezervacije_div">
-rezer
-</div>
-
-<!-- login ili logout
-ako korisnik nije logovan prikazace stranu za logovanje
-ako je logovan samo ce ga izlogovati sa sajta
- -->
-<div id="podesavanja_div">
-podes
-</div>
-
-<!-- login ili logout
-ako korisnik nije logovan prikazace stranu za logovanje
-ako je logovan samo ce ga izlogovati sa sajta
- -->
-<div id="fanzona_div">
-</div>
 </body>
 </html>
