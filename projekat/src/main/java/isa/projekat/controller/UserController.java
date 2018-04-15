@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa.projekat.model.MedalType;
+import isa.projekat.model.RatingScale;
 import isa.projekat.model.User;
 import isa.projekat.model.UserPassword;
 import isa.projekat.model.UserRole;
+import isa.projekat.repository.RatingScaleRepository;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.EmailService;
 
@@ -34,6 +37,11 @@ public class UserController {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private RatingScaleRepository rsRep;
+	
+	public int brojac = 0;
 	
 	@RequestMapping(value="/registerUser",
 					method = RequestMethod.POST,
@@ -95,8 +103,9 @@ public class UserController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
+		
 		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
-			
+		
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
@@ -106,7 +115,14 @@ public class UserController {
 		if(us.getUserPassword().equals(user.getUserPassword())) {
 				//&& us.isUserStatus() == true) {
 			//TODO : odkomentarisi kad dodje vrijeme za to
+			brojac = us.getBrojLogovanja();
+			brojac++;
+			//System.out.println(brojac);
+			us.setBrojLogovanja(brojac);
+		
+			userRep.save(us);
 			request.getSession().setAttribute("user", us);
+			
 			return "logovao";
 		}
 		

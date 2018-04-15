@@ -59,6 +59,9 @@ public class User {
 	@NotNull
 	private boolean firstLogin;
 	
+	@NotNull
+	private int brojLogovanja;
+	
 	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Ticket> tickets;
 	
@@ -97,6 +100,8 @@ public class User {
 	@JsonIgnore
 	private List<RequestOglasa> zahtjeviOglasa;
 	
+	private MedalType mt;
+	
 	public User() {
 		super();
 	}
@@ -122,6 +127,23 @@ public class User {
 	}
 
 	
+	
+	public MedalType getMt() {
+		return mt;
+	}
+
+	public void setMt(MedalType mt) {
+		this.mt = mt;
+	}
+
+	public int getBrojLogovanja() {
+		return brojLogovanja;
+	}
+
+	public void setBrojLogovanja(int brojLogovanja) {
+		this.brojLogovanja = brojLogovanja;
+	}
+
 	public List<RequestOglasa> getZahtjeviOglasa() {
 		return zahtjeviOglasa;
 	}

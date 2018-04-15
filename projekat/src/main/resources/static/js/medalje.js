@@ -1,3 +1,17 @@
+window.onload = function(){
+	
+	$.ajax({
+		url: "medalje/getUserNaSkali",
+		type:"GET",
+		success : function(data){
+				
+		},
+		error: function(){
+		}
+		});
+	
+}
+
 function postaviSkalu(){
 	
 	var $form = $("#medaljeForm");
@@ -14,6 +28,7 @@ function postaviSkalu(){
 		success: function(data){
 			if(data){
 				alert("Uspjesno ste postavili bodovnu skalu!");
+				top.location.href = "medalje.html"
 			}else
 				alert("Niste postavili bodovnu skalu!");
 			

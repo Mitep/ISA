@@ -22,7 +22,7 @@ public class RatingScale implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "medalje_id", nullable = false)
-	private Long medaljeId;
+	private Integer medaljeId;
 	
 	@NotNull
 	private String odBronzana;

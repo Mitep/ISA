@@ -125,6 +125,16 @@ window.onload = function() {
 		}
 	});
 	
+	$.ajax({
+		url: "medalje/getUserNaSkali",
+		type:"GET",
+		success : function(data){
+				
+		},
+		error: function(){
+		}
+		});
+	
 }
 
 function daljeBioskop(){
