@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Template</title>
-
+	<title>Medalje</title>
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<script  type="text/javascript" src="js/medalje.js"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>		
 		<!-- toolbar -->
-<ul>
+	<ul>
 	  <li class="left"><a href="">Home</a></li>
 	  <li class="left"><a href="profilKorisnika.html">Korisnik</a></li>
 	  <li class="left"><a href="sviKorisnici.html">Svi korisnici</a></li>
@@ -24,6 +27,27 @@
 
 	<!-- glavni div u koji sve sa strane ide -->
 	<div id=main>
+	<form id="medaljeForm">
+		<div>
+		<label>Bronzana medalja:</label>
+		<input type = "text" name = "odBronzana" placeholder = "Od" >
+		<input type = "text" name = "doBronzana" placeholder = "Do" >
+		</div>
+		
+		<div>
+		<label>Srebrna medalja:</label>
+		<input type = "text" name = "odSrebrna" placeholder = "Od" >
+		<input type = "text" name = "doSrebrna" placeholder = "Do" >
+		</div>
+		
+		<div>
+		<label>Zlatna medalja:</label>
+		<input type = "text" name = "odZlatna" placeholder = "Od" >
+		<input type = "text" name = "doZlatna" placeholder = "Do" >
+		</div>
+		
+		<input onclick = "postaviSkalu()" type = "button" value = "Postavi">
+	</form>
 		
 	</div>
 
