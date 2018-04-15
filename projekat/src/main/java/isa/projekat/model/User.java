@@ -3,10 +3,10 @@ package isa.projekat.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -93,6 +93,9 @@ public class User {
 	@JsonIgnore
 	private List<TheatreCinema> bioPozAdmini;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "korisnik")
+	@JsonIgnore
+	private List<RequestOglasa> zahtjeviOglasa;
 	
 	public User() {
 		super();
@@ -115,9 +118,18 @@ public class User {
 		this.friendsWith = new ArrayList<User>();
 		this.friendsRequest = new ArrayList<User>();
 		this.bioPozAdmini = new ArrayList<TheatreCinema>();
+		this.zahtjeviOglasa = new ArrayList<RequestOglasa>();
 	}
 
 	
+	public List<RequestOglasa> getZahtjeviOglasa() {
+		return zahtjeviOglasa;
+	}
+
+	public void setZahtjeviOglasa(List<RequestOglasa> zahtjeviOglasa) {
+		this.zahtjeviOglasa = zahtjeviOglasa;
+	}
+
 	public Long getUserId() {
 		return userId;
 	}

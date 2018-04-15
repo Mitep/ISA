@@ -1,15 +1,19 @@
+
 package isa.projekat.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -41,6 +45,11 @@ public class Oglas {
 	@JsonIgnore
 	private List<MoviePerformance> moviePer;
 	
+	@OneToOne(mappedBy = "oglas", cascade = CascadeType.ALL, 
+            fetch = FetchType.EAGER, optional = false)
+	private RequestOglasa requestOglasa;
+	
+	
 
 	
 	public Oglas() {
@@ -59,6 +68,14 @@ public class Oglas {
 	}
 	
 
+	public RequestOglasa getRequestOglasa() {
+		return requestOglasa;
+	}
+
+	public void setRequestOglasa(RequestOglasa requestOglasa) {
+		this.requestOglasa = requestOglasa;
+	}
+	
 	public List<MoviePerformance> getMoviePer() {
 		return moviePer;
 	}

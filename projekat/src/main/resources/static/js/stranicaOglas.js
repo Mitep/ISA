@@ -85,7 +85,29 @@ $.ajax({
 	}
 	});
 
+$.ajax({
 	
+	url: "oglas/getOglasRequest",
+	type: "GET",
+	success: function(data){
+		console.log(data)
+		$(".oglasRequest").empty();
+		for(i=0;i<data.length;i++) {
+			
+			$(".oglasRequest").append("<tr><td>Naziv: </td><td>" + data[i].nazivOglasa + "</td></tr> "+
+					 "<tr><td>Opis: </td><td>" + data[i].opisOglasa + "</td></tr> "+
+					 "<tr><td>Slika: </td><td>" + data[i].imageOglasa + "</td></tr> "+
+					 "<tr><td>Datum: </td><td>" + data[i].datumOglasa + "</td></tr> "+
+					 "<tr><td><input type=\"button\" value = \"Prihvati\" onclick = \"prihvatiOglas("+data[i].oglasId+")\">" +
+							"<input type=\"button\" value = \"Odbij\" onclick = \"odbijOglas("+data[i].oglasId+")\"></td></tr>"
+					);
+
+			
+		}
+		
+	}
+
+});
 }
 
 function dodajFilmuOglas(movieId) {
@@ -191,4 +213,45 @@ function getFilmovi() {
 		});
 }
 	
+
+function prihvatiOglas(oglasId) {
+	$.ajax({
+			
+			url: "oglas/prihvatiOglas/" + oglasId,
+			type: "GET",
+			contentType:"application/json",
+			dataType: "json",
+			success: function(data){
+				
+				alert("Prihvatili ste zahtjev za oglas!");
+				top.location.href = "fanZona.html"
+			},
+			error: function() {
+				alert("Doslo je do greske");
+			}
+		
+		});
+		
+	}
+
+
+function odbijOglas(oglasId) {
+	$.ajax({
+			
+			url: "oglas/odbijOglas/" + oglasId,
+			type: "GET",
+			contentType:"application/json",
+			dataType: "json",
+			success: function(data){
+				
+				alert("Odbili ste zahtjev za oglas!");
+				top.location.href = "fanZona.html"
+			},
+			error: function() {
+				alert("Doslo je do greske");
+			}
+		
+		});
+		
+	}
 	
