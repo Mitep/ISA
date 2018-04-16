@@ -58,6 +58,43 @@ window.onload = function(){
 		 }
 	});
 	
+	$.ajax({
+		 url: "user/getPozorista",
+		 method: "GET",
+		 success: function(data){
+			 $(".listaPozorista").empty();
+			 for(i=0;i<data.length;i++){
+				 if(data[i].type == "THEATRE"){
+				 	$(".listaPozorista").append("<hr><tr><td>Naziv: </td><td>" + data[i].name + "</td></tr> "+
+						 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
+						 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr>");
+				 	}
+				 }
+		 },
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+	$.ajax({
+		 url: "user/getBioskopi",
+		 method: "GET",
+		 success: function(data){
+			 $(".listaBioskopa").empty();
+			 for(i=0;i<data.length;i++){
+				if(data[i].type == "CINEMA"){ 
+				 $(".listaBioskopa").append("<hr><tr><td>Naziv: </td><td>" + data[i].name + "</td></tr> "+
+						 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
+						 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr>");
+				} 
+			}
+		 },
+		 error: function(){
+			 alert("Doslo je do greske");
+		 }
+	});
+	
+	
 	
 }
 

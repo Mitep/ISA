@@ -73,11 +73,11 @@ public class TheatreController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<TheatreCinema> prikaziPozoriste(HttpServletRequest request) {
 		User us = (User)request.getSession().getAttribute("user");
-		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
-			return theatreRep.findAll();
-		}else {
-			return null;
-			}
+	//	if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+		return theatreRep.findAll();
+	//	}else {
+	//		return null;
+	//		}
 			
 		}
 	
@@ -131,5 +131,21 @@ public class TheatreController {
 			}
 		}
 	
+	@RequestMapping(value = "/prikaziPozoriste/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public TheatreCinema prikaziPozoriste(@PathVariable Long id,HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		User pom = userRep.findByUserId(us.getUserId());
+		TheatreCinema tc = theatreRep.findByTcId(id);
+		if(pom.getUserRole().equals(UserRole.USER)) {
+			pom.getListaTC().add(tc);
+			tc.getListaKorisnika().add(pom);
+		}
+		userRep.save(pom);
+		theatreRep.save(tc);
+		return tc;
+		
+	}
 }
 

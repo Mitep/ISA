@@ -12,7 +12,8 @@ window.onload = function() {
 							 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 							 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
-								"<input type=\"button\" value = \"Izmijeni\"></td></tr>"
+								"<input type=\"button\" value = \"Izmijeni\">"+
+								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
 							);
 
 					}
@@ -94,3 +95,32 @@ function dodajBioskop() {
 	
 }
 
+function repertoar(cinemaId){
+	
+	$.ajax({
+		
+		url: "bioskop/prikaziBioskope/"+cinemaId,
+		type: "GET",
+		success: function(data){
+			$(".prikaz").empty();
+			$("#adminiKorisnici").empty();
+				if(data.type == "CINEMA") {
+				$(".prikaz").append("<tr><td>Naziv: </td><td>" + data.name + "</td></tr> "+
+						 "<tr><td>Adresa: </td><td>" + data.adress + "</td></tr> "+
+						 "<tr><td>Opis: </td><td>" + data.description + "</td></tr> " +
+						 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
+							"<input type=\"button\" value = \"Izmijeni\">" +
+							"<input type=\"button\" onclick=\"nazad()\" value = \"Nazad\"></td></tr>");
+				}
+		},
+		error:function(data){
+			alert(data)
+		}
+	});
+
+}
+
+function nazad(){
+	
+	top.location.href="theatre.html";
+}

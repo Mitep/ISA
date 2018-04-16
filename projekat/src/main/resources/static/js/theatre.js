@@ -4,14 +4,17 @@ window.onload = function() {
 			url: "pozoriste/prikaziPozoriste",
 			type: "GET",
 			success: function(data){
+				
 				$(".prikaz").empty();
 				for(i=0;i<data.length;i++) {
+					console.log(data[i].id);
 					if(data[i].type == "THEATRE") {
 					$(".prikaz").append("<tr><td>Naziv: </td><td>" + data[i].name + "</td></tr> "+
 							 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 							 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
-								"<input type=\"button\" value = \"Izmijeni\"></td></tr>"
+								"<input type=\"button\" value = \"Izmijeni\">" +
+								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
 							);
 					}
 					
@@ -105,4 +108,34 @@ function dodajPozoriste() {
 	
 	});
 	
+}
+
+function repertoar(theatreId){
+	
+	$.ajax({
+		
+		url: "pozoriste/prikaziPozoriste/"+theatreId,
+		type: "GET",
+		success: function(data){
+			$(".prikaz").empty();
+			$("#adminiKorisnici").empty();
+				if(data.type == "THEATRE") {
+				$(".prikaz").append("<tr><td>Naziv: </td><td>" + data.name + "</td></tr> "+
+						 "<tr><td>Adresa: </td><td>" + data.adress + "</td></tr> "+
+						 "<tr><td>Opis: </td><td>" + data.description + "</td></tr> " +
+						 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
+							"<input type=\"button\" value = \"Izmijeni\">" +
+							"<input type=\"button\" onclick=\"nazad()\" value = \"Nazad\"></td></tr>");
+				}
+		},
+		error:function(data){
+			alert(data)
+		}
+	});
+
+}
+
+function nazad(){
+	
+	top.location.href="theatre.html";
 }

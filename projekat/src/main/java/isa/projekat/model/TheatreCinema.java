@@ -67,6 +67,14 @@ public class TheatreCinema implements Serializable {
 	private List<Projection> projekcije;
 	
 	
+	@ManyToMany
+	@JoinTable(name = "korisniciTC",
+    joinColumns = @JoinColumn(name = "tc", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "korisnik", nullable = false))
+	@JsonIgnore
+	private List<User> listaKorisnika;
+	
+	
 	private TheatreCinema() {
 		
 	}
@@ -78,9 +86,19 @@ public class TheatreCinema implements Serializable {
 		this.description = description;
 		this.adminiBioPoz = new ArrayList<User>();
 		this.projekcije = new ArrayList<Projection>();
+		this.listaKorisnika = new ArrayList<User>();
 	}
 	
 	
+	
+
+	public List<User> getListaKorisnika() {
+		return listaKorisnika;
+	}
+
+	public void setListaKorisnika(List<User> listaKorisnika) {
+		this.listaKorisnika = listaKorisnika;
+	}
 
 	public List<Projection> getProjekcije() {
 		return projekcije;

@@ -61,11 +61,11 @@ public class CinemaController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<TheatreCinema> prikaziBioskop(HttpServletRequest request) {
 		User us = (User)request.getSession().getAttribute("user");
-		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+	//	if(us.getUserRole().equals(UserRole.SYSADMIN)) {
 			return cinemaRep.findAll();
-		}else {
-			return null;
-			}
+	//	}else {
+	//		return null;
+		//	}
 			
 		}
 		
@@ -119,5 +119,22 @@ public class CinemaController {
 			}
 		}
 	
+	
+	@RequestMapping(value = "/prikaziBioskope/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public TheatreCinema prikaziPozoriste(@PathVariable Long id,HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		User pom = userRep.findByUserId(us.getUserId());
+		TheatreCinema tc = cinemaRep.findByTcId(id);
+		if(pom.getUserRole().equals(UserRole.USER)) {
+			pom.getListaTC().add(tc);
+			tc.getListaKorisnika().add(pom);
+		}
+		userRep.save(pom);
+		cinemaRep.save(tc);
+		return tc;
+		
+	}
 	
 }

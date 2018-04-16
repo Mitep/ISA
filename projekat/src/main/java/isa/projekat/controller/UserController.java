@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import isa.projekat.model.MedalType;
 import isa.projekat.model.RatingScale;
+import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.User;
 import isa.projekat.model.UserPassword;
 import isa.projekat.model.UserRole;
@@ -449,6 +450,29 @@ public class UserController {
 	public User adminiPozoristas(@PathVariable Long userId,HttpServletRequest request){
 			
 			return userRep.findByUserId(userId);
+		
+		}
+	
+	
+	@RequestMapping(value = "/getPozorista",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TheatreCinema> getPozorista(HttpServletRequest request){
+			
+			User us = (User) request.getSession().getAttribute("user");
+			User pom = userRep.findByUserId(us.getUserId());
+			return pom.getListaTC();
+		
+		}
+	
+	@RequestMapping(value = "/getBioskopi",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TheatreCinema> getBioskopi(HttpServletRequest request){
+			
+			User us = (User) request.getSession().getAttribute("user");
+			User pom = userRep.findByUserId(us.getUserId());
+			return pom.getListaTC();
 		
 		}
 	

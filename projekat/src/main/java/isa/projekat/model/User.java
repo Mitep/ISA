@@ -1,6 +1,7 @@
 package isa.projekat.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,6 +106,11 @@ public class User {
 	@JsonIgnore
 	private List<RequestOglasa> zahtjeviOglasa;
 	
+	@ManyToMany(mappedBy = "listaKorisnika")
+	@JsonIgnore
+	private List<TheatreCinema> listaTC;
+	
+	
 	private MedalType mt;
 	
 	public User() {
@@ -124,10 +135,17 @@ public class User {
 		this.friendsRequest = new ArrayList<User>();
 		this.bioPozAdmini = new ArrayList<TheatreCinema>();
 		this.zahtjeviOglasa = new ArrayList<RequestOglasa>();
+		this.listaTC = new ArrayList<TheatreCinema>();
 	}
 
-	
-	
+	public List<TheatreCinema> getListaTC() {
+		return listaTC;
+	}
+
+	public void setListaTC(List<TheatreCinema> listaTC) {
+		this.listaTC = listaTC;
+	}
+
 	public MedalType getMt() {
 		return mt;
 	}
