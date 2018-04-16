@@ -447,12 +447,20 @@ public class UserController {
 	@RequestMapping(value = "/getAdminiPozorista/{userId}",			
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public User adminiPozoristas(@PathVariable Long userId,HttpServletRequest request){
+	public User adminiPozorista(@PathVariable Long userId,HttpServletRequest request){
 			
 			return userRep.findByUserId(userId);
 		
 		}
 	
+	@RequestMapping(value = "/getAdminiBioskopa/{userId}",			
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public User getAdminiBioskopa(@PathVariable Long userId,HttpServletRequest request){
+			
+			return userRep.findByUserId(userId);
+		
+		}
 	
 	@RequestMapping(value = "/getPozorista",			
 			method = RequestMethod.GET,

@@ -17,9 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -57,8 +54,8 @@ public class TheatreCinema implements Serializable {
 	
 	@ManyToMany
     @JoinTable(name = "adminiObjekata",
-    joinColumns = @JoinColumn(name = "user1_id", nullable = false),
-    inverseJoinColumns = @JoinColumn(name = "objekat_id", nullable = false))
+    joinColumns = @JoinColumn(name = "objekat_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "user1_id", nullable = false))
 	@JsonIgnore
 	private List<User> adminiBioPoz;
 	

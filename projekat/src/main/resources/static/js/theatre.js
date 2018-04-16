@@ -12,7 +12,7 @@ window.onload = function() {
 					$(".prikaz").append("<tr><td>Naziv: </td><td>" + data[i].name + "</td></tr> "+
 							 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
-							 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
+							 "<tr><td><input type=\"button\" value = \"Ukloni\" onclick = \"ukloniPozoriste("+data[i].id+")\">" +
 								"<input type=\"button\" value = \"Izmijeni\">" +
 								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
 							);
@@ -138,4 +138,24 @@ function repertoar(theatreId){
 function nazad(){
 	
 	top.location.href="theatre.html";
+}
+
+function ukloniPozoriste(id){
+	console.log(id)
+	$.ajax({
+		
+		url: "pozoriste/deletePozoriste/" + id,
+		type: "GET",
+		success: function(data){
+			if(data != null){
+				alert("Uspjesno ste izbrisali pozoriste!");
+				top.location.href="theatre.html";
+				
+			}else
+				alert("Niste izbrisali pozoriste!");
+			
+		}
+	
+	});
+
 }

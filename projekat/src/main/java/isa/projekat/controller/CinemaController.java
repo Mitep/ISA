@@ -136,5 +136,14 @@ public class CinemaController {
 		return tc;
 		
 	}
-	
+
+	@RequestMapping(value = "/deleteBioskop/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean deleteBioskop(@PathVariable Long id) {
+	TheatreCinema c = cinemaRep.findByTcId(id);
+	cinemaRep.delete(c);
+	return true;
+	}
+
 }

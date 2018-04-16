@@ -1,6 +1,5 @@
 package isa.projekat.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -147,5 +146,15 @@ public class TheatreController {
 		return tc;
 		
 	}
-}
 
+
+		@RequestMapping(value = "/deletePozoriste/{id}",
+				method = RequestMethod.GET,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean deletePozoriste(@PathVariable Long id) {
+		TheatreCinema t = theatreRep.findByTcId(id);
+		theatreRep.delete(t);
+		return true;
+		}
+
+}
