@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Promjena password-a</title>
+    <title>Izmjena bioskopa</title>
+	<script  type="text/javascript" src="js/cinema.js"></script>
     <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script  type="text/javascript" src="js/podesavanja.js"></script>
     <script  type="text/javascript" src="js/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
     
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     
   </head>
   <body>
   
-  <ul>
+ <ul>
 	  <li class="left"><a href="homePage.html">Home</a></li>
 	  <li class="left"><a href="profilKorisnika.html">Korisnik</a></li>
 	  <li class="left"><a href="sviKorisnici.html">Svi korisnici</a></li>
@@ -28,21 +28,22 @@
    
                     <div>
                         <div >
-                            <h1><b>Novi password</b></h1>
+                            <h1><b>Izmjena bioskopa</b></h1>
                         </div>
                         <div >
-                            <form accept-charset="UTF-8" role="form" name = "passwordForm" id="passwordForm"  >
+                            <form accept-charset="UTF-8" role="form" name = "izmjenaBioskopaForm" id="izmjenaBioskopaForm"  >
                                 <fieldset>
                                     <div >
-                                        <input placeholder="Stari password" type="password" id="oldPassword" name="oldPassword">
+                                        <input placeholder="Naziv bioskopa" type="text" name="name">
                                     </div>
                                     <div> 
-                                        <input placeholder="Novi password" id="newPassword" name="newPassword" type="password" >
+                                        <input placeholder="Adresa bioskopa" name="adress" type="text" >
                                     </div>
                                     <div> 
-                                        <input placeholder="Ponovite novi password" id="repeatNewPassword" name="repeatNewPassword" type="password" >
+                                        <input placeholder="Opis bioskopa" name="description" type="text" >
                                     </div>
-                                    <input type="button" value="Izmijeni" onclick="izmijeniPassword()">
+                          
+                                    <input type="button" value="Izmijeni" onclick="izmijeniBioskop2()">
                                
                                 </fieldset>
 

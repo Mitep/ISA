@@ -151,10 +151,36 @@ public class TheatreController {
 		@RequestMapping(value = "/deletePozoriste/{id}",
 				method = RequestMethod.GET,
 				produces = MediaType.APPLICATION_JSON_VALUE)
-		public boolean deletePozoriste(@PathVariable Long id) {
-		TheatreCinema t = theatreRep.findByTcId(id);
-		theatreRep.delete(t);
-		return true;
-		}
+		public boolean deletePozoriste(@PathVariable Long id, HttpServletRequest request) {
+			User us = (User)request.getSession().getAttribute("user");
+			if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+				TheatreCinema t = theatreRep.findByTcId(id);
+				theatreRep.delete(t);
+				return true;
+				} 
+			else {
+				return false;
+				}
+			}
 
-}
+		@RequestMapping(value="/izmijeniPozoriste/{id}",
+				method = RequestMethod.PUT,
+				consumes = MediaType.APPLICATION_JSON_VALUE,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean izmijeniPozoriste(@RequestBody TheatreCinema theatre, @PathVariable Long id, HttpServletRequest request) {
+			User us = (User)request.getSession().getAttribute("user");
+			if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+				TheatreCinema tc = theatreRep.findByTcId(id);
+				tc.setName(theatre.getName());
+				tc.setAdress(theatre.getAdress());
+				tc.setDescription(theatre.getDescription());
+				theatreRep.save(tc);
+			
+					return true;
+
+		} else {
+			return false;
+		}
+			}
+	
+		}

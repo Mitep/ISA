@@ -13,7 +13,7 @@ window.onload = function() {
 							 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 							 "<tr><td><input type=\"button\" value = \"Ukloni\" onclick = \"ukloniPozoriste("+data[i].id+")\">" +
-								"<input type=\"button\" value = \"Izmijeni\">" +
+								"<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniPozoriste("+data[i].id+")\">"+
 								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
 							);
 					}
@@ -147,15 +147,49 @@ function ukloniPozoriste(id){
 		url: "pozoriste/deletePozoriste/" + id,
 		type: "GET",
 		success: function(data){
-			if(data != null){
-				alert("Uspjesno ste izbrisali pozoriste!");
+			if(data){
+				alert("Uspjesno ste uklonili pozoriste!");
 				top.location.href="theatre.html";
 				
 			}else
-				alert("Niste izbrisali pozoriste!");
+				alert("Samo administrator sistema moze da ukloni pozoriste!");
 			
 		}
 	
 	});
 
+}
+
+function izmijeniPozoriste(id) {
+	
+	sessionStorage.setItem('Tid',id);
+	top.location.href="formaZaIzmjenuPozorista.html";
+	
+
+}
+
+function izmijeniPozoriste2() {
+	
+	id = sessionStorage.getItem('Tid');
+	var $form = $("#izmjenaPozoristaForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	$.ajax({
+		
+		url: "pozoriste/izmijeniPozoriste/"+id,
+		type: "PUT",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste izmijenili pozoriste!");
+				top.location.href="theatre.html";
+			}else
+				alert("Samo administrator sistema moze da izmijeni pozoriste!");
+			
+		}
+	
+	});
+	
 }

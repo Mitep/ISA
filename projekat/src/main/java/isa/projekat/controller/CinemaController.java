@@ -140,10 +140,35 @@ public class CinemaController {
 	@RequestMapping(value = "/deleteBioskop/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean deleteBioskop(@PathVariable Long id) {
-	TheatreCinema c = cinemaRep.findByTcId(id);
-	cinemaRep.delete(c);
-	return true;
-	}
+	public boolean deleteBioskop(@PathVariable Long id, HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			TheatreCinema c = cinemaRep.findByTcId(id);
+			cinemaRep.delete(c);
+			return true;
+			} else {
+				return false;
+				}
+			}
+			
+	@RequestMapping(value="/izmijeniBioskop/{id}",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean izmijeniBioskop(@RequestBody TheatreCinema cinema, @PathVariable Long id, HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		if(us.getUserRole().equals(UserRole.SYSADMIN)) {
+			TheatreCinema tc = cinemaRep.findByTcId(id);
+			tc.setName(cinema.getName());
+			tc.setAdress(cinema.getAdress());
+			tc.setDescription(cinema.getDescription());
+			cinemaRep.save(tc);
+		
+				return true;
+
+			} else {
+				return false;
+				}
+			}
 
 }

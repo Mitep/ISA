@@ -12,7 +12,7 @@ window.onload = function() {
 							 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 							 "<tr><td><input type=\"button\" value = \"Ukloni\" onclick = \"ukloniBioskop("+data[i].id+")\">" +
-								"<input type=\"button\" value = \"Izmijeni\">"+
+								"<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniBioskop("+data[i].id+")\">"+
 								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
 							);
 
@@ -149,15 +149,49 @@ function ukloniBioskop(id){
 		url: "bioskop/deleteBioskop/" + id,
 		type: "GET",
 		success: function(data){
-			if(data != null){
-				alert("Uspjesno ste izbrisali bioskop!");
+			if(data){
+				alert("Uspjesno ste uklonili bioskop!");
 				top.location.href="cinema.html";
 				
 			}else
-				alert("Niste izbrisali bioskop!");
+				alert("Samo administrator sistema moze da ukloni bioskop!");
 			
 		}
 	
 	});
 
+}
+
+function izmijeniBioskop(id) {
+	
+	sessionStorage.setItem('Cid',id);
+	top.location.href="formaZaIzmjenuBioskopa.html";
+	
+
+}
+
+function izmijeniBioskop2() {
+	
+	id = sessionStorage.getItem('Cid');
+	var $form = $("#izmjenaBioskopaForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	$.ajax({
+		
+		url: "bioskop/izmijeniBioskop/"+id,
+		type: "PUT",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste izmijenili bioskop!");
+				top.location.href="cinema.html";
+			}else
+				alert("Samo administrator sistema moze da izmijeni bioskop!");
+			
+		}
+	
+	});
+	
 }
