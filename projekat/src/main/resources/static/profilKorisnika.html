@@ -40,6 +40,8 @@
         
         <div>
           
+          
+          
           <table>
             <thead>
               <tr bgcolor="lightgray">
@@ -99,7 +101,6 @@
               </tbody>
             </table>
        </div>
-       
           <input  onclick="formaZaIzmjenu()" type="button" value="Izmijeni">
      </div>
             </form>
@@ -140,16 +141,27 @@
                         </tbody> 
                	</table>
                	<h3><label>Lista pozorista:</label></h3>
-               	<table>
-				
-                        <tbody class="listaPozorista">                                    
+               	<table id = "myTable">
+					  <tr>
+					   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+					    <th onclick="sortTable(0)">Naziv</th>
+					    <th onclick="sortTable(1)">Adresa</th>
+					    <th onclick="sortTable(2)">Opis</th>
+					  </tr>
+		               <tbody class="listaPozorista">                                    
                             
                         </tbody> 
                	</table>
                	
                	<h3><label>Lista bioskopa:</label></h3>
-               	<table>
-				
+               	<table id = "myTable2">
+						<tr>
+					   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+					    <th onclick="sortTable2(0)">Naziv</th>
+					    <th onclick="sortTable2(1)">Adresa</th>
+					    <th onclick="sortTable2(2)">Opis</th>
+					  </tr>
+						
                         <tbody class="listaBioskopa">                                    
                             
                         </tbody> 

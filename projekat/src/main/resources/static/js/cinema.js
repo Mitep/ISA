@@ -13,7 +13,7 @@ window.onload = function() {
 							 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 							 "<tr><td><input type=\"button\" value = \"Ukloni\" onclick = \"ukloniBioskop("+data[i].id+")\">" +
 								"<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniBioskop("+data[i].id+")\">"+
-								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Repertoar\"></td></tr>"
+								"<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\"></td></tr>"
 							);
 
 					}
@@ -125,9 +125,8 @@ function repertoar(cinemaId){
 				$(".prikaz").append("<tr><td>Naziv: </td><td>" + data.name + "</td></tr> "+
 						 "<tr><td>Adresa: </td><td>" + data.adress + "</td></tr> "+
 						 "<tr><td>Opis: </td><td>" + data.description + "</td></tr> " +
-						 "<tr><td><input type=\"button\" value = \"Ukloni\">" +
-							"<input type=\"button\" value = \"Izmijeni\">" +
-							"<input type=\"button\" onclick=\"nazad()\" value = \"Nazad\"></td></tr>");
+						 "<tr><td>" +
+							"<input type=\"button\" onclick=\"nazadBioskop()\" value = \"Nazad\"></td></tr>");
 				}
 		},
 		error:function(data){
@@ -137,9 +136,9 @@ function repertoar(cinemaId){
 
 }
 
-function nazad(){
+function nazadBioskop(){
 	
-	top.location.href="theatre.html";
+	top.location.href="cinema.html";
 }
 
 function ukloniBioskop(id){
