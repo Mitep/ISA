@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,6 +32,8 @@ public class Seat implements Serializable {
 	private int colNum;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="segment_id")
+	@JsonIgnore
 	private Segment segment;
 	
 	public Seat() {

@@ -49,7 +49,6 @@ public class TheatreCinema implements Serializable {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
-	@JsonIgnore
 	private Set<Hall> halls;
 	
 	@ManyToMany

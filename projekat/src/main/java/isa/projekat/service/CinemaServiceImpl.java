@@ -71,4 +71,16 @@ public class CinemaServiceImpl implements CinemaService {
 		cinemaRepository.updateCinema(newCinema.getName(), newCinema.getDescription(), newCinema.getId());
 	}
 
+	@Override
+	public void editCinema(TheatreCinema c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TheatreCinema getCinema(Long id) {
+		// TODO Auto-generated method stub
+		return cinemaRepository.findByTcId(id);
+	}
+
 }

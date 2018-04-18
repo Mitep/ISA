@@ -33,10 +33,10 @@ public class Hall implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="theatre_cinema_id")
+	@JsonIgnore
 	private TheatreCinema theatreCinema;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hall")
-	@JsonIgnore
 	private Set<Segment> segments;
 	
 	public Hall() {

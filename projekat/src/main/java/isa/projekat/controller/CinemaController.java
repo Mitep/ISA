@@ -83,7 +83,7 @@ public class CinemaController {
 	@RequestMapping(
 			value= {"/sviBioskopi"},
 			method = {RequestMethod.GET},
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CinemaDTO> getAllCinemas(){
 		return cinemaService.getAllCinemas();
 	}
@@ -170,5 +170,22 @@ public class CinemaController {
 				return false;
 				}
 			}
+	
+	@RequestMapping(
+			value= {"/{id}"},
+			method = {RequestMethod.GET},
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public TheatreCinema getCinema(@PathVariable("id") Long id){
+		return cinemaService.getCinema(id);
+	}
+	
+	@RequestMapping(
+			value= {"/{id}"},
+			method = {RequestMethod.POST},
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void editCinema(@RequestBody TheatreCinema cinema){
+		cinemaService.editCinema(cinema);
+	}
 
 }

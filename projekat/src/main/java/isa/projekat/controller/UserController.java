@@ -105,12 +105,12 @@ public class UserController {
 	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
 		
-		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
+		if(!us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
 		
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
-			return "fanAdmin";
+			return us.getUserRole().toString();
 		}
 		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
@@ -124,10 +124,10 @@ public class UserController {
 			userRep.save(us);
 			request.getSession().setAttribute("user", us);
 			
-			return "logovao";
+			return us.getUserRole().toString();
 		}
 		
-			return "nije se logovao";
+			return null;
 	}
 	
 	

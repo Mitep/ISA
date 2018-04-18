@@ -26,10 +26,10 @@ insert into hall(name, theatre_cinema_id) values ('glavna sala', 1)
 insert into hall(name, theatre_cinema_id) values ('glavna sala', 2)
 insert into hall(name, theatre_cinema_id) values ('mala sala', 3)
 
-insert into segment(name, hall_id) values ('prvi segment', 1)
-insert into segment(name, hall_id) values ('drugi segment', 2)
-insert into segment(name, hall_id) values ('prvi segment', 2)
-insert into segment(name, hall_id) values ('prednji deo', 2)
+insert into segment(name, hall_id,row_num,col_num) values ('prvi segment', 1, 4,4)
+insert into segment(name, hall_id,row_num,col_num) values ('drugi segment', 2,0,0)
+insert into segment(name, hall_id,row_num,col_num) values ('prvi segment', 2,0,0)
+insert into segment(name, hall_id,row_num,col_num) values ('prednji deo', 2,0,0)
 
 
 insert into movie_performance(type, name, director_id, length, poster) values (1, "Film1", 1, 78978, "poster1")
@@ -41,7 +41,6 @@ insert into projection(name, description, projection_date_time, movie_performanc
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 3 projekcija 3", "projekcija 3", "1523552111", 1, 1, 3) 
 
 insert into user(broj_logovanja,city, email, first_login, mobile_number, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values (0,'Zvornik','sysAdmin@sysAdmin.com',0,'123','sysAdmin','sysAdmin','sysAdmin', 2,0,'sysAdmin')
-
 insert into user(broj_logovanja,city, email, first_login, mobile_number, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values (0,'Zvornik1','sysAdmin1@sysAdmin1.com',0,'1234','sysAdmin1','sysAdmin1','sysAdmin1', 3,0,'sysAdmin1')
 
 insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','s@s.com',0,'123','s','s','s',0,0,'s')
@@ -49,4 +48,31 @@ insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,u
 insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'bbbb','b@b.com',0,'12345','b','b','b',0,0,'b')
 insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'cccc','c@c.com',0,'12341','c','c','c',0,0,'c')
 
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','admin@s.com',0,'123','s','s','s',1,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','admin2@s.com',0,'123','s','s','s',1,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','user@s.com',0,'123','s','s','s',0,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','user2@s.com',0,'123','s','s','s',0,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','sysAdmin@s.com',0,'123','s','s','s',3,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','sysAdmin2@s.com',0,'123','s','s','s',3,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','fanAdmin@s.com',0,'123','s','s','s',2,0,'s')
+insert into user(broj_logovanja,city,email,first_login,mobile_number,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','fanAdmin2@s.com',0,'123','s','s','s',2,0,'s')
+
 insert into medalje(do_bronzana,do_srebrna,do_zlatna,od_bronzana,od_srebrna,od_zlatna) values(2,4,10,0,2,4)
+
+insert into seat(segment_id, row_num, col_num) values (1,1,1)
+insert into seat(segment_id, row_num, col_num) values (1,1,2)
+insert into seat(segment_id, row_num, col_num) values (1,1,3)
+insert into seat(segment_id, row_num, col_num) values (1,1,4)
+insert into seat(segment_id, row_num, col_num) values (1,2,1)
+insert into seat(segment_id, row_num, col_num) values (1,2,2)
+insert into seat(segment_id, row_num, col_num) values (1,2,3)
+insert into seat(segment_id, row_num, col_num) values (1,2,4)
+insert into seat(segment_id, row_num, col_num) values (1,3,1)
+insert into seat(segment_id, row_num, col_num) values (1,3,2)
+insert into seat(segment_id, row_num, col_num) values (1,3,3)
+insert into seat(segment_id, row_num, col_num) values (1,3,4)
+insert into seat(segment_id, row_num, col_num) values (1,4,1)
+insert into seat(segment_id, row_num, col_num) values (1,4,2)
+insert into seat(segment_id, row_num, col_num) values (1,4,3)
+insert into seat(segment_id, row_num, col_num) values (1,4,4)
+

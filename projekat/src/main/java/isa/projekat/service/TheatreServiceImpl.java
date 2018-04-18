@@ -54,4 +54,16 @@ public class TheatreServiceImpl implements TheatreService {
 		theatreRepostiory.updateTheatre(newTheatre.getName(), newTheatre.getDescription(), newTheatre.getId());
 	}
 
+	@Override
+	public void editTheatre(TheatreCinema t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TheatreCinema getTheatre(Long id) {
+		// TODO Auto-generated method stub
+		return theatreRepostiory.findByTcId(id);
+	}
+
 }

@@ -33,14 +33,36 @@ public class Segment implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="hall_id")
+	@JsonIgnore
 	private Hall hall;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "segment")
-	@JsonIgnore
 	private Set<Seat> Seat;
+	
+	@Column(name = "row_num", nullable = false)
+	private int rowNum;
+	
+	@Column(name = "col_num", nullable = false)
+	private int colNum;
 	
 	public Segment() {
 		
+	}
+
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+	public int getColNum() {
+		return colNum;
+	}
+
+	public void setColNum(int colNum) {
+		this.colNum = colNum;
 	}
 
 	public Long getId() {

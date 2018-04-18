@@ -94,7 +94,7 @@ public class TheatreController {
 	@RequestMapping(
 			value= {"/svaPozorista"},
 			method = {RequestMethod.GET},
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<TheatreDTO> getAllTheatres(){
 		return theatreService.getAllTheatres();
 	}
@@ -182,5 +182,22 @@ public class TheatreController {
 			return false;
 		}
 			}
-	
+		
+		@RequestMapping(
+				value= {"/{id}"},
+				method = {RequestMethod.GET},
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public TheatreCinema getCinema(@PathVariable("id") Long id){
+			return theatreService.getTheatre(id);
 		}
+		
+		@RequestMapping(
+				value= {"/{id}"},
+				method = {RequestMethod.POST},
+				produces = MediaType.APPLICATION_JSON_VALUE,
+				consumes = MediaType.APPLICATION_JSON_VALUE)
+		public void editCinema(@RequestBody TheatreCinema theatre){
+			theatreService.editTheatre(theatre);
+		}
+	
+}

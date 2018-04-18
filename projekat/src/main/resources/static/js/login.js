@@ -13,16 +13,16 @@ function logIn(){
 		dataType: "text",
 		success: function(data){
 			console.log(data)
-			if(data == "fanAdmin"){
-				
-				alert("Uspjesno ste se ulogovali admine fan zone!");
-				top.location.href="podesavanja.html";
-				
-			}else if(data =="logovao"){
-				
+			if(data != null){
+				if(data == "FANADMIN"){
+					sessionStorage.setItem("user_type", data);
+					alert("Uspjesno ste se ulogovali admine fan zone!");
+					top.location.href="podesavanja.html";	
+				} else {
+				sessionStorage.setItem("user_type", data);
 				alert("Uspjesno ste se ulogovali!");
 				top.location.href="homePage.html";
-				
+				}
 			}else
 				alert("Niste se ulogovali!");
 			

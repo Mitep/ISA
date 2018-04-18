@@ -1,16 +1,16 @@
 $(document).ready(function(){
-	$("#home_div").show();
-	$("#friends_div").hide();
-	$("#log_div").hide();
-	$("#profile_div").hide();
-		
-	$('a[href="#log"]').click(function(){
-		$("#home_div").hide();
-		$("#friends_div").hide();
-		$("#log_div").show();
-		$("#profile_div").hide();
+
+	$("#home_div > div.pozoriste").click(function(){
+		 //prikazuje pozorista
+		top.location.href="theatre.html";
 	});
-		
+	
+	$("#home_div > div.bioskop").click(function(){
+		//prikazuje bioskope		
+		top.location.href="cinema.html";
+
+	});
+	
 });
 
 function getFormData($form){
@@ -38,6 +38,9 @@ function logout(){
 		success : function(data){
 			if (data == true) {
 				alert("Uspjesno ste se odjavili sa sistema.");
+
+				sessionStorage.removeItem("user_type")
+
 				top.location.href = "login.html";
 			}else{
 				
