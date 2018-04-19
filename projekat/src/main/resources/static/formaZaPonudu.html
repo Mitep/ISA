@@ -2,21 +2,17 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Izmjena bioskopa</title>
-    
-    <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script  type="text/javascript" src="js/editCinema.js"></script>
-    <script  type="text/javascript" src="js/index.js"></script>
-   	<script type="text/javascript" src="js/util.js"></script>
-    
-    
+    <title>Dodaj ponudu</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/editCinema.css">
     
-    
+   	<script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+   	<script  type="text/javascript" src="js/index.js"></script>
+   	<script  type="text/javascript" src="js/stranicaOglas.js"></script>
+   	<script type="text/javascript" src="js/util.js"></script>
+   	
   </head>
   <body>
-<!-- toolbar -->
+ <!-- toolbar -->
 <ul>  
   		<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
 	<li class="left" id="user_tb" ><a href="profilKorisnika.html">Korisnik</a></li>
@@ -33,30 +29,28 @@
 	<li class="right" id="register_tb" ><a href="registracija.html">Registracija</a></li>  
 	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li>
 </ul>
-   
-   
-   <br>
-   <div id="main_div">
-   Izmeni osnovne informacije
-   <div class="osnovne_informacije">
-   <form accept-charset="UTF-8" >
-   	   <input placeholder="Naziv bioskopa" type="text" name="name" id="input_name"><br>
-	   <input placeholder="Adresa bioskopa" name="adress" type="text" id="input_adress"><br>
-	   <input placeholder="Opis bioskopa" name="description" type="text" id="input_description"><br>
-	   <button> Sacuvaj izmene osnovnih informacija</button>
-   </form>
-  </div>
-  
-  <br>
-  <form accept-charset="UTF-8" >
-   	   <input placeholder="Naziv sale" type="text" name="name">
-		<button>Dodaj salu</button>
-   </form>
-  Sale
-  <div id="sale"></div>
-  
-	      
-   </div>
-                 
+
+<div>
+
+                    <div>
+                        <h1 ><b>Dodaj ponudu</b></h1>
+                    </div>
+                    <div>
+                        <form  id = "ponudaForm" method="post" >
+                            <fieldset>
+                                <div>
+                                    <input required  placeholder="Ponuda" id="ponuda" type="text" name="ponuda">
+                                </div>
+                                
+                              	<input  id="ponudaButton" onclick="ponudi2()" type="button" value="Ponudi">
+                               
+                                
+                                
+                            </fieldset>
+                        </form>
+                        
+                       
+                    </div>
+        
   </body>
 </html>

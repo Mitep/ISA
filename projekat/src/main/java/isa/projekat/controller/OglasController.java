@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa.projekat.model.MoviePerformance;
+import isa.projekat.model.Offer;
 import isa.projekat.model.Oglas;
 import isa.projekat.model.RequestOglasa;
 import isa.projekat.model.User;
 import isa.projekat.model.UserRole;
 import isa.projekat.repository.MoviePerformanceRepository;
+import isa.projekat.repository.OfferRepository;
 import isa.projekat.repository.OglasRepository;
 import isa.projekat.repository.RequestOglasaRepository;
 import isa.projekat.repository.UserRepository;
@@ -32,6 +34,9 @@ public class OglasController {
 	
 	@Autowired
 	private MoviePerformanceRepository movieRep;
+	
+	@Autowired
+	private OfferRepository offerRep;
 	
 	@Autowired
 	private UserRepository userRep;
@@ -52,12 +57,15 @@ public class OglasController {
 				movie.getOglas().add(og);
 				og.getMoviePer().add(movie);
 				RequestOglasa ro = new RequestOglasa();
-				ro.setKorisnik(null);
+				ro.setFanAdmin(null);
 				ro.setOglas(og);
 				ro.setPrihvacen(true);
+				ro.setSender(us);
+				og.setVlasnik(us);
 				oglasRep.save(og);
 				movieRep.save(movie);
 				roRep.save(ro);
+				userRep.save(us);
 				return true;
 			}else if(us.getUserRole().equals(UserRole.USER)) {
 				
@@ -69,15 +77,15 @@ public class OglasController {
 				RequestOglasa ro = new RequestOglasa();
 				//ro.setKorisnik(us);
 				ro.setOglas(og);
-				ro.setPrihvacen(false);
 				
+				ro.setSender(us);
 				List<User> admin = userRep.findAll();
 				for(int i=0; i < admin.size();i++) {
 					if(admin.get(i).getUserRole().equals(UserRole.FANADMIN)) {
 					//	Hibernate.initialize(admin.get(i).getZahtjeviOglasa());
 						System.out.println(admin.get(i).getUserName());
 						admin.get(i).getZahtjeviOglasa().add(ro);
-						ro.setKorisnik(admin.get(i));
+						ro.setFanAdmin(admin.get(i));
 						userRep.save(admin.get(i));
 					}
 				}
@@ -96,11 +104,12 @@ public class OglasController {
 	@RequestMapping(value = "/prikaziOglas",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Oglas> prikaziOglas() {
+	public List<Oglas> prikaziOglas(HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
 		List<RequestOglasa> rp = roRep.findAll();
 		List<Oglas> ogl = new ArrayList<Oglas>();
 		for(int i = 0; i < rp.size();i++) {
-			if(rp.get(i).isPrihvacen()) {
+			if(rp.get(i).isPrihvacen() && rp.get(i).getSender().getUserId().equals(us.getUserId())) {
 				ogl.add(rp.get(i).getOglas());
 			}
 		}
@@ -108,6 +117,23 @@ public class OglasController {
 		return ogl;
 }
 
+	@RequestMapping(value = "/prikaziOglasDrugih",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<Oglas> prikaziOglasDrugih(HttpServletRequest request) {
+			User us = (User)request.getSession().getAttribute("user");
+			List<RequestOglasa> rp = roRep.findAll();
+			List<Oglas> ogl = new ArrayList<Oglas>();
+			for(int i = 0; i < rp.size();i++) {
+				if(rp.get(i).isPrihvacen() && !rp.get(i).getSender().getUserId().equals(us.getUserId())) {
+					ogl.add(rp.get(i).getOglas());
+				}
+			}
+			
+			return ogl;
+			
+	}
+	
 	@RequestMapping(value = "/deleteOglas/{oglasId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -196,14 +222,106 @@ public class OglasController {
 			for(int i = 0; i < receiver.getZahtjeviOglasa().size(); i++) {
 				if(receiver.getZahtjeviOglasa().get(i).getOglas().equals(os)) {
 					receiver.getZahtjeviOglasa().get(i).setPrihvacen(true);
+					os.setVlasnik(ro.getSender());
 					receiver.getZahtjeviOglasa().remove(i);
-					ro.setKorisnik(null);
+					ro.setFanAdmin(null);
 				}
 			}
 		
-			
+			oglasRep.save(os);
 			userRep.save(receiver);
 			return os;
 	}
 	
+	@RequestMapping(value = "/addPonuda/{oglasId}",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean addPonuda(@RequestBody Offer offer, @PathVariable Long oglasId, HttpServletRequest request) {
+			User us = (User)request.getSession().getAttribute("user");
+			User userPom = userRep.findByUserId(us.getUserId());
+			Oglas og = oglasRep.findByOglasId(oglasId);
+		
+			Offer of = new Offer();
+			of.setPonuda(offer.getPonuda());
+			
+			of.setSender(userPom);
+			userPom.getKorisnikovePonude().add(of);
+			of.setReceiver(og.getVlasnik());
+			of.setPonudaOglas(og);
+			og.getListaOffera().add(of);
+			
+		
+			offerRep.save(of);
+			userRep.save(userPom);
+			oglasRep.save(og);
+			return true;
+			
+			}
+		
+		@RequestMapping(value = "/prikaziPonude",
+				method = RequestMethod.GET,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<Offer> prikaziPonude(HttpServletRequest request) {
+				
+			User us = (User)request.getSession().getAttribute("user");
+			List<Offer> of = offerRep.findAll();
+			List<Offer> pomOg = new ArrayList<Offer>();
+			for(int i = 0; i < of.size();i++) {
+				if(of.get(i).getSender().getUserId().equals(us.getUserId())) {
+					pomOg.add(of.get(i));
+				}
+			}
+			
+			return pomOg;
+			
+			
+			
+			
+			
+	}
+		
+		
+		
+		@RequestMapping(value = "/prikaziPonudeDrugih",
+				method = RequestMethod.GET,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<Offer> prikaziPonudeDrugih(HttpServletRequest request) {
+				
+			User us = (User)request.getSession().getAttribute("user");
+			List<Offer> of = offerRep.findAll();
+			List<Offer> pomOg = new ArrayList<Offer>();
+			for(int i = 0; i < of.size();i++) {
+				if(of.get(i).getReceiver().getUserId().equals(us.getUserId())) {
+					pomOg.add(of.get(i));
+				}
+			}
+			
+			return pomOg;
+			
+	}
+		
+		
+		
+
+		@RequestMapping(value = "/prihvatiPonudu/{offerId}",
+				method = RequestMethod.GET,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public String prihvatiPonudu(@PathVariable Long offerId,HttpServletRequest request) {
+		
+			User us = (User)request.getSession().getAttribute("user");
+			Offer of = offerRep.findByOfferId(offerId);
+			List<Offer> ala =  offerRep.findAll();
+					
+			for(int i = 0; i < ala.size();i++) {
+				if(ala.get(i).getPonudaOglas().getOglasId().equals(of.getPonudaOglas().getOglasId())) {
+					offerRep.delete(ala.get(i));
+				
+				}
+			}
+			return "nesto";
+			
+	}
+			
+		
 }

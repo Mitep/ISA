@@ -21,7 +21,7 @@ function logIn(){
 				} else {
 				sessionStorage.setItem("user_type", data);
 				alert("Uspjesno ste se ulogovali!");
-				top.location.href="homePage.html";
+				top.location.href="index.html";
 				}
 			}else
 				alert("Niste se ulogovali!");

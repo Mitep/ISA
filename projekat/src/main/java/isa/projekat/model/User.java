@@ -102,13 +102,17 @@ public class User implements Serializable{
 	@JsonIgnore
 	private List<TheatreCinema> bioPozAdmini;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "korisnik")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "fanAdmin")
 	@JsonIgnore
 	private List<RequestOglasa> zahtjeviOglasa;
 	
 	@ManyToMany(mappedBy = "listaKorisnika")
 	@JsonIgnore
 	private List<TheatreCinema> listaTC;
+	
+	@OneToMany(mappedBy = "sender")
+	@JsonIgnore
+	private List<Offer> korisnikovePonude;
 	
 	
 	private MedalType mt;
@@ -136,6 +140,16 @@ public class User implements Serializable{
 		this.bioPozAdmini = new ArrayList<TheatreCinema>();
 		this.zahtjeviOglasa = new ArrayList<RequestOglasa>();
 		this.listaTC = new ArrayList<TheatreCinema>();
+		this.korisnikovePonude = new ArrayList<Offer>();
+	}
+
+	
+	public List<Offer> getKorisnikovePonude() {
+		return korisnikovePonude;
+	}
+
+	public void setKorisnikovePonude(List<Offer> korisnikovePonude) {
+		this.korisnikovePonude = korisnikovePonude;
 	}
 
 	public List<TheatreCinema> getListaTC() {

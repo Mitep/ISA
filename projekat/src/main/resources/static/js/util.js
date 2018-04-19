@@ -13,6 +13,7 @@ $(document).ready(function(){
 		$("#cinemas_tb").show();
 		$("#friends_tb").show();
 		$("#reservations_tb").show();
+		$("#medalje_tb").show();
 		$("#settings_tb").show();
 		$("#fan_zone_tb").show();
 		$("#login_tb").hide();
@@ -26,6 +27,7 @@ $(document).ready(function(){
 		$("#cinemas_tb").show();
 		$("#friends_tb").hide();
 		$("#reservations_tb").hide();
+		$("#medalje_tb").hide();
 		$("#settings_tb").hide();
 		$("#fan_zone_tb").hide();
 		$("#login_tb").show();

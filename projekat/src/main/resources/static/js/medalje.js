@@ -30,7 +30,7 @@ function postaviSkalu(){
 				alert("Uspjesno ste postavili bodovnu skalu!");
 				top.location.href = "medalje.html"
 			}else
-				alert("Niste postavili bodovnu skalu!");
+				alert("Samo administrator sistema moze da postavlja bodovnu skalu!");
 			
 		}
 	
