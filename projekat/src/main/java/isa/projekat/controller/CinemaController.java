@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa.projekat.model.Projection;
+import isa.projekat.model.Seat;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.TheatreCinemaEnum;
+import isa.projekat.model.Ticket;
 import isa.projekat.model.User;
 import isa.projekat.model.UserRole;
 import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
 import isa.projekat.repository.CinemaRepository;
+import isa.projekat.repository.SeatRepository;
+import isa.projekat.repository.TicketRepository;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.CinemaService;
 
@@ -33,7 +37,15 @@ public class CinemaController {
 	@Autowired
 	private CinemaRepository cinemaRep;
 	
-	@Autowired UserRepository userRep;
+	@Autowired 
+	private UserRepository userRep;
+	
+	@Autowired 
+	private TicketRepository ticketRep;
+	
+	@Autowired 
+	private SeatRepository seatRep;
+	
 	
 	@RequestMapping(value = "/addBioskop/{userId}",
 			method = RequestMethod.POST,
@@ -187,5 +199,27 @@ public class CinemaController {
 	public void editCinema(@RequestBody TheatreCinema cinema){
 		cinemaService.editCinema(cinema);
 	}
-
+	
+	
+	@RequestMapping(value = "/zauzetiMjesto/{id1}/{id2}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean zauzetiMjesto(@PathVariable String id1, @PathVariable String id2, HttpServletRequest request) {
+		User us = (User)request.getSession().getAttribute("user");
+		String red = id1.trim();
+		String kolona = id2.trim();
+		Seat seat = seatRep.findByRowNumAndColNum(Integer.parseInt(red), Integer.parseInt(kolona));
+		System.out.println("SJEDISTE"+ seat.getId());
+		Ticket t = ticketRep.findBySeat(seat);
+		System.out.println("KARTA" + t.getId());
+		System.out.println("Korisnik" + us.getUserName());
+		t.setUser(us);
+		
+		ticketRep.save(t);
+		seatRep.save(seat);
+		
+		return true;
+		
+		}
+	
 }

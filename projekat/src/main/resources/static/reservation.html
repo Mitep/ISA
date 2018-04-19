@@ -2,23 +2,22 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Izmjena bioskopa</title>
-    
+    <title>Novo pozoriste</title>
     <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script  type="text/javascript" src="js/editCinema.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
     <script  type="text/javascript" src="js/index.js"></script>
-   	<script type="text/javascript" src="js/util.js"></script>
-    
+    <script  type="text/javascript" src="js/reservation.js"></script>
     
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/editCinema.css">
+    <link rel="stylesheet" type="text/css" href="css/table.css">
     
     
   </head>
   <body>
+  
 <!-- toolbar -->
 <ul>  
-  		<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
+  	<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
 	<li class="left" id="user_tb" ><a href="profilKorisnika.html">Korisnik</a></li>
 	<li class="left" id="users_tb" ><a href="sviKorisnici.html">Svi korisnici</a></li>
 	<li class="left" id="theatres_tb" ><a href="theatre.html">Pozorišta</a></li>
@@ -33,29 +32,50 @@
 	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li>
 </ul>
    
-   
-   <br>
-   <div id="main_div">
-   Izmeni osnovne informacije
-   <div class="osnovne_informacije">
-   <form accept-charset="UTF-8" >
-   	   <input placeholder="Naziv bioskopa" type="text" name="name" id="input_name"><br>
-	   <input placeholder="Adresa bioskopa" name="adress" type="text" id="input_adress"><br>
-	   <input placeholder="Opis bioskopa" name="description" type="text" id="input_description"><br>
-	   <button> Sacuvaj izmene osnovnih informacija</button>
-   </form>
-  </div>
-  
-  <br>
-  <form accept-charset="UTF-8" >
-   	   <input placeholder="Naziv sale" type="text" name="name">
-		<button>Dodaj salu</button>
-   </form>
-  Sale
-  <div id="sale"></div>
-  
+   					<div >
+					<label>Naziv bioskopa:</label>
+					<div>
+						<select id="bioskop">
+						</select>
+					</div>
+					<div id = "daljeBioskop">
+						<input type="button" onclick="daljeBioskop()" value="Dalje">
+					</div>
+					</div>
+                     
+                    <div >
+					<label>Naziv projekcije bioskopa:</label>
+					<div>
+						<select id="bioskopProjekcija">
+						</select>
+					</div>
+					
+					
+					<label id = "datum">Datum:</label>
+					<div id = "datumBioskopProjekcija">
+					
+					</div>
+					<label id = "sala">Sala:</label>
+					<div id = "sale">
+					
+					</div>
+					
+					</div>
+					<label id = "segment">Segment:</label>
+					<div id = "segments">
+					
+					</div>
+					
+				</div>
+				<input type="button" onclick="daljeProjekcijaBioskop()" value="Dalje">
+				<input type="button" onclick="daljeSala()" value="Dalje">
 	      
-   </div>
-                 
+   
+                    
+    
+
+
+
+
   </body>
 </html>

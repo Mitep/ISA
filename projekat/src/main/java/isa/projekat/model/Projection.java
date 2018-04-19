@@ -51,7 +51,6 @@ public class Projection implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="hall_id")
-	@JsonIgnore
 	private Hall hall;
 	
 	@ManyToOne(optional = false)
