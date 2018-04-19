@@ -323,5 +323,28 @@ public class OglasController {
 			
 	}
 			
+
+		@RequestMapping(value="/izmijeniPonudu/{offerId}",
+				method = RequestMethod.PUT,
+				consumes = MediaType.APPLICATION_JSON_VALUE,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean izmijeniPonudu(@RequestBody Offer offer, @PathVariable Long offerId) {
+			
+			Offer of = offerRep.findByOfferId(offerId);
+			of.setPonuda(offer.getPonuda());
 		
+			offerRep.save(of);
+		
+				return true;
+
+	}
+
+		@RequestMapping(value = "/deletePonudu/{offerId}",
+				method = RequestMethod.GET,
+				produces = MediaType.APPLICATION_JSON_VALUE)
+		public boolean deletePonudu(@PathVariable Long offerId) {
+				Offer o = offerRep.findByOfferId(offerId);
+				offerRep.delete(o);
+				return true;
+		}
 }
