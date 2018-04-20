@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import isa.projekat.model.MedalType;
-import isa.projekat.model.RatingScale;
 import isa.projekat.model.TheatreCinema;
+import isa.projekat.model.Ticket;
 import isa.projekat.model.User;
 import isa.projekat.model.UserPassword;
 import isa.projekat.model.UserRole;
 import isa.projekat.repository.RatingScaleRepository;
+import isa.projekat.repository.TicketRepository;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.EmailService;
 
@@ -41,6 +40,9 @@ public class UserController {
 	
 	@Autowired
 	private RatingScaleRepository rsRep;
+	
+	@Autowired 
+	private TicketRepository ticketRep;
 	
 	public int brojac = 0;
 	
@@ -488,6 +490,18 @@ public class UserController {
 			return pom.getListaTC();
 		
 		}
+	
+	@RequestMapping(value = "/getListaRezervacija",			
+						method = RequestMethod.GET,
+						produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Ticket> getListaRezervacija(HttpServletRequest request){
+						
+				User us = (User) request.getSession().getAttribute("user");
+				List<Ticket> t = ticketRep.findByUser(us);
+				
+				return t;
+			
+			}
 	
 	
 }

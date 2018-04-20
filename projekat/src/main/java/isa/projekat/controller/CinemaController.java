@@ -236,14 +236,17 @@ public class CinemaController {
 		String[] nesto;
 		List<Seat> listaZauzetihSjedista = new ArrayList<Seat>(); 
 		System.out.println(pero);
+		Projection pr = proRep.findByProjId(id);
 		for(int i = 0; i < pero.length;i++) {
 			 if (i%2!=0) {
 				 nesto = pero[i].split(",");
 				 Seat se = seatRep.findByRowNumAndColNum(Integer.parseInt(nesto[0]), Integer.parseInt(nesto[1]));
+				 se.getListaProjekcija().add(pr);
+				 seatRep.save(se);
 				 listaZauzetihSjedista.add(se);
 			 }	 
 		}
-		Projection pr = proRep.findByProjId(id);
+	
 		for(int i=0;i<listaZauzetihSjedista.size();i++) {
 		
 		pr.getZauzetaSjedista().add(listaZauzetihSjedista.get(i));
@@ -276,7 +279,7 @@ public class CinemaController {
 		System.out.println("PROJEKAT" + pr.getId());
 		List<Ticket> listaTiketa = new ArrayList<Ticket>();
 		for(int i = 0; i < pr.getZauzetaSjedista().size();i++) {
-			Ticket t = ticketRep.findBySeat(pr.getZauzetaSjedista().get(i));
+			Ticket t = ticketRep.findBySeatAndProjection(pr.getZauzetaSjedista().get(i),pr);
 			System.out.println("TIKET" + t.getId());
 			listaTiketa.add(t);
 		}
