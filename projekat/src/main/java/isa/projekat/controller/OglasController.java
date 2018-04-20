@@ -77,7 +77,7 @@ public class OglasController {
 				RequestOglasa ro = new RequestOglasa();
 				//ro.setKorisnik(us);
 				ro.setOglas(og);
-				
+				ro.setPrihvacen(false);
 				ro.setSender(us);
 				List<User> admin = userRep.findAll();
 				for(int i=0; i < admin.size();i++) {
@@ -86,7 +86,10 @@ public class OglasController {
 						System.out.println(admin.get(i).getUserName());
 						admin.get(i).getZahtjeviOglasa().add(ro);
 						ro.setFanAdmin(admin.get(i));
+						
+						oglasRep.save(og);
 						userRep.save(admin.get(i));
+						roRep.save(ro);
 					}
 				}
 				
@@ -312,7 +315,7 @@ public class OglasController {
 			User us = (User)request.getSession().getAttribute("user");
 			Offer of = offerRep.findByOfferId(offerId);
 			List<Offer> ala =  offerRep.findAll();
-					
+		
 			for(int i = 0; i < ala.size();i++) {
 				if(ala.get(i).getPonudaOglas().getOglasId().equals(of.getPonudaOglas().getOglasId())) {
 					offerRep.delete(ala.get(i));

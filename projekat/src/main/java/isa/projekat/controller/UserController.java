@@ -105,12 +105,12 @@ public class UserController {
 	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
 		
-		if(!us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
 		
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
-			return us.getUserRole().toString();
+			return "nesto";
 		}
 		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
@@ -302,6 +302,7 @@ public class UserController {
 			if(user.getNewPassword().equals(user.getRepeatNewPassword())) {
 				us.setUserPassword(user.getNewPassword());
 				us.setUserPasswordConf(user.getNewPassword());
+				//us.setFirstLogin(true);
 				userRep.save(us);
 				return true;
 			}

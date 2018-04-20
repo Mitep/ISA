@@ -14,7 +14,7 @@ function logIn(){
 		success: function(data){
 			console.log(data)
 			if(data != null){
-				if(data == "FANADMIN"){
+				if(data == "nesto"){
 					sessionStorage.setItem("user_type", data);
 					alert("Uspjesno ste se ulogovali admine fan zone!");
 					top.location.href="podesavanja.html";	

@@ -13,11 +13,14 @@ function izmijeniPassword(){
 		dataType: "json",
 		success: function(data){
 			if(data){
+				$("#oldPassword").val(data.oldPassword);
+				$("#newPassword").val(data.newPassword);
+				$("#repeatNewPassrword").val(data.repeatNewPassword);
 				alert("Uspjesno ste izmjenili password.");
 				top.location.href="fanZona.html";
 			}else
-				alert("Niste izmjenili password.");
-			
+				alert("Morate izmijeniti password da bi nastavili sa daljim aktivnostima.");
+				
 		}
 	
 	});

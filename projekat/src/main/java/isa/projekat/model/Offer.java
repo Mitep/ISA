@@ -42,6 +42,7 @@ public class Offer implements Serializable{
 
 	@ManyToOne
 	private Oglas ponudaOglas;
+	
 
 	public Offer() {
 		super();
