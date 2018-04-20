@@ -165,10 +165,14 @@ function dodajPrijatelja(userId){
 		url: "user/dodajPrijatelja/"+userId,
 		type: "GET",
 		success: function(data){
-			alert("Uspjesno ste poslali zahtjev");
+			if(data){
+				alert("Uspjesno ste poslali zahtjev");
+			}else{
+				alert("Niste poslali zahtjev, jer saljete sami sebi ili nekom od admina!");
+			}
 		},
 	 	error: function(){
-		 alert("Niste dodali korisnika!");
+	 		alert("Niste poslali zahtjev!");
 	 	}
 		});
 	

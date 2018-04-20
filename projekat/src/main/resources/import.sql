@@ -78,4 +78,7 @@ insert into seat(segment_id, row_num, col_num) values (1,4,4)
 
 
 insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,1,1,null)
+insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,1,2,null)
 
+insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,4,1,null)
+insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,4,2,null)

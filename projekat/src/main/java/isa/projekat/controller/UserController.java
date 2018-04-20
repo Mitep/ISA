@@ -267,9 +267,13 @@ public class UserController {
 				System.out.println(sender.getEmail());
 				User reciever = (User) userRep.findByUserId(userId);
 				System.out.println(reciever.getEmail());
-				reciever.getFriendsRequest().add(sender);
-				userRep.save(reciever);
-				return true;
+				if(sender.getUserId().equals(reciever.getUserId()) || !reciever.getUserRole().equals(UserRole.USER) ) {
+					return false;
+				}else {
+					reciever.getFriendsRequest().add(sender);
+					userRep.save(reciever);
+					return true;
+				}
 			}
 	
 	

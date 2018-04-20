@@ -1,5 +1,6 @@
 package isa.projekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import isa.projekat.model.UserRole;
 import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
 import isa.projekat.repository.CinemaRepository;
+import isa.projekat.repository.ProjectionRepository;
 import isa.projekat.repository.SeatRepository;
 import isa.projekat.repository.TicketRepository;
 import isa.projekat.repository.UserRepository;
@@ -45,6 +47,11 @@ public class CinemaController {
 	
 	@Autowired 
 	private SeatRepository seatRep;
+	
+	@Autowired 
+	private ProjectionRepository proRep;
+	
+	
 	
 	
 	@RequestMapping(value = "/addBioskop/{userId}",
@@ -201,22 +208,88 @@ public class CinemaController {
 	}
 	
 	
-	@RequestMapping(value = "/zauzetiMjesto/{id1}/{id2}",
+	@RequestMapping(value = "/postaviZauzetaSjedista/{sjedistaId}/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean zauzetiMjesto(@PathVariable String id1, @PathVariable String id2, HttpServletRequest request) {
-		User us = (User)request.getSession().getAttribute("user");
-		String red = id1.trim();
-		String kolona = id2.trim();
-		Seat seat = seatRep.findByRowNumAndColNum(Integer.parseInt(red), Integer.parseInt(kolona));
-		System.out.println("SJEDISTE"+ seat.getId());
-		Ticket t = ticketRep.findBySeat(seat);
-		System.out.println("KARTA" + t.getId());
-		System.out.println("Korisnik" + us.getUserName());
-		t.setUser(us);
+	public boolean postaviZauzetaSjedista(@PathVariable String sjedistaId,@PathVariable Long id, HttpServletRequest request) {
 		
-		ticketRep.save(t);
-		seatRep.save(seat);
+		System.out.println(sjedistaId);
+		String[] pero = sjedistaId.split(" ");
+		String[] nesto;
+		List<Seat> listaZauzetihSjedista = new ArrayList<Seat>(); 
+		System.out.println(pero);
+		for(int i = 0; i < pero.length;i++) {
+			 if (i%2!=0) {
+				 nesto = pero[i].split(",");
+				 Seat se = seatRep.findByRowNumAndColNum(Integer.parseInt(nesto[0]), Integer.parseInt(nesto[1]));
+				 listaZauzetihSjedista.add(se);
+			 }	 
+		}
+		Projection pr = proRep.findByProjId(id);
+		for(int i=0;i<listaZauzetihSjedista.size();i++) {
+		
+		pr.getZauzetaSjedista().add(listaZauzetihSjedista.get(i));
+		}
+		proRep.save(pr);
+		
+		return true;
+		
+		}
+		
+		
+		
+	
+	
+	@RequestMapping(value = "/zauzmiSjediste/{userId}/{projId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean zauzmiSjediste(@PathVariable String userId,@PathVariable Long projId, HttpServletRequest request) {
+		
+		User us = (User) request.getSession().getAttribute("user");
+		if(userId=="nesto") {
+			userId = "";
+		}
+		String[] pero = userId.split(" ");
+		String nesto;
+		List<User> listaKorisnika = new ArrayList<User>(); 
+		System.out.println(pero);
+		listaKorisnika.add(us);
+		Projection pr = proRep.findByProjId(projId);
+		System.out.println("PROJEKAT" + pr.getId());
+		List<Ticket> listaTiketa = new ArrayList<Ticket>();
+		for(int i = 0; i < pr.getZauzetaSjedista().size();i++) {
+			Ticket t = ticketRep.findBySeat(pr.getZauzetaSjedista().get(i));
+			System.out.println("TIKET" + t.getId());
+			listaTiketa.add(t);
+		}
+		
+		for(int i = 0; i < pero.length;i++) {
+			 if (i%2!=0) {
+				 nesto = pero[i];
+				 User se = userRep.findByUserId(Long.parseLong(nesto));
+				 listaKorisnika.add(se);
+			 }	 
+		}
+		
+		for(int i=0;i<listaTiketa.size();i++) {
+			System.out.println(listaTiketa.get(i).getId());
+		}
+	
+		for(int i = 0; i < listaKorisnika.size();i++) {
+			System.out.println(listaKorisnika.get(i));
+		}
+		
+		
+		for(int i = 0; i < listaKorisnika.size();i++) {
+			System.out.println(listaTiketa.get(i).getId());
+			System.out.println(listaKorisnika.get(i).getUserId());
+			listaTiketa.get(i).setUser(listaKorisnika.get(i));
+			System.out.println(listaTiketa.get(i).getId());
+			ticketRep.save(listaTiketa.get(i));
+		}
+		
+		proRep.save(pr);
+	
 		
 		return true;
 		

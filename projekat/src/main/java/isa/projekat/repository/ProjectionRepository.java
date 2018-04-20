@@ -12,4 +12,5 @@ public interface ProjectionRepository extends CrudRepository<Projection, Long> {
 	@Query("select p from Projection p where p.theatreCinema.id = ?1")
 	List<Projection> getAllProjectionOfTheatreCinema(Long projId);
 	
+	Projection findByProjId(Long projId);
 }
