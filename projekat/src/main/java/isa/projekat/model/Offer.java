@@ -43,7 +43,8 @@ public class Offer implements Serializable{
 	@ManyToOne
 	private Oglas ponudaOglas;
 	
-
+	private boolean prihvacen;
+	
 	public Offer() {
 		super();
 	}
@@ -54,6 +55,14 @@ public class Offer implements Serializable{
 	}
 	
 	
+	
+	
+	public boolean isPrihvacen() {
+		return prihvacen;
+	}
+	public void setPrihvacen(boolean prihvacen) {
+		this.prihvacen = prihvacen;
+	}
 	public User getSender() {
 		return sender;
 	}

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import isa.projekat.repository.OfferRepository;
 import isa.projekat.repository.OglasRepository;
 import isa.projekat.repository.RequestOglasaRepository;
 import isa.projekat.repository.UserRepository;
+import isa.projekat.service.EmailService;
 
 @RestController
 @RequestMapping("/oglas")
@@ -43,6 +45,9 @@ public class OglasController {
 	
 	@Autowired
 	private RequestOglasaRepository roRep;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@RequestMapping(value = "/addOglas/{movieId}",
 			method = RequestMethod.POST,
@@ -315,11 +320,33 @@ public class OglasController {
 			User us = (User)request.getSession().getAttribute("user");
 			Offer of = offerRep.findByOfferId(offerId);
 			List<Offer> ala =  offerRep.findAll();
-		
+			of.setPrihvacen(true);
+			
 			for(int i = 0; i < ala.size();i++) {
 				if(ala.get(i).getPonudaOglas().getOglasId().equals(of.getPonudaOglas().getOglasId())) {
-					offerRep.delete(ala.get(i));
-				
+					if(ala.get(i).isPrihvacen()) {
+						try {
+							emailService.sendNotificaitionSyncPrihvacena(ala.get(i).getSender());
+						} catch (MailException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						offerRep.delete(ala.get(i));
+					}else {
+						try {
+							emailService.sendNotificaitionSyncOdbijena(ala.get(i).getSender());
+						} catch (MailException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						offerRep.delete(ala.get(i));
+					}
 				}
 			}
 			return "nesto";

@@ -112,12 +112,21 @@ public class UserController {
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
-			return "nesto";
+			return "fanadmin";
 		}
+		System.out.println("STATUS" + us.isUserStatus());
 		
-		if(us.getUserPassword().equals(user.getUserPassword())) {
-				//&& us.isUserStatus() == true) {
+		if(us.getUserPassword().equals(user.getUserPassword()) && us.isFirstLogin() == true) {
+			
+			userRep.save(us);
+			request.getSession().setAttribute("user", us);
+			
+			return us.getUserRole().toString();
+		}
+	
+		if(us.getUserPassword().equals(user.getUserPassword()) && us.isUserStatus() == true) {
 			//TODO : odkomentarisi kad dodje vrijeme za to
+			System.out.println("KAKO SI USAO");
 			brojac = us.getBrojLogovanja();
 			brojac++;
 			//System.out.println(brojac);
@@ -127,9 +136,10 @@ public class UserController {
 			request.getSession().setAttribute("user", us);
 			
 			return us.getUserRole().toString();
+		}else {
+			
+			return "nista";
 		}
-		
-			return null;
 	}
 	
 	

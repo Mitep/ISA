@@ -13,18 +13,38 @@ function logIn(){
 		dataType: "text",
 		success: function(data){
 			console.log(data)
-			if(data != null){
-				if(data == "nesto"){
+		//	if(data != null){
+				if(data == "fanadmin"){
 					sessionStorage.setItem("user_type", data);
 					alert("Uspjesno ste se ulogovali admine fan zone!");
 					top.location.href="podesavanja.html";	
-				} else {
+				}else if(data == "USER") {
 				sessionStorage.setItem("user_type", data);
 				alert("Uspjesno ste se ulogovali!");
 				top.location.href="index.html";
+				}else if(data == "SYSADMIN") {
+					sessionStorage.setItem("user_type", data);
+					alert("Uspjesno ste se ulogovali!");
+					top.location.href="index.html";	
+				}else if(data == "ADMIN") {
+					sessionStorage.setItem("user_type", data);
+					alert("Uspjesno ste se ulogovali!");
+					top.location.href="index.html";	
+				}else if(data == "FANADMIN") {
+					sessionStorage.setItem("user_type", data);
+					alert("Uspjesno ste se ulogovali!");
+					top.location.href="index.html";	
 				}
-			}else
-				alert("Niste se ulogovali!");
+				else if("nista"){
+					
+					alert("Niste se ulogovali!");
+					
+				}else{
+					alert("Niste se ulogovali!");
+				}
+			//	}
+			//}else
+			//	alert("Niste se ulogovali!");
 			
 		},
 		error: function(data){
