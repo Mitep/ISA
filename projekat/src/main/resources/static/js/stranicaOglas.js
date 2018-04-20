@@ -56,6 +56,65 @@ $.ajax({
 		}
 	
 	});
+$.ajax({
+	
+	url: "oglas/prikaziOglasDrugih",
+	type: "GET",
+	success: function(data){
+		$(".prikazDrugih").empty();
+		for(i=0;i<data.length;i++) {
+			$(".prikazDrugih").append("<tr><td>Naziv: </td><td>" + data[i].nazivOglasa + "</td></tr> "+
+					 "<tr><td>Opis: </td><td>" + data[i].opisOglasa + "</td></tr> "+
+					 "<tr><td>Slika: </td><td>" + data[i].imageOglasa + "</td></tr> "+
+					 "<tr><td>Datum: </td><td>" + data[i].datumOglasa + "</td></tr> " +
+							"<tr><td><input type=\"button\" value = \"Ponudi\" onclick = \"ponudi("+data[i].oglasId+")\"></td></tr>"
+					);
+
+			
+		}
+		
+	}
+
+});
+
+$.ajax({
+	
+	url: "oglas/prikaziPonude",
+	type: "GET",
+	success: function(data){
+		$(".prikazPonuda").empty();
+		for(i=0;i<data.length;i++) {
+			$(".prikazPonuda").append("<tr><td>Ponuda za "+data[i].ponudaOglas.nazivOglasa +" oglas: </td><td>" + data[i].ponuda + "</td></tr> "+
+					"<tr><td><input type=\"button\" value = \"Ukloni\" onclick = \"ukloniPonudu("+data[i].offerId+")\">" +
+							"<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniPonudu("+data[i].offerId+")\"></td></tr>"
+					);
+
+			
+		}
+		
+	}
+
+});
+
+
+$.ajax({
+	
+	url: "oglas/prikaziPonudeDrugih",
+	type: "GET",
+	success: function(data){
+		console.log(data)
+		$(".prikazPonudaDrugih").empty();
+		for(i=0;i<data.length;i++) {
+			$(".prikazPonudaDrugih").append("<tr><td>Ponuda: </td><td>" + data[i].ponuda + "</td></tr> "+
+							"<tr><td><input type=\"button\" value = \"Prihvati\" onclick = \"prihvatiPonudu("+data[i].offerId+")\"></td></tr>"
+					);
+
+			
+		}
+		
+	}
+
+});
 
 
 
@@ -127,6 +186,42 @@ $.ajax({
 	});
 	
 }
+
+function izmijeniPonudu(offerId) {
+	
+	sessionStorage.setItem('idOff',offerId);
+	top.location.href="formaZaIzmjenuPonude.html";
+	
+
+}
+
+function izmijeniPonudu2() {
+	
+	idOffer = sessionStorage.getItem('idOff');
+	console.log(idOglasa);
+	var $form = $("#izmjenaPonudaForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	$.ajax({
+		
+		url: "oglas/izmijeniPonudu/"+idOffer,
+		type: "PUT",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste izmijenili ponudu!");
+				top.location.href="fanZona.html";
+			}else
+				alert("Niste izmjenili ponudu!");
+			
+		}
+	
+	});
+	
+}
+
 
 function ukloniOglas(oglasId){
 	console.log(oglasId)
@@ -254,4 +349,79 @@ function odbijOglas(oglasId) {
 		});
 		
 	}
+
+function ponudi(oglasId) {
 	
+	sessionStorage.setItem('idOgl',oglasId);
+	top.location.href="formaZaPonudu.html";
+}
+
+function ponudi2() {
+	
+	var idOglas = sessionStorage.getItem('idOgl');
+	var $form = $("#ponudaForm");
+	var data = getFormData($form);
+	var s = JSON.stringify(data);
+	console.log(s);
+	$.ajax({
+		
+		url: "oglas/addPonuda/" + idOglas,
+		type: "POST",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		success: function(data){
+			if(data){
+				alert("Uspjesno ste dodali ponudu!");
+				top.location.href="fanZona.html";
+			}else
+				alert("Niste dodali ponudu!");
+			
+		}
+	
+	});
+	
+	
+}
+
+function prihvatiPonudu(offerId){
+	
+	$.ajax({
+		
+		url: "oglas/prihvatiPonudu/" + offerId,
+		type: "GET",
+		contentType:"application/json",
+		dataType: "text",
+		success: function(data){
+			if(data == "nesto"){
+			alert("Prihvatili ste ponudu!");
+			top.location.href = "fanZona.html"
+			}
+			
+		},
+		error: function() {
+			alert("Doslo je do greske");
+		}
+	
+	});
+	
+}
+	
+function ukloniPonudu(offerId){
+	$.ajax({
+		
+		url: "oglas/deletePonudu/" + offerId,
+		type: "GET",
+		success: function(data){
+			if(data != null){
+				alert("Uspjesno ste uklonili ponudu!");
+				top.location.href="fanZona.html";
+				
+			}else
+				alert("Niste uklonili ponudu!");
+			
+		}
+	
+	});
+
+}

@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Promjena password-a</title>
+    <title>Izmjena ponude</title>
+    
     <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script  type="text/javascript" src="js/podesavanja.js"></script>
+	<script  type="text/javascript" src="js/stranicaOglas.js"></script>
     <script  type="text/javascript" src="js/index.js"></script>
-   	<script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    
     
     <link rel="stylesheet" type="text/css" href="css/index.css">
     
-    
   </head>
   <body>
-  
 <!-- toolbar -->
 <ul>  
- <!--  	<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
+  	<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
 	<li class="left" id="user_tb" ><a href="profilKorisnika.html">Korisnik</a></li>
 	<li class="left" id="users_tb" ><a href="sviKorisnici.html">Svi korisnici</a></li>
 	<li class="left" id="theatres_tb" ><a href="theatre.html">Pozorišta</a></li>
@@ -24,33 +24,25 @@
 	<li class="left" id="friends_tb" ><a href="">Prijatelji</a></li>
 	<li class="left" id="reservations_tb" ><a href="reservation.html">Rezervacije</a></li>
 	<li class="left" id="medalje_tb" ><a href="medalje.html">Bodovna skala</a></li>
-	<li class="left" id="settings_tb" ><a href="podesavanja.html">Podešavanja</a></li>
+	<!-- <li class="left" id="settings_tb" ><a href="podesavanja.html">Podešavanja</a></li> -->
 	<li class="left" id="fan_zone_tb" ><a href="fanZona.html">Fan Zona</a></li>
 	
 	<li class="right" id="login_tb" ><a href="login.html">Prijava</a></li>
 	<li class="right" id="register_tb" ><a href="registracija.html">Registracija</a></li>  
-	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li> -->
-	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li> 
+	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li>
 </ul>
    
                     <div>
                         <div >
-                            <h1><b>Novi password</b></h1>
+                            <h1><b>Izmjena ponude</b></h1>
                         </div>
                         <div >
-                            <form accept-charset="UTF-8" role="form" name = "passwordForm" id="passwordForm"  >
+                            <form accept-charset="UTF-8" role="form" name = "izmjenaPonudaForm" id="izmjenaPonudaForm"  >
                                 <fieldset>
                                     <div >
-                                        <input placeholder="Stari password" type="password" id="oldPassword" name="oldPassword">
+                                        <input placeholder="Ponuda" type="text" name="ponuda">
                                     </div>
-                                    <div> 
-                                        <input placeholder="Novi password" id="newPassword" name="newPassword" type="password" >
-                                    </div>
-                                    <div> 
-                                        <input placeholder="Ponovite novi password" id="repeatNewPassword" name="repeatNewPassword" type="password" >
-                                    </div>
-                                    <input type="button" value="Izmijeni" onclick="izmijeniPassword()">
-                               
+                                    <input type="button" value="Izmijeni" onclick="izmijeniPonudu2()">
                                 </fieldset>
 
                             </form>

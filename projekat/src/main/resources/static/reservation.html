@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Novo pozoriste</title>
+    <script  type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script  type="text/javascript" src="js/index.js"></script>
+    <script  type="text/javascript" src="js/reservation.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/table.css">
+    
+    
+  </head>
+  <body>
+  
+<!-- toolbar -->
+<ul>  
+  	<li class="left" id="home_tb" ><a href="index.html">Home</a></li>
+	<li class="left" id="user_tb" ><a href="profilKorisnika.html">Korisnik</a></li>
+	<li class="left" id="users_tb" ><a href="sviKorisnici.html">Svi korisnici</a></li>
+	<li class="left" id="theatres_tb" ><a href="theatre.html">Pozorišta</a></li>
+ 	<li class="left" id="cinemas_tb" ><a href="cinema.html">Bioskopi</a></li>
+	<li class="left" id="friends_tb" ><a href="">Prijatelji</a></li>
+	<li class="left" id="reservations_tb" ><a href="reservation.html">Rezervacije</a></li>
+	<li class="left" id="settings_tb" ><a href="podesavanja.html">Podešavanja</a></li>
+	<li class="left" id="fan_zone_tb" ><a href="fanZona.html">Fan Zona</a></li>
+	
+	<li class="right" id="login_tb" ><a href="login.html">Prijava</a></li>
+	<li class="right" id="register_tb" ><a href="registracija.html">Registracija</a></li>  
+	<li class="right" id="logout_tb" ><a onclick="logout()">Odjava</a></li>
+</ul>
+   
+   					<div >
+					<label>Naziv bioskopa:</label>
+					<div>
+						<select id="bioskop">
+						</select>
+					</div>
+					<div id = "daljeBioskop">
+						<input type="button" onclick="daljeBioskop()" value="Dalje">
+					</div>
+					</div>
+                     
+                    <div >
+					<label>Naziv projekcije bioskopa:</label>
+					<div>
+						<select id="bioskopProjekcija">
+						</select>
+					</div>
+					
+					
+					<label id = "datum">Datum:</label>
+					<div id = "datumBioskopProjekcija">
+					
+					</div>
+					<label id = "sala">Sala:</label>
+					<div id = "sale">
+					
+					</div>
+					
+					</div>
+					<label id = "segment">Segment:</label>
+					<div id = "segments">
+					
+					</div>
+					
+					<h3><label>Lista prijatelja:</label></h3>    	
+         			<table>
+		       	  <tr>
+				   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+				    <th>Ime</th>
+				    <th>Prezime</th>
+				    <th>Email</th>
+				    <th>Grad</th>
+				    <th>Broj</th>
+				    
+				  </tr>
+			              <tbody class="friends">                                    
+			              
+			              </tbody>             
+            	</table>
+					
+				<div id="daljeProjekcijaBioskop">
+				<input type="button" onclick="daljeProjekcijaBioskop()" value="Dalje">
+				</div>
+				<div id="daljeSala">
+				
+				</div>
+				<div id="zauzetaMjesta">
+				
+	      		</div>
+	      		
+	      		
+	      		
+	      		<div >
+					<label>Naziv pozorista:</label>
+					<div>
+						<select id="pozoriste">
+						</select>
+					</div>
+					<div id = "daljePozoriste">
+						<input type="button" onclick="daljePozoriste()" value="Dalje">
+					</div>
+					</div>
+                     
+                    <div >
+					<label>Naziv projekcije pozorista:</label>
+					<div>
+						<select id="pozoristeProjekcija">
+						</select>
+					</div>
+					
+					
+					<label id = "datum">Datum:</label>
+					<div id = "datumPozoristeProjekcija">
+					
+					</div>
+					<label id = "salaPozoriste">Sala:</label>
+					<div id = "salePozoriste">
+					
+					</div>
+					
+					</div>
+					<label id = "segmentPozoriste">Segment:</label>
+					<div id = "segmentsPozoriste">
+					
+					</div>
+					
+					<h3><label>Lista prijatelja:</label></h3>    	
+         			<table>
+		       	  <tr>
+				   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+				    <th>Ime</th>
+				    <th>Prezime</th>
+				    <th>Email</th>
+				    <th>Grad</th>
+				    <th>Broj</th>
+				    
+				  </tr>
+			              <tbody class="friendsPozoriste">                                    
+			              
+			              </tbody>             
+            	</table>
+					
+				<div id="daljeProjekcijaPozoriste">
+				<input type="button" onclick="daljeProjekcijaPozoriste()" value="Dalje">
+				</div>
+				<div id="daljeSalaPozoriste">
+				
+				</div>
+				<div id="zauzetaMjestaPozoriste">
+				
+	      		</div>
+	      		
+	      		
+   
+                    
+    
+
+
+
+
+  </body>
+</html>

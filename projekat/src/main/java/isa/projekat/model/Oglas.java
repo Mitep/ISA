@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -56,7 +58,13 @@ public class Oglas implements Serializable{
             fetch = FetchType.EAGER, optional = false)
 	private RequestOglasa requestOglasa;
 	
+	@ManyToOne(optional = true)
+	@JsonIgnore
+	private User vlasnik;
 	
+	@OneToMany(mappedBy = "ponudaOglas")
+	@JsonIgnore
+	private List<Offer> listaOffera;
 
 	
 	public Oglas() {
@@ -72,8 +80,26 @@ public class Oglas implements Serializable{
 		this.imageOglasa = imageOglasa;
 		this.datumOglasa = datumOglasa;
 		this.moviePer = new ArrayList<MoviePerformance>();
+		this.listaOffera = new ArrayList<Offer>();
 	}
 	
+
+
+	public User getVlasnik() {
+		return vlasnik;
+	}
+
+	public void setVlasnik(User vlasnik) {
+		this.vlasnik = vlasnik;
+	}
+
+	public List<Offer> getListaOffera() {
+		return listaOffera;
+	}
+
+	public void setListaOffera(List<Offer> listaOffera) {
+		this.listaOffera = listaOffera;
+	}
 
 	public RequestOglasa getRequestOglasa() {
 		return requestOglasa;

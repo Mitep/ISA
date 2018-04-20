@@ -42,7 +42,11 @@ public class RequestOglasa implements Serializable{
 	
 	@ManyToOne
 	@JsonIgnore
-	private User korisnik;
+	private User fanAdmin;
+	
+	@OneToOne
+	@JsonIgnore
+	private User sender;
 
 	@NotNull
 	private boolean prihvacen;
@@ -57,14 +61,6 @@ public class RequestOglasa implements Serializable{
 		this.oglas = oglas;
 	}
 
-	public User getKorisnik() {
-		return korisnik;
-	}
-
-	public void setKorisnik(User korisnik) {
-		this.korisnik = korisnik;
-	}
-
 	public boolean isPrihvacen() {
 		return prihvacen;
 	}
@@ -72,6 +68,23 @@ public class RequestOglasa implements Serializable{
 	public void setPrihvacen(boolean prihvacen) {
 		this.prihvacen = prihvacen;
 	}
+
+	public User getFanAdmin() {
+		return fanAdmin;
+	}
+
+	public void setFanAdmin(User fanAdmin) {
+		this.fanAdmin = fanAdmin;
+	}
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+	
 	
 	
 }

@@ -40,17 +40,12 @@ window.onload = function(){
 	
 	
 	$.ajax({
-		 url: "user/getFriends",
+		url: "user/getFriends",
 		 method: "GET",
 		 success: function(data){
 			 $(".friends").empty();
 			 for(i=0;i<data.length;i++){
-				 $(".friends").append( "<tr><td>Ime:</td><td>" + data[i].userName + "</td></tr>"+
-						 "<tr><td>Prezime:</td><td>" + data[i].userSurname + "</td></tr>"+
-						 "<tr><td>Email:</td><td>" + data[i].email + "</td></tr>"+
-						 "<tr><td>Grad:</td><td>" + data[i].city + "</td></tr>"+
-						 "<tr><td>Broj telefona:</td><td>" + data[i].mobileNumber + "</td></tr>+" +
-						 "<tr><td><input type=\"button\" value = \"Obrisi prijatelja\" onclick = \"obrisiPrijatelja("+data[i].userId+")\"></td><tr>");
+				 $(".friends").append("<tr><td>" + data[i].userName + "</td><td>" + data[i].userSurname + "</td><td>" + data[i].email + "</td><td>" + data[i].city + "</td><td>" + data[i].mobileNumber + "</td><td><input type=\"button\" value = \"Obrisi prijatelja\" onclick = \"obrisiPrijatelja("+data[i].userId+")\"></td></tr>");
 			 }
 		 },
 		 error: function(){
@@ -170,10 +165,14 @@ function dodajPrijatelja(userId){
 		url: "user/dodajPrijatelja/"+userId,
 		type: "GET",
 		success: function(data){
-			alert("Uspjesno ste poslali zahtjev");
+			if(data){
+				alert("Uspjesno ste poslali zahtjev");
+			}else{
+				alert("Niste poslali zahtjev, jer saljete sami sebi ili nekom od admina!");
+			}
 		},
 	 	error: function(){
-		 alert("Niste dodali korisnika!");
+	 		alert("Niste poslali zahtjev!");
 	 	}
 		});
 	
@@ -233,8 +232,10 @@ function obrisiPrijatelja(userId){
 }
 
 function sortTable(n) {
+
 	  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 	  table = document.getElementById("myTable");
+		console.log(table)
 	  switching = true;
 	  //Set the sorting direction to ascending:
 	  dir = "asc"; 
@@ -244,6 +245,7 @@ function sortTable(n) {
 	    //start by saying: no switching is done:
 	    switching = false;
 	    rows = table.getElementsByTagName("TR");
+		console.log(rows)
 	    /*Loop through all table rows (except the
 	    first, which contains table headers):*/
 	    for (i = 1; i < (rows.length - 1); i++) {
@@ -253,6 +255,8 @@ function sortTable(n) {
 	      one from current row and one from the next:*/
 	      x = rows[i].getElementsByTagName("TD")[n];
 	      y = rows[i + 1].getElementsByTagName("TD")[n];
+	      console.log(x)
+	      console.log(y)
 	      /*check if the two rows should switch place,
 	      based on the direction, asc or desc:*/
 	      if (dir == "asc") {
@@ -344,4 +348,57 @@ function sortTable2(n) {
 	}
 
 
-
+function sortTable3(n) {
+	  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	  table = document.getElementById("myTable3");
+	  switching = true;
+	  //Set the sorting direction to ascending:
+	  dir = "asc"; 
+	  /*Make a loop that will continue until
+	  no switching has been done:*/
+	  while (switching) {
+	    //start by saying: no switching is done:
+	    switching = false;
+	    rows = table.getElementsByTagName("TR");
+	    /*Loop through all table rows (except the
+	    first, which contains table headers):*/
+	    for (i = 1; i < (rows.length - 1); i++) {
+	      //start by saying there should be no switching:
+	      shouldSwitch = false;
+	      /*Get the two elements you want to compare,
+	      one from current row and one from the next:*/
+	      x = rows[i].getElementsByTagName("TD")[n];
+	      y = rows[i + 1].getElementsByTagName("TD")[n];
+	      /*check if the two rows should switch place,
+	      based on the direction, asc or desc:*/
+	      if (dir == "asc") {
+	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+	          //if so, mark as a switch and break the loop:
+	          shouldSwitch= true;
+	          break;
+	        }
+	      } else if (dir == "desc") {
+	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+	          //if so, mark as a switch and break the loop:
+	          shouldSwitch= true;
+	          break;
+	        }
+	      }
+	    }
+	    if (shouldSwitch) {
+	      /*If a switch has been marked, make the switch
+	      and mark that a switch has been done:*/
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	      //Each time a switch is done, increase this count by 1:
+	      switchcount ++;      
+	    } else {
+	      /*If no switching has been done AND the direction is "asc",
+	      set the direction to "desc" and run the while loop again.*/
+	      if (switchcount == 0 && dir == "asc") {
+	        dir = "desc";
+	        switching = true;
+	      }
+	    }
+	  }
+	}

@@ -1,7 +1,9 @@
 package isa.projekat.model;
 
 import java.io.Serializable;
+
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,7 +30,7 @@ public class Projection implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "projection_id", nullable = false)
-	private long id;
+	private long projId;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -52,7 +52,6 @@ public class Projection implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="hall_id")
-	@JsonIgnore
 	private Hall hall;
 	
 	@ManyToOne(optional = false)
@@ -61,8 +60,24 @@ public class Projection implements Serializable {
 	private TheatreCinema theatreCinema;
 	
 	
+	@OneToMany
+	private List<Seat> zauzetaSjedista;
+	
 	public Projection() {
 		
+		this.zauzetaSjedista = new ArrayList<Seat>();
+	}
+	
+	
+
+	public List<Seat> getZauzetaSjedista() {
+		return zauzetaSjedista;
+	}
+
+
+
+	public void setZauzetaSjedista(List<Seat> zauzetaSjedista) {
+		this.zauzetaSjedista = zauzetaSjedista;
 	}
 
 	private void addTicket(Ticket t){
@@ -70,11 +85,11 @@ public class Projection implements Serializable {
 	}
 	
 	public Long getId() {
-		return id;
+		return projId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.projId = id;
 	}
 
 	public String getName() {
@@ -115,10 +130,6 @@ public class Projection implements Serializable {
 
 	public void setHall(Hall hall) {
 		this.hall = hall;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public TheatreCinema getTheatreCinema() {

@@ -105,12 +105,12 @@ public class UserController {
 	public String loginUser(@RequestBody User user, HttpServletRequest request) {
 		User us = userRep.findByEmail(user.getEmail());
 		
-		if(!us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
+		if(us.getUserRole().equals(UserRole.FANADMIN) && us.isFirstLogin()==false) {
 		
 			us.setFirstLogin(true);	
 			request.getSession().setAttribute("user", us);
 			
-			return us.getUserRole().toString();
+			return "nesto";
 		}
 		
 		if(us.getUserPassword().equals(user.getUserPassword())) {
@@ -267,9 +267,13 @@ public class UserController {
 				System.out.println(sender.getEmail());
 				User reciever = (User) userRep.findByUserId(userId);
 				System.out.println(reciever.getEmail());
-				reciever.getFriendsRequest().add(sender);
-				userRep.save(reciever);
-				return true;
+				if(sender.getUserId().equals(reciever.getUserId()) || !reciever.getUserRole().equals(UserRole.USER) ) {
+					return false;
+				}else {
+					reciever.getFriendsRequest().add(sender);
+					userRep.save(reciever);
+					return true;
+				}
 			}
 	
 	
@@ -302,6 +306,7 @@ public class UserController {
 			if(user.getNewPassword().equals(user.getRepeatNewPassword())) {
 				us.setUserPassword(user.getNewPassword());
 				us.setUserPasswordConf(user.getNewPassword());
+				//us.setFirstLogin(true);
 				userRep.save(us);
 				return true;
 			}
