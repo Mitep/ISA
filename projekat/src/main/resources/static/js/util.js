@@ -36,8 +36,6 @@ $(document).ready(function(){
 	
 });
 
-
-
 function getFormData($form){
 	
 	 var unindexed_array = $form.serializeArray();
@@ -50,3 +48,5 @@ function getFormData($form){
 	    return indexed_array;
 	
 }
+
+

@@ -26,6 +26,12 @@ public class ProjectionDTO {
 	
 	private String theatreCinemaName;
 	
+	private int price;
+	
+	private int discount;
+	
+	private int discountSeatNumber;
+	
 	public ProjectionDTO() {
 		
 	}
@@ -141,6 +147,42 @@ public class ProjectionDTO {
 
 	public void setMovieRating(String movieRating) {
 		this.movieRating = movieRating;
+	}
+
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+
+	public int getDiscount() {
+		return discount;
+	}
+
+
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+
+
+	public int getDiscountSeatNumber() {
+		return discountSeatNumber;
+	}
+
+
+
+	public void setDiscountSeatNumber(int discountSeatNumber) {
+		this.discountSeatNumber = discountSeatNumber;
 	}
 	
 	

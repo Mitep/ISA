@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import isa.projekat.model.Projection;
+import isa.projekat.model.Ticket;
 
 public interface ProjectionRepository extends CrudRepository<Projection, Long> {
 
-	@Query("select p from Projection p where p.theatreCinema.id = ?1")
-	List<Projection> getAllProjectionOfTheatreCinema(Long projId);
+	Projection getProjectionById(Long id);
+	
+	@Query("select p from Projection p where p.theatreCinema.tcId = ?1")
+	List<Projection> getAllProjectionOfTheatreCinema(Long thecinId);
 	
 }

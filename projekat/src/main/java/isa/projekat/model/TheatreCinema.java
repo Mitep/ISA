@@ -49,7 +49,7 @@ public class TheatreCinema implements Serializable {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "theatreCinema")
-	private Set<Hall> halls;
+	private List<Hall> halls;
 	
 	@ManyToMany
     @JoinTable(name = "adminiObjekata",
@@ -144,11 +144,11 @@ public class TheatreCinema implements Serializable {
 		this.description = description;
 	}
 
-	public Set<Hall> getHalls() {
+	public List<Hall> getHalls() {
 		return halls;
 	}
 
-	public void setHalls(Set<Hall> halls) {
+	public void setHalls(List<Hall> halls) {
 		this.halls = halls;
 	}
 

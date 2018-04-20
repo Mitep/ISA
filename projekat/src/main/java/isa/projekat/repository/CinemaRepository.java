@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import isa.projekat.model.Hall;
 import isa.projekat.model.TheatreCinema;
+import isa.projekat.model.User;
 
 public interface CinemaRepository extends CrudRepository<TheatreCinema, Long> {
 	
@@ -20,11 +22,15 @@ public interface CinemaRepository extends CrudRepository<TheatreCinema, Long> {
 	@Query("select c from TheatreCinema c where c.type = 1")
 	List<TheatreCinema> findAllCinemas();
 	
+	//@Query("select c from TheatreCinema c where ?1 in c.adminiBioPoz and where c.type = 1")
+	List<TheatreCinema> findByAdminiBioPoz(User admin);
+		
 	@Transactional
     @Modifying
     @Query("update TheatreCinema c "
     		+ "set c.name = ?1, c.description = ?2 "
     		+ "where c.id = ?3")
 	void updateCinema(String name, String description, Long id);
+	
 	
 }

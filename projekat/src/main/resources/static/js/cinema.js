@@ -14,7 +14,8 @@ window.onload = function() {
 									 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 									 "<tr><td>Prosecna ocena: </td><td>" + data[i].rating + "</td></tr> " +
 									 "<tr><td>"+
-									 "<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniBioskop("+data[i].id+")\">"+
+									 "<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniBioskop("+data[i].id+")\">" +
+									 "<input type=\"button\" value = \"Izmeni repertoar\" onclick = \"izmeniRepertoar("+data[i].id+")\">"+
 									 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\"></td></tr>"
 									);
 						} else if(sessionStorage.getItem("user_type") == "SYSADMIN"){
@@ -31,13 +32,13 @@ window.onload = function() {
 									 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 									 "<tr><td>Prosecna ocena: </td><td>" + data[i].rating + "</td></tr> " +
 									 "<tr><td>" +
-									 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\"></td></tr>");
+									 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\">" +
+									 "<input type=\"button\" onclick = \"brzeRezervacije("+data[i].id+")\" value = \"Brze karte\"></td></tr>");
 						}	
 					}
 					
 				},
 				error: function() {
-					alert("Samo administrator sistema ima mogucnost pristupa ovoj stranici.")
 				}
 			});
 
@@ -189,6 +190,19 @@ function izmijeniBioskop(id) {
 	sessionStorage.setItem('edit_cinema_id',id);
 	top.location.href="formaZaIzmjenuBioskopa.html";
 
+}
+
+function brzeRezervacije(id){
+	
+	sessionStorage.setItem('fast_reserv_the_cin_id',id);
+	top.location.href="brzeKarte.html";
+	
+}
+
+function izmeniRepertoar(id) {
+	
+	sessionStorage.setItem('edit_cinema_projections',id);
+	top.location.href="projekcije.html";
 }
 
 function izmijeniBioskop2() {

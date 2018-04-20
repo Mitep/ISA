@@ -76,3 +76,7 @@ insert into seat(segment_id, row_num, col_num) values (1,4,2)
 insert into seat(segment_id, row_num, col_num) values (1,4,3)
 insert into seat(segment_id, row_num, col_num) values (1,4,4)
 
+insert into admini_objekata(objekat_id, user1_id) values (1,7)
+insert into admini_objekata(objekat_id, user1_id) values (2,7)
+insert into admini_objekata(objekat_id, user1_id) values (3,7)
+

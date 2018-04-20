@@ -19,6 +19,7 @@ import isa.projekat.model.User;
 import isa.projekat.model.UserRole;
 import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
+import isa.projekat.model.dtos.TicketDTO;
 import isa.projekat.repository.CinemaRepository;
 import isa.projekat.repository.UserRepository;
 import isa.projekat.service.CinemaService;
@@ -84,8 +85,16 @@ public class CinemaController {
 			value= {"/sviBioskopi"},
 			method = {RequestMethod.GET},
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CinemaDTO> getAllCinemas(){
-		return cinemaService.getAllCinemas();
+	public List<CinemaDTO> getAllCinemas(HttpServletRequest request){
+
+//		User us = null;
+//		if(request.getSession().getAttribute("user") != null)
+		User us = (User) request.getSession().getAttribute("user");
+		
+		if (us.getUserRole().equals(UserRole.ADMIN))
+			return cinemaService.getCinemasForAdmin(us);
+		else
+			return cinemaService.getAllCinemas();
 	}
 	
 	@RequestMapping(
@@ -188,4 +197,12 @@ public class CinemaController {
 		cinemaService.editCinema(cinema);
 	}
 
+	@RequestMapping(
+			value= {"/BrzeKarte/{id}"},
+			method = {RequestMethod.GET},
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TicketDTO> getFastReservationTickets(@PathVariable Long id){
+		return cinemaService.getFastTickets(id);
+	}
+	
 }
