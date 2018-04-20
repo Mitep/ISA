@@ -44,7 +44,8 @@ window.onload = function() {
 
 	$("#dodaj_bioskop_div_sysadmin").hide();
 	if(sessionStorage.getItem("user_type") == "SYSADMIN") {
-		
+	$("#dodaj_bioskop_div_sysadmin").show();
+			
 		$.ajax({
 			url: "user/getAdmine",
 			type:"GET",

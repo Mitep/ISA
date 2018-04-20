@@ -104,7 +104,7 @@ public class ProjectionServiceImpl implements ProjectionService {
 	public void updateProjection(ProjectionDTO editProj) {
 		// TODO Auto-generated method stub
 		
-		Projection p = projectionRepository.getProjectionById(editProj.getId());
+		Projection p = projectionRepository.getProjectionByProjId(editProj.getId());
 		
 		p.setName(editProj.getName());				
 
@@ -120,7 +120,7 @@ public class ProjectionServiceImpl implements ProjectionService {
 	@Override
 	public ProjectionDTO getProjection(Long id) {
 		// TODO Auto-generated method stub
-		Projection p = projectionRepository.getProjectionById(id);
+		Projection p = projectionRepository.getProjectionByProjId(id);
 		String avgRating = moviePerformanceRatingRepository.getAvgMovieRating(p.getMoviePerformance().getMovieId());
 		if(avgRating == null)
 			avgRating = "Bez rejtinga";
@@ -134,7 +134,7 @@ public class ProjectionServiceImpl implements ProjectionService {
 	@Override
 	public void deleteProjection(Long projId) {
 		// TODO Auto-generated method stub
-		Projection p = projectionRepository.getProjectionById(projId);
+		Projection p = projectionRepository.getProjectionByProjId(projId);
 		projectionRepository.delete(p);
 	}
 

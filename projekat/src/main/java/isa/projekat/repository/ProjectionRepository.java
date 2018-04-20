@@ -10,7 +10,7 @@ import isa.projekat.model.Ticket;
 
 public interface ProjectionRepository extends CrudRepository<Projection, Long> {
 
-	Projection getProjectionById(Long id);
+	Projection getProjectionByProjId(Long id);
 	
 	@Query("select p from Projection p where p.theatreCinema.tcId = ?1")
 	List<Projection> getAllProjectionOfTheatreCinema(Long thecinId);
