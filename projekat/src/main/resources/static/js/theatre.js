@@ -13,7 +13,8 @@
 								 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 								 "<tr><td>Prosecna ocena: </td><td>" + data[i].rating + "</td></tr> " +
 								 "<tr><td>"+
-								 "<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniPozoriste("+data[i].id+")\">"+
+								 "<input type=\"button\" value = \"Izmijeni\" onclick = \"izmijeniPozoriste("+data[i].id+")\">" +
+								 "<input type=\"button\" value = \"Izmeni repertoar\" onclick = \"izmeniRepertoar("+data[i].id+")\">"+
 								 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\"></td></tr>"
 								);
 					} else if(sessionStorage.getItem("user_type") == "SYSADMIN"){
@@ -30,7 +31,8 @@
 								 "<tr><td>Opis: </td><td>" + data[i].description + "</td></tr> " +
 								 "<tr><td>Prosecna ocena: </td><td>" + data[i].rating + "</td></tr> " +
 								 "<tr><td>" +
-								 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\"></td></tr>");
+								 "<input type=\"button\" onclick = \"repertoar("+data[i].id+")\" value = \"Pogledaj\">" +
+								 "<input type=\"button\" onclick = \"brzeRezervacije("+data[i].id+")\" value = \"Brze karte\"></td></tr>");
 					}	
 				}
 				
@@ -41,9 +43,10 @@
 		});
 	
 	
-	$("#dodaj_bioskop_div_sysadmin").hide();
+	$("#dodaj_pozoriste_div_sysadmin").hide();
 	if(sessionStorage.getItem("user_type") == "SYSADMIN") {
-		
+	$("#dodaj_pozoriste_div_sysadmin").show();
+			
 		$.ajax({
 			url: "user/getAdmine",
 			type:"GET",
@@ -183,10 +186,22 @@ function ukloniPozoriste(id){
 
 function izmijeniPozoriste(id) {
 	
-	sessionStorage.setItem('edit_theatre_id',id);
-	top.location.href="formaZaIzmjenuPozorista.html";
-	
+	sessionStorage.setItem('edit_cinema_id',id);
+	top.location.href="formaZaIzmjenuBioskopa.html";
 
+}
+
+function brzeRezervacije(id){
+	
+	sessionStorage.setItem('fast_reserv_the_cin_id',id);
+	top.location.href="brzeKarte.html";
+	
+}
+
+function izmeniRepertoar(id) {
+	
+	sessionStorage.setItem('edit_cinema_projections',id);
+	top.location.href="projekcije.html";
 }
 
 function izmijeniPozoriste2() {

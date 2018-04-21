@@ -1,5 +1,4 @@
 window.onload = function() {
-
 		$.ajax({
 				url: "bioskop/sviBioskopi",
 				type: "GET",
@@ -8,6 +7,7 @@ window.onload = function() {
 					console.log(sessionStorage.getItem("user_type"));
 					$(".prikaz").empty();
 					for(i=0;i<data.length;i++) {
+						
 						if(sessionStorage.getItem("user_type") == "ADMIN") {
 							$(".prikaz").append("<tr><td>Naziv: </td><td>" + data[i].name + "</td></tr> "+
 									 "<tr><td>Adresa: </td><td>" + data[i].adress + "</td></tr> "+

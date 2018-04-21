@@ -52,3 +52,31 @@ function getFormData($form){
 }
 
 
+function logout(){
+	
+	
+	
+	$.ajax({
+		url: "user/logOut",
+		type:"GET",
+		contentType:"application/json",
+		dataType:"json",
+		success : function(data){
+			if (data == true) {
+				alert("Uspjesno ste se odjavili sa sistema.");
+
+				sessionStorage.removeItem("user_type")
+
+				top.location.href = "login.html";
+			}else{
+				
+				
+			}
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			alert(errorThrown);
+		}
+	});
+	
+	
+}

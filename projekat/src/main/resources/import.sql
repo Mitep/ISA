@@ -76,9 +76,10 @@ insert into seat(segment_id, row_num, col_num) values (1,4,2)
 insert into seat(segment_id, row_num, col_num) values (1,4,3)
 insert into seat(segment_id, row_num, col_num) values (1,4,4)
 
-insert into admini_objekata(objekat_id, user1_id) values (1,7)
-insert into admini_objekata(objekat_id, user1_id) values (2,7)
+insert into admini_objekata(objekat_id, user1_id) values (1,6)
+insert into admini_objekata(objekat_id, user1_id) values (2,6)
 insert into admini_objekata(objekat_id, user1_id) values (3,7)
+insert into admini_objekata(objekat_id, user1_id) values (4,7)
 
 insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,1,1,null)
 insert into ticket(discount,price,projection_projection_id,seat_seat_id,user_user_id) value(0,0,1,2,null)

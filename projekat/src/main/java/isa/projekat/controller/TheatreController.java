@@ -20,6 +20,7 @@ import isa.projekat.model.TheatreCinemaEnum;
 import isa.projekat.model.Ticket;
 import isa.projekat.model.User;
 import isa.projekat.model.UserRole;
+import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
 import isa.projekat.model.dtos.TheatreDTO;
 import isa.projekat.repository.ProjectionRepository;
@@ -27,6 +28,7 @@ import isa.projekat.repository.SeatRepository;
 import isa.projekat.repository.TheatreRepository;
 import isa.projekat.repository.TicketRepository;
 import isa.projekat.repository.UserRepository;
+import isa.projekat.service.CinemaService;
 import isa.projekat.service.TheatreService;
 
 @RestController
@@ -38,6 +40,9 @@ public class TheatreController {
 	
 	@Autowired
 	private TheatreRepository theatreRep;
+	
+	@Autowired
+	private CinemaService cinemaService;
 	
 	@Autowired
 	private UserRepository userRep;
@@ -112,8 +117,13 @@ public class TheatreController {
 			value= {"/svaPozorista"},
 			method = {RequestMethod.GET},
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<TheatreDTO> getAllTheatres(){
-		return theatreService.getAllTheatres();
+	public List<CinemaDTO> getAllTheatres(HttpServletRequest request){
+		User us = (User) request.getSession().getAttribute("user");
+		
+		if (us.getUserRole().equals(UserRole.ADMIN))
+			return cinemaService.getCinemasForAdmin(us);
+		else
+			return cinemaService.getAllCinemas();
 	}
 	
 	@RequestMapping(
