@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import isa.projekat.model.TheatreCinema;
+import isa.projekat.model.TheatreCinemaEnum;
+import isa.projekat.model.User;
+import isa.projekat.model.dtos.CinemaDTO;
 import isa.projekat.model.dtos.ProjectionDTO;
 import isa.projekat.model.dtos.TheatreDTO;
 import isa.projekat.repository.AmbientRatingRepository;
@@ -64,6 +67,25 @@ public class TheatreServiceImpl implements TheatreService {
 	public TheatreCinema getTheatre(Long id) {
 		// TODO Auto-generated method stub
 		return theatreRepostiory.findByTcId(id);
+	}
+
+	@Override
+	public List<TheatreDTO> getAllTheatresForAdmin(User user) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		List<TheatreCinema> cinemaList = theatreRepostiory.findByAdminiBioPoz(user);
+		List<TheatreDTO> cinemaRet = new ArrayList<TheatreDTO>();
+		for(TheatreCinema c : cinemaList){
+			String avgRating = ambientRatingRepository.getAvgRating(c);
+			if(avgRating == null)
+				avgRating = "Bez rejtinga";
+			
+			TheatreDTO cd = new TheatreDTO(c.getId(), c.getName(), c.getAdress(), c.getDescription(), avgRating);
+			if(c.getType().equals(TheatreCinemaEnum.CINEMA))
+				cinemaRet.add(cd);
+		}
+		
+		return cinemaRet;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import isa.projekat.model.TheatreCinema;
+import isa.projekat.model.User;
 
 public interface TheatreRepository extends CrudRepository<TheatreCinema, Long> {
 		
@@ -18,6 +19,9 @@ public interface TheatreRepository extends CrudRepository<TheatreCinema, Long> {
 	
 	@Query("select c from TheatreCinema c where c.type = 0")
 	List<TheatreCinema> findAllTheatres();
+	
+	//@Query("select c from TheatreCinema c where ?1 in c.adminiBioPoz and where c.type = 1")
+	List<TheatreCinema> findByAdminiBioPoz(User admin);
 
 	@Transactional
     @Modifying

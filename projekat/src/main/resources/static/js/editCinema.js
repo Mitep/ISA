@@ -20,7 +20,9 @@ window.onload = function() {
 			   	   "<input placeholder='Novi naziv sale' type='text' class='edit_hall_name_value' >"+
 				   "<button class='edit_hall_name_button' value="+data.halls[i].id+"> Izmeni ime sale</button></form>" +
 				   "<button class='delete_hall_button' value="+data.halls[i].id+"> Obrisi salu</button><br>" +
-				   "Segmenti<hr>");		
+				   "Segmenti<br>" +
+				   "<input placeholder='Novi naziv segmenta' type='text' class='new_segment_name' >" +
+				   "<button class='add_new_segment' value="+data.halls[i].id+"> Dodaj novi segment</button><br><hr>");		
 				if(data.halls[i].segments != null){
 					var segments = data.halls[i].segments;
 					for(var j = 0; j < segments.length; j++){
@@ -113,7 +115,7 @@ $(document).ready(function(){
 			dataType:"application/json",
 			data : dto,
 			success: function(data){
-				top.location.href="formaZaIzmjenuBiosokpa.html";
+				top.location.href="formaZaIzmjenuBioskopa.html";
 			},
 			error: function() {
 			}
@@ -141,7 +143,7 @@ $(document).ready(function(){
 			data : dto,
 			success: function(data){
 			    //location.reload();
-				top.location.href="formaZaIzmjenuBiosokpa.html";
+				top.location.href="formaZaIzmjenuBioskopa.html";
 			},
 			error: function() {
 			}
@@ -150,11 +152,11 @@ $(document).ready(function(){
 });
 
 $(document).on("click", "button.edit_hall_name_button", function( event ){
-	//event.preventDefault();
-	//console.log("doso");
-	//console.log(this.value);
-	//console.log("vrednost");
-	//console.log($(this).prev().val());
+//	event.preventDefault();
+//	console.log("dodavj novi segmen sa id");
+//	console.log(this.value);
+//	console.log("vrednost");
+//	console.log($(this).prev().val());
 	var theatreCinemaId = this.value;
 	var hallName = $(this).prev().val();
 	var a = { hallName, theatreCinemaId };
@@ -167,7 +169,7 @@ $(document).on("click", "button.edit_hall_name_button", function( event ){
 		data : dto,
 		success: function(data){
 		    //location.reload();
-			top.location.href="formaZaIzmjenuBiosokpa.html";
+			top.location.href="formaZaIzmjenuBioskopa.html";
 		},
 		error: function() {
 		}
@@ -190,7 +192,7 @@ $(document).on("click", "button.delete_hall_button", function(){
 		data: cdat,
 		success: function(data){
 	
-			top.location.href="formaZaIzmjenuBiosokpa.html";
+			top.location.href="formaZaIzmjenuBioskopa.html";
 		},
 		error: function() {
 		}
@@ -202,31 +204,76 @@ $(document).on("click", "button.delete_hall_button", function(){
 
 $(document).on("click", "button.edit_segment_name_button", function( event ){
 	 
-	event.preventDefault();
-
-	console.log("doso");
-	console.log(this.value);
-	console.log("vrednost");
-	console.log($(this).prev().val());
+	var segmentId = this.value;
+	var segmentName = $(this).prev().val();
+	
+	var a = { segmentName, segmentId };
+	var dto = JSON.stringify( a );
+	
+	$.ajax({
+		url: "/segment/izmeni",
+		type: "POST",
+		contentType:"application/json",
+		dataType:"application/json",
+		data : dto,
+		success: function(data){
+		    //location.reload();
+			top.location.href="formaZaIzmjenuBioskopa.html";
+		},
+		error: function() {
+		}
+	});
+	
+	
 	
 });
 
 $(document).on("click", "button.delete_segment_button", function(){
 	
-	console.log("doso");
-	console.log(this.value);
+	var segmentId = this.value;
+	
+	var a = { segmentId };
+	var dto = JSON.stringify( a );
+	
+	$.ajax({
+		url: "/segment/obrisi",
+		type: "POST",
+		contentType:"application/json",
+		dataType:"application/json",
+		data : dto,
+		success: function(data){
+		    //location.reload();
+			top.location.href="formaZaIzmjenuBioskopa.html";
+		},
+		error: function() {
+		}
+	});
 	
 	
 });
 
 $(document).on("click", "button.add_seat_button", function( event ){
 	 
-	event.preventDefault();
+	//event.preventDefault();
 
 	console.log("id segmenta");
 	console.log(this.value);
 	console.log("red i kolona");
 	console.log($(this).prev().val() + $(this).prev().prev().val());
+//	
+//	$.ajax({
+//		url: "/segment/obrisi",
+//		type: "POST",
+//		contentType:"application/json",
+//		dataType:"application/json",
+//		data : dto,
+//		success: function(data){
+//		    //location.reload();
+//			top.location.href="formaZaIzmjenuBioskopa.html";
+//		},
+//		error: function() {
+//		}
+//	});
 	
 });
 
@@ -247,4 +294,35 @@ $(document).on("click", "button.edit_one_seat_button", function(){
 	} else {
 		$(this).empty().append("prazno");
 	}
+});
+
+$(document).on("click", "button.add_new_segment", function(  ){
+	//event.preventDefault();
+	console.log("dodavj novi segmen sa id");
+	console.log(this.value);
+	console.log("vrednost");
+	console.log($(this).prev().val());
+
+	var hallId = this.value;
+	var segmentName = $(this).prev().val();
+	
+	var a = { segmentName, hallId };
+	var dto = JSON.stringify( a );
+	
+	console.log(dto);
+	$.ajax({
+		url: "/segment/dodaj",
+		type: "POST",
+		contentType:"application/json",
+		dataType:"application/json",
+		data : dto,
+		success: function(data){
+		    //location.reload();
+			top.location.href="formaZaIzmjenuBioskopa.html";
+		},
+		error: function() {
+		}
+	});
+
+	
 });

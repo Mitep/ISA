@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import isa.projekat.model.Hall;
+import isa.projekat.model.Seat;
 import isa.projekat.model.TheatreCinema;
 import isa.projekat.model.dtos.NewHallDTO;
 import isa.projekat.model.dtos.SeatDTO;
 import isa.projekat.repository.CinemaRepository;
 import isa.projekat.repository.HallRepository;
+import isa.projekat.repository.SeatRepository;
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -22,9 +24,15 @@ public class HallServiceImpl implements HallService {
 	@Autowired
 	private CinemaRepository cinemaRepository;
 	
+	@Autowired
+	private SeatRepository seatRepository;
+	
 	@Override
 	public String getSeatState(SeatDTO seat) {
 		// TODO Auto-generated method stub
+		Seat s = seatRepository.findSeatById(seat.getSeatId());
+		
+		
 		return null;
 	}
 

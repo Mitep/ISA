@@ -117,13 +117,13 @@ public class TheatreController {
 			value= {"/svaPozorista"},
 			method = {RequestMethod.GET},
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CinemaDTO> getAllTheatres(HttpServletRequest request){
+	public List<TheatreDTO> getAllTheatres(HttpServletRequest request){
 		User us = (User) request.getSession().getAttribute("user");
 		
 		if (us.getUserRole().equals(UserRole.ADMIN))
-			return cinemaService.getCinemasForAdmin(us);
+			return theatreService.getAllTheatresForAdmin(us);
 		else
-			return cinemaService.getAllCinemas();
+			return theatreService.getAllTheatres();
 	}
 	
 	@RequestMapping(

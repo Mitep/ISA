@@ -39,10 +39,10 @@ public class Segment implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "segment")
 	private Set<Seat> Seat;
 	
-	@Column(name = "row_num", nullable = false)
+	@Column(name = "row_num", nullable = true)
 	private int rowNum;
 	
-	@Column(name = "col_num", nullable = false)
+	@Column(name = "col_num", nullable = true)
 	private int colNum;
 	
 	public Segment() {
