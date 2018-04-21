@@ -40,7 +40,7 @@ insert into projection(name, description, projection_date_time, movie_performanc
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("projekcija2", "projekcija2", "1523", 1, 2, 1)
 insert into projection(name, description, projection_date_time, movie_performance_id, hall_id, theatre_cinema_id) values ("film 3 projekcija 3", "projekcija 3", "1523552111", 1, 1, 3) 
 
-insert into user(broj_logovanja,city, email, first_login, mobile_number,mt, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values (0,'Zvornik1','sysAdmin1@sysAdmin1.com',0,'1234',0,'sysAdmin1','sysAdmin1','sysAdmin1', 3,0,'sysAdmin1')
+insert into user(broj_logovanja,city, email, first_login, mobile_number,mt, user_name,user_password, user_password_conf, user_role, user_status, user_surname) values (0,'Zvornik1','sysAdmin1@sysAdmin1.com',0,'1234',0,'sysAdmin1','sysAdmin1','sysAdmin1', 3,1,'sysAdmin1')
 
 insert into user(broj_logovanja,city,email,first_login,mobile_number,mt,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Lopare','s@s.com',0,'123',0,'s','s','s',0,1,'s')
 insert into user(broj_logovanja,city,email,first_login,mobile_number,mt,user_name,user_password,user_password_conf,user_role,user_status,user_surname) value (0,'Aaaa','a@a.com',0,'1234',0,'a','a','a',0,1,'a')
